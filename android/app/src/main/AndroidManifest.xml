@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flutter_survey">
-   <application
+    package="vn.luongvo.flutter.survey">
+
+    <application
         android:label="flutter_survey"
         android:icon="@mipmap/ic_launcher">
         <activity
