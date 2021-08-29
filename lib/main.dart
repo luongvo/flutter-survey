@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterConfig.loadEnvVariables();
   runApp(MyApp());
 }
 
@@ -30,7 +33,9 @@ class MyHomePage extends StatelessWidget {
                   : SizedBox.shrink();
             }),
       ),
-      body: Center(),
+      body: Center(
+        child: Text(FlutterConfig.get('SECRET')),
+      ),
     );
   }
 }
