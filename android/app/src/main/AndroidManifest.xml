@@ -2,7 +2,7 @@
     package="vn.luongvo.flutter.survey">
 
     <application
-        android:label="flutter_survey"
+        android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

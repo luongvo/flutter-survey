@@ -30,6 +30,12 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+        production {
+            res.srcDirs = ['src/production/res']
+        }
+        staging {
+            res.srcDirs = ['src/staging/res']
+        }
     }
 
     defaultConfig {
@@ -46,6 +52,27 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
+    }
+
+    flavorDimensions "stage"
+    productFlavors {
+        production {
+            applicationId "vn.luongvo.flutter.survey"
+            dimension "stage"
+        }
+        staging {
+            dimension "stage"
+            applicationId "vn.luongvo.flutter.survey.staging"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
 
