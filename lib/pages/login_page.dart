@@ -28,7 +28,7 @@ class LoginPage extends StatelessWidget {
                 Expanded(
                   child: Assets.icons.icNimbleLogo.svg(),
                 ),
-                _buildLoginForm(),
+                _buildLoginForm(context),
                 Expanded(
                   child: SizedBox.shrink(),
                 ),
@@ -40,7 +40,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _buildLoginForm() {
+  Widget _buildLoginForm(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -50,6 +50,7 @@ class LoginPage extends StatelessWidget {
           maxLength: 100,
           // TODO localization https://github.com/luongvo/flutter-survey/issues/25
           placeholder: "Email",
+          style: Theme.of(context).textTheme.bodyText1,
           textInputAction: TextInputAction.next,
         ),
         SizedBox(
@@ -61,6 +62,7 @@ class LoginPage extends StatelessWidget {
               maxLength: 100,
               obscureText: true,
               placeholder: "Password",
+              style: Theme.of(context).textTheme.bodyText1,
               textInputAction: TextInputAction.done,
             ),
             Positioned.fill(
@@ -69,11 +71,10 @@ class LoginPage extends StatelessWidget {
                 child: TextButton(
                   child: Text(
                     "Forgot?",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.normal,
-                    ),
+                    style: Theme.of(context).textTheme.bodyText1?.apply(
+                          color: Colors.black,
+                          fontSizeDelta: -2,
+                        ),
                   ),
                   onPressed: () {
                     // TODO forgot https://github.com/luongvo/flutter-survey/issues/8
@@ -91,10 +92,13 @@ class LoginPage extends StatelessWidget {
           child: CupertinoButton(
             color: Colors.blue,
             padding: EdgeInsets.all(0),
+            child: Text(
+              'Log in',
+              style: Theme.of(context).textTheme.button,
+            ),
             onPressed: () {
               // TODO login https://github.com/luongvo/flutter-survey/issues/7
             },
-            child: Text('Log in'),
           ),
         ),
       ],
