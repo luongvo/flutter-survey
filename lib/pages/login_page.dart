@@ -61,16 +61,38 @@ class LoginPage extends StatelessWidget {
           textInputAction: TextInputAction.next,
         ),
         SizedBox(
-          height: 16.0,
+          height: 20.0,
         ),
-        CupertinoTextField(
-          maxLength: 100,
-          obscureText: true,
-          placeholder: "Password",
-          textInputAction: TextInputAction.done,
+        Stack(
+          children: [
+            CupertinoTextField(
+              maxLength: 100,
+              obscureText: true,
+              placeholder: "Password",
+              textInputAction: TextInputAction.done,
+            ),
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  child: Text(
+                    "Forgot?",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  onPressed: () {
+                    // TODO forgot https://github.com/luongvo/flutter-survey/issues/8
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
         SizedBox(
-          height: 16.0,
+          height: 20.0,
         ),
         Container(
           width: double.infinity,
