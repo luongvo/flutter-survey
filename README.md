@@ -16,6 +16,8 @@ A new Flutter project.
 
   - Production: `.env`
 
+- Generate project assets: `$ flutter packages pub run build_runner build`
+
 - Run the app with the desire app flavor:
 
   - Staging: `$ fvm flutter run --flavor staging`
