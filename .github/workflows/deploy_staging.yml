@@ -7,9 +7,9 @@ on:
       - develop
       - 'release/**'
 jobs:
-  deploy_android:
-    name: Build Flutter (Android)
-    runs-on: ubuntu-latest
+  build_on_mac:
+    name: Build Flutter (Android and iOS)
+    runs-on: macOS-latest
     environment: staging
     steps:
       # Setup Java environment in order to build the Android app.
@@ -31,10 +31,10 @@ jobs:
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
       - name: Make envfile
-        uses: SpicyPizza/create-envfile@v1
-        with:
-          envkey_SECRET: ${{ secrets.SECRET }}
-          file_name: .env.staging
+        run: |
+          touch .env.staging
+          echo SECRET= ${{ secrets.SECRET }} >> .env.staging
+          cat .env.staging
 
       - name: Decrypt large secret
         run: ./.github/workflows/decrypt_secret.sh
@@ -45,11 +45,28 @@ jobs:
       - name: Build Android apk
         run: flutter build apk --flavor staging --debug --build-number $GITHUB_RUN_NUMBER
 
-      # Upload artifact to Staging Firebase App Distribution
+      - name: Upload apk artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-staging-debug.apk
+          path: build/app/outputs/flutter-apk/app-staging-debug.apk
+
+  deploy_on_linux:
+    name: Deploy builds into FAB
+    needs: build_on_mac
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      # Download builds from artifact
+      - uses: actions/download-artifact@v2
+        with:
+          name: app-staging-debug.apk
+
+      # This container action is only supported on Linux https://github.com/wzieba/Firebase-Distribution-Github-Action/issues/24
       - name: Upload Staging to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{secrets.FIREBASE_ANDROID_APP_ID_STAGING}}
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: dev
-          file: build/app/outputs/flutter-apk/app-staging-debug.apk
+          file: app-staging-debug.apk
