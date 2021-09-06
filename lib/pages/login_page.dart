@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/resouces/app_colors.dart';
@@ -64,8 +63,10 @@ class LoginPage extends StatelessWidget {
           children: [
             TextField(
               decoration: _formInputDecoration(context, "Password").copyWith(
-                contentPadding: EdgeInsets.only(
-                  left: Dimens.inputHorizontalPadding,
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: Dimens.inputHorizontalPadding,
+                  vertical: Dimens.inputVerticalPadding,
+                ).copyWith(
                   right: forgotButtonWidth,
                 ),
               ),
@@ -99,15 +100,26 @@ class LoginPage extends StatelessWidget {
         SizedBox(
           height: 20.0,
         ),
-        Container(
+        SizedBox(
           width: double.infinity,
-          child: CupertinoButton(
-            color: Colors.blue,
-            padding: EdgeInsets.all(0),
-            child: Text(
-              'Log in',
-              style: Theme.of(context).textTheme.button,
+          child: TextButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.white),
+              foregroundColor: MaterialStateProperty.all(Colors.black),
+              overlayColor: MaterialStateProperty.all(Colors.black12),
+              padding: MaterialStateProperty.all(
+                EdgeInsets.symmetric(vertical: Dimens.inputVerticalPadding),
+              ),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(Dimens.inputBorderRadius)),
+              ),
+              textStyle: MaterialStateProperty.all(
+                Theme.of(context).textTheme.button,
+              ),
             ),
+            child: Text('Log in'),
             onPressed: () {
               // TODO login https://github.com/luongvo/flutter-survey/issues/7
             },

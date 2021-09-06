@@ -16,9 +16,10 @@ class AppTheme {
             fontWeight: FontWeight.w400,
           ),
           button: TextStyle(
-              color: AppColors.blackRussian,
-              fontWeight: FontWeight.w800,
-              fontSize: 17),
+            color: AppColors.blackRussian,
+            fontWeight: FontWeight.w800,
+            fontSize: 17,
+          ),
         ),
       );
 }
