@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
-import 'package:flutter_survey/resouces/app_colors.dart';
+import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/resouces/dimens.dart';
 
 import 'widgets/blur_background.dart';
@@ -84,7 +84,7 @@ class LoginPage extends StatelessWidget {
                     child: Text(
                       "Forgot?",
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            color: AppColors.whiteAlpha50,
+                        color: ColorName.whiteAlpha50,
                             fontSize: 15,
                           ),
                     ),
@@ -141,12 +141,12 @@ class LoginPage extends StatelessWidget {
           horizontal: Dimens.inputHorizontalPadding,
           vertical: Dimens.inputVerticalPadding,
         ),
-        fillColor: AppColors.whiteAlpha18,
+        fillColor: ColorName.whiteAlpha18,
         filled: true,
         hintStyle: Theme.of(context)
             .textTheme
             .bodyText1!
-            .copyWith(color: AppColors.whiteAlpha18),
+            .copyWith(color: ColorName.whiteAlpha18),
         hintText: hint,
       );
 

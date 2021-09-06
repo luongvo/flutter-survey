@@ -1,14 +1,14 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_survey/resouces/app_colors.dart';
-import 'package:flutter_survey/resouces/fonts.dart';
+import 'package:flutter_survey/gen/colors.gen.dart';
+import 'package:flutter_survey/gen/fonts.gen.dart';
 
 class AppTheme {
   AppTheme._();
 
   static ThemeData get light => ThemeData(
-        fontFamily: Fonts.neuzeit,
+        fontFamily: FontFamily.neuzeit,
         textTheme: TextTheme(
           bodyText1: TextStyle(
             color: Colors.white,
@@ -16,7 +16,7 @@ class AppTheme {
             fontWeight: FontWeight.w400,
           ),
           button: TextStyle(
-            color: AppColors.blackRussian,
+            color: ColorName.blackRussian,
             fontWeight: FontWeight.w800,
             fontSize: 17,
           ),
