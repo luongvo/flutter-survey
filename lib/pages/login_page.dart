@@ -83,9 +83,8 @@ class LoginPage extends StatelessWidget {
                   child: TextButton(
                     child: Text(
                       "Forgot?",
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: ColorName.whiteAlpha50,
-                            fontSize: 15,
+                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                            color: ColorName.whiteAlpha50,
                           ),
                     ),
                     onPressed: () {

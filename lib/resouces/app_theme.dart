@@ -15,6 +15,11 @@ class AppTheme {
             fontSize: 17,
             fontWeight: FontWeight.w400,
           ),
+          bodyText2: TextStyle(
+            color: Colors.white,
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+          ),
           button: TextStyle(
             color: ColorName.blackRussian,
             fontWeight: FontWeight.w800,
