@@ -20,14 +20,7 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           BlurBackground(),
-          DimmedBackground(
-            colors: [
-              Colors.black.withOpacity(0.2),
-              Colors.black.withOpacity(0.8),
-              Colors.black,
-            ],
-            stops: [0.0, 0.6, 1.0],
-          ),
+          _buildDimmedBackground(),
           Padding(
             padding: EdgeInsets.all(24.0),
             child: Column(
@@ -107,4 +100,13 @@ class LoginPage extends StatelessWidget {
       ],
     );
   }
+
+  Widget _buildDimmedBackground() => DimmedBackground(
+        colors: [
+          Colors.black.withOpacity(0.2),
+          Colors.black.withOpacity(0.8),
+          Colors.black,
+        ],
+        stops: [0.0, 0.6, 1.0],
+      );
 }
