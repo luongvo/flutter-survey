@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/resouces/app_colors.dart';
+import 'package:flutter_survey/resouces/dimens.dart';
 
 import 'widgets/blur_background.dart';
 import 'widgets/dimmed_background.dart';
@@ -43,6 +44,8 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget _buildLoginForm(BuildContext context) {
+    final forgotButtonWidth = 80.0;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -60,7 +63,12 @@ class LoginPage extends StatelessWidget {
         Stack(
           children: [
             TextField(
-              decoration: _formInputDecoration(context, "Password"),
+              decoration: _formInputDecoration(context, "Password").copyWith(
+                contentPadding: EdgeInsets.only(
+                  left: Dimens.inputHorizontalPadding,
+                  right: forgotButtonWidth,
+                ),
+              ),
               obscureText: true,
               obscuringCharacter: "●",
               style: Theme.of(context).textTheme.bodyText1,
@@ -69,16 +77,20 @@ class LoginPage extends StatelessWidget {
             Positioned.fill(
               child: Align(
                 alignment: Alignment.centerRight,
-                child: TextButton(
-                  child: Text(
-                    "Forgot?",
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          fontSize: 15,
-                        ),
+                child: SizedBox(
+                  height: double.infinity,
+                  child: TextButton(
+                    child: Text(
+                      "Forgot?",
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            color: AppColors.whiteAlpha50,
+                            fontSize: 15,
+                          ),
+                    ),
+                    onPressed: () {
+                      // TODO forgot https://github.com/luongvo/flutter-survey/issues/8
+                    },
                   ),
-                  onPressed: () {
-                    // TODO forgot https://github.com/luongvo/flutter-survey/issues/8
-                  },
                 ),
               ),
             ),
@@ -109,7 +121,13 @@ class LoginPage extends StatelessWidget {
       InputDecoration(
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(
+            Dimens.inputBorderRadius,
+          ),
+        ),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: Dimens.inputHorizontalPadding,
+          vertical: Dimens.inputVerticalPadding,
         ),
         fillColor: AppColors.whiteAlpha18,
         filled: true,
