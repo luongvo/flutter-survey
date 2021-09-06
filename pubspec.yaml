@@ -84,6 +84,18 @@ flutter:
     - assets/images/
     - assets/icons/
 
+  fonts:
+    - family: Neuzeit
+      fonts:
+        - asset: assets/fonts/neuzeit.otf
+    - family: Neuzeit-Heavy
+      fonts:
+        - asset: assets/fonts/neuzeit-heavy.otf
+
 flutter_gen:
   integrations:
     flutter_svg: true
+
+  colors:
+    inputs:
+      - assets/color/colors.xml
