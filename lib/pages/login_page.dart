@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/pages/widgets/blur_background.dart';
 import 'package:flutter_survey/pages/widgets/dimmed_background.dart';
-import 'package:flutter_survey/resouces/assets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -15,7 +14,7 @@ class LoginPage extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(Assets.bgLogin),
+                image: Assets.images.bgLogin,
                 fit: BoxFit.cover,
               ),
             ),
@@ -34,7 +33,7 @@ class LoginPage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Expanded(
-                  child: SvgPicture.asset(Assets.icNimbleLogo),
+                  child: Assets.icons.icNimbleLogo.svg(),
                 ),
                 _buildLoginForm(),
                 Expanded(
