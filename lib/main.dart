@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_survey/pages/login_page.dart';
@@ -13,11 +12,9 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: AppTheme.light,
-      child: CupertinoApp(
-        home: LoginPage(),
-      ),
+    return MaterialApp(
+      theme: AppTheme.light,
+      home: LoginPage(),
     );
   }
 }

@@ -1,15 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
-import 'package:flutter_survey/pages/widgets/blur_background.dart';
-import 'package:flutter_survey/pages/widgets/dimmed_background.dart';
+import 'package:flutter_survey/resouces/app_colors.dart';
+
+import 'widgets/blur_background.dart';
+import 'widgets/dimmed_background.dart';
 
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: false,
-      child: Stack(
+      body: Stack(
         children: [
           Container(
             decoration: BoxDecoration(
@@ -44,12 +46,11 @@ class LoginPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        CupertinoTextField(
+        TextField(
           autofocus: true,
-          keyboardType: TextInputType.emailAddress,
-          maxLength: 100,
           // TODO localization https://github.com/luongvo/flutter-survey/issues/25
-          placeholder: "Email",
+          decoration: _formInputDecoration(context, "Email"),
+          keyboardType: TextInputType.emailAddress,
           style: Theme.of(context).textTheme.bodyText1,
           textInputAction: TextInputAction.next,
         ),
@@ -58,10 +59,10 @@ class LoginPage extends StatelessWidget {
         ),
         Stack(
           children: [
-            CupertinoTextField(
-              maxLength: 100,
+            TextField(
+              decoration: _formInputDecoration(context, "Password"),
               obscureText: true,
-              placeholder: "Password",
+              obscuringCharacter: "●",
               style: Theme.of(context).textTheme.bodyText1,
               textInputAction: TextInputAction.done,
             ),
@@ -71,9 +72,8 @@ class LoginPage extends StatelessWidget {
                 child: TextButton(
                   child: Text(
                     "Forgot?",
-                    style: Theme.of(context).textTheme.bodyText1?.apply(
-                          color: Colors.black,
-                          fontSizeDelta: -2,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          fontSize: 15,
                         ),
                   ),
                   onPressed: () {
@@ -104,6 +104,21 @@ class LoginPage extends StatelessWidget {
       ],
     );
   }
+
+  InputDecoration _formInputDecoration(BuildContext context, String hint) =>
+      InputDecoration(
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        fillColor: AppColors.whiteAlpha18,
+        filled: true,
+        hintStyle: Theme.of(context)
+            .textTheme
+            .bodyText1!
+            .copyWith(color: AppColors.whiteAlpha18),
+        hintText: hint,
+      );
 
   Widget _buildDimmedBackground() => DimmedBackground(
         colors: [
