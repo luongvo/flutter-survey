@@ -1,3 +1,5 @@
+![Lint & Test](https://github.com/luongvo/flutter-survey/actions/workflows/test.yml/badge.svg)
+
 # flutter_survey
 
 A new Flutter project.
