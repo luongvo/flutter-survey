@@ -10,3 +10,6 @@ gpg --quiet --batch --yes --decrypt --passphrase="$LARGE_SECRET_PASSPHRASE" \
 mkdir -p android/app/src/production
 gpg --quiet --batch --yes --decrypt --passphrase="$LARGE_SECRET_PASSPHRASE" \
 --output android/app/src/production/google-services.json .github/workflows/secrets/android-production-google-services.json.gpg
+
+gpg --quiet --batch --yes --decrypt --passphrase="$LARGE_SECRET_PASSPHRASE" \
+--output ios/Runner/GoogleService-Info.plist .github/workflows/secrets/ios-GoogleService-Info.plist.gpg

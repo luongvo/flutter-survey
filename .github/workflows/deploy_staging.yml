@@ -41,7 +41,7 @@ jobs:
         env:
           LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
 
-      # Bundle requires FAB connected to Play Store to upload https://appdistribution.page.link/KPoa
+      # Bundle requires Firebase connected to Play Store to upload https://appdistribution.page.link/KPoa
       - name: Build Android apk
         run: flutter build apk --flavor staging --debug --build-number $GITHUB_RUN_NUMBER
 
@@ -51,13 +51,29 @@ jobs:
           name: app-staging-debug.apk
           path: build/app/outputs/flutter-apk/app-staging-debug.apk
 
+      - name: Build iOS archive
+        run: flutter build ipa --flavor staging --release --no-codesign --build-number $GITHUB_RUN_NUMBER
+
+      - name: Make ipa
+        run: |
+          cd build/ios/iphoneos
+          mkdir -p Payload
+          mv Runner.app Payload
+          zip -r app-staging-debug.ipa Payload
+
+      - name: Upload ipa artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-staging-debug.ipa
+          path: build/ios/iphoneos/app-staging-debug.ipa
+
   deploy_on_linux:
-    name: Deploy builds into FAB
+    name: Deploy builds into Firebase
     needs: build_on_mac
     runs-on: ubuntu-latest
     environment: staging
     steps:
-      # Download builds from artifact
+      # Download apk build
       - uses: actions/download-artifact@v2
         with:
           name: app-staging-debug.apk
@@ -70,3 +86,17 @@ jobs:
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: dev
           file: app-staging-debug.apk
+
+      # Download ipa build
+      - uses: actions/download-artifact@v2
+        with:
+          name: app-staging-debug.ipa
+
+      # This container action is only supported on Linux https://github.com/wzieba/Firebase-Distribution-Github-Action/issues/24
+      - name: Upload Staging to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.FIREBASE_IOS_APP_ID_STAGING}}
+          token: ${{secrets.FIREBASE_TOKEN}}
+          groups: dev
+          file: app-staging-debug.ipa
