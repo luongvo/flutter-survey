@@ -41,6 +41,7 @@ jobs:
         env:
           LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
 
+      # Build Android
       # Bundle requires Firebase connected to Play Store to upload https://appdistribution.page.link/KPoa
       - name: Build Android apk
         run: flutter build apk --flavor staging --debug --build-number $GITHUB_RUN_NUMBER
@@ -50,22 +51,28 @@ jobs:
         with:
           name: app-staging-debug.apk
           path: build/app/outputs/flutter-apk/app-staging-debug.apk
+          if-no-files-found: error
+
+      # Build iOS
+      - name: Install distribution certificate & provisioning profile
+        run: |
+          cd ios
+          fastlane codesigning keychain_password:${{ secrets.IOS_KEYCHAIN_PASSPHASE }} certificate_password:${{ secrets.IOS_PRIVATE_KEY_P12_PWD }}
+
+      - name: Pod install
+        run: |
+          cd ios
+          pod install
 
       - name: Build iOS archive
-        run: flutter build ipa --flavor staging --release --no-codesign --build-number $GITHUB_RUN_NUMBER
-
-      - name: Make ipa
-        run: |
-          cd build/ios/iphoneos
-          mkdir -p Payload
-          mv Runner.app Payload
-          zip -r app-staging-debug.ipa Payload
+        run: flutter build ipa --flavor staging --release --build-number $GITHUB_RUN_NUMBER --export-options-plist=.github/workflows/ExportOptions.plist
 
       - name: Upload ipa artifact
         uses: actions/upload-artifact@v2
         with:
-          name: app-staging-debug.ipa
-          path: build/ios/iphoneos/app-staging-debug.ipa
+          name: flutter_survey.ipa
+          path: build/ios/ipa/flutter_survey.ipa
+          if-no-files-found: error
 
   deploy_on_linux:
     name: Deploy builds into Firebase
@@ -90,7 +97,7 @@ jobs:
       # Download ipa build
       - uses: actions/download-artifact@v2
         with:
-          name: app-staging-debug.ipa
+          name: flutter_survey.ipa
 
       # This container action is only supported on Linux https://github.com/wzieba/Firebase-Distribution-Github-Action/issues/24
       - name: Upload Staging to Firebase
@@ -99,4 +106,4 @@ jobs:
           appId: ${{secrets.FIREBASE_IOS_APP_ID_STAGING}}
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: dev
-          file: app-staging-debug.ipa
+          file: flutter_survey.ipa

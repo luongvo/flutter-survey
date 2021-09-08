@@ -34,3 +34,4 @@ Runner/GeneratedPluginRegistrant.*
 
 # Google services
 GoogleService-Info.plist
+fastlane/certs/

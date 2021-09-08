@@ -1,0 +1,36 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Install distribution certificate and provision profile"
+  lane :codesigning do |options|
+    keychain_name = "distribution_certificate"
+    keychain_password = options[:keychain_password]
+    certificate_password = options[:certificate_password]
+
+    create_keychain(
+      name: keychain_name,
+      default_keychain: true,
+      unlock: true,
+      timeout: 3600,
+      lock_when_sleeps: true,
+      password: keychain_password,
+    )
+
+    import_certificate(
+      keychain_name: keychain_name,
+      keychain_password: keychain_password,
+      certificate_path: "fastlane/certs/distribution_certificate_4TWS7E2EPE.cer",
+    )
+
+    import_certificate(
+      keychain_name: keychain_name,
+      keychain_password: keychain_password,
+      certificate_path: "fastlane/certs/private_certificate.p12",
+      certificate_password: certificate_password,
+    )
+
+    install_provisioning_profile(
+      path: "fastlane/certs/Adhoc_Distribution_Lucas_Flutter_Survey.mobileprovision",
+    )
+  end
+end
