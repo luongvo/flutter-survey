@@ -80,13 +80,13 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
     steps:
-      # Download apk build
-      - uses: actions/download-artifact@v2
+      - name: Download apk artifact
+        uses: actions/download-artifact@v2
         with:
           name: app-staging-debug.apk
 
       # This container action is only supported on Linux https://github.com/wzieba/Firebase-Distribution-Github-Action/issues/24
-      - name: Upload Staging to Firebase
+      - name: Upload Android Staging to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{secrets.FIREBASE_ANDROID_APP_ID_STAGING}}
@@ -94,13 +94,13 @@ jobs:
           groups: dev
           file: app-staging-debug.apk
 
-      # Download ipa build
-      - uses: actions/download-artifact@v2
+      - name: Download ipa artifact
+        uses: actions/download-artifact@v2
         with:
           name: flutter_survey.ipa
 
       # This container action is only supported on Linux https://github.com/wzieba/Firebase-Distribution-Github-Action/issues/24
-      - name: Upload Staging to Firebase
+      - name: Upload iOS Staging to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{secrets.FIREBASE_IOS_APP_ID_STAGING}}
