@@ -89,11 +89,6 @@ jobs:
           cd ios
           fastlane codesigning keychain_password:${{ secrets.IOS_KEYCHAIN_PASSPHASE }} certificate_password:${{ secrets.IOS_PRIVATE_KEY_P12_PWD }}
 
-      - name: Pod install
-        run: |
-          cd ios
-          pod install
-
       - name: Build iOS archive
         run: flutter build ipa --flavor staging --release --build-number $GITHUB_RUN_NUMBER --export-options-plist=ios/config/ExportOptions.plist
 
