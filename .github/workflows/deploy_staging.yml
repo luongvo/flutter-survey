@@ -1,0 +1,55 @@
+name: CI
+on:
+  # Trigger the workflow on push action in develop branch
+  # So it will trigger when the PR of the feature branch was merged.
+  push:
+    branches:
+      - develop
+      - 'release/**'
+jobs:
+  deploy_android:
+    name: Build Flutter (Android)
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      # Setup Java environment in order to build the Android app.
+      - uses: actions/checkout@v2.3.2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      # Setup the flutter environment.
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+          flutter-version: '2.2.3'
+
+      - name: Get flutter dependencies
+        run: flutter pub get
+
+      - name: Generate project assets (flutter_gen)
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_SECRET: ${{ secrets.SECRET }}
+          file_name: .env.staging
+
+      - name: Decrypt large secret
+        run: ./.github/workflows/decrypt_secret.sh
+        env:
+          LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
+
+      # Bundle requires FAB connected to Play Store to upload https://appdistribution.page.link/KPoa
+      - name: Build Android apk
+        run: flutter build apk --flavor staging --debug --build-number $GITHUB_RUN_NUMBER
+
+      # Upload artifact to Staging Firebase App Distribution
+      - name: Upload Staging to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.FIREBASE_ANDROID_APP_ID_STAGING}}
+          token: ${{secrets.FIREBASE_TOKEN}}
+          groups: dev
+          file: build/app/outputs/flutter-apk/app-staging-debug.apk
