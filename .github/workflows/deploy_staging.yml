@@ -65,7 +65,7 @@ jobs:
           pod install
 
       - name: Build iOS archive
-        run: flutter build ipa --flavor staging --release --build-number $GITHUB_RUN_NUMBER --export-options-plist=.github/workflows/ExportOptions.plist
+        run: flutter build ipa --flavor staging --release --build-number $GITHUB_RUN_NUMBER --export-options-plist=ios/config/ExportOptions.plist
 
       - name: Upload ipa artifact
         uses: actions/upload-artifact@v2
