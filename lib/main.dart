@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_survey/pages/login_page.dart';
 import 'package:flutter_survey/resouces/app_theme.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.light,
       home: LoginPage(),
       localizationsDelegates: [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

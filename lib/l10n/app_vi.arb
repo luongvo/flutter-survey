@@ -1,3 +1,6 @@
 {
-  "buttonLogin": "Đăng nhập"
+  "loginEmail": "Email",
+  "loginPassword": "Mật khẩu",
+  "loginForgot": "Quên?",
+  "loginText": "Đăng nhập"
 }

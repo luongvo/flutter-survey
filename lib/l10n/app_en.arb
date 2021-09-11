@@ -1,6 +1,6 @@
 {
-  "buttonLogin": "Login",
-  "@buttonLogin": {
-    "description": "Login button text"
-  }
+  "loginEmail": "Email",
+  "loginPassword": "Password",
+  "loginForgot": "Forgot?",
+  "loginText": "Log In"
 }
