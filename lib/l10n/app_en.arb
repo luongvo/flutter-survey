@@ -1,0 +1,6 @@
+{
+  "buttonLogin": "Login",
+  "@buttonLogin": {
+    "description": "Login button text"
+  }
+}
