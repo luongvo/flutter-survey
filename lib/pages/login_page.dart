@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/resouces/dimens.dart';
+import 'package:flutter_survey/routes.dart';
 
 import 'widgets/blur_background.dart';
 import 'widgets/dimmed_background.dart';
@@ -127,6 +128,7 @@ class LoginPage extends StatelessWidget {
             child: Text(AppLocalizations.of(context)!.loginText),
             onPressed: () {
               // TODO login https://github.com/luongvo/flutter-survey/issues/7
+              Navigator.of(context).pushNamed(Routes.HOME_PAGE);
             },
           ),
         ),
