@@ -57,16 +57,41 @@ class HomePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          // TODO
-          "●●●",
+        Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(4)),
+              child: Container(
+                height: 8,
+                width: 8,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(width: 10.0),
+            ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(4)),
+              child: Container(
+                height: 8,
+                width: 8,
+                color: Colors.white.withOpacity(0.2),
+              ),
+            ),
+            SizedBox(width: 10.0),
+            ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(4)),
+              child: Container(
+                height: 8,
+                width: 8,
+                color: Colors.white.withOpacity(0.2),
+              ),
+            ),
+          ],
         ),
-        SizedBox(
-          height: 10.0,
-        ),
+        SizedBox(height: Dimens.defaultMarginPaddingLarge),
         Text(
           // TODO
           'Working from home Check-In',
+          style: Theme.of(context).textTheme.subtitle1,
         ),
         SizedBox(
           height: 10.0,
@@ -77,6 +102,22 @@ class HomePage extends StatelessWidget {
               child: Text(
                 // TODO
                 'We would like to know how you feel about our work from home...',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: Dimens.defaultMarginPadding),
+              child: ClipOval(
+                child: Material(
+                  color: Colors.white,
+                  child: SizedBox(
+                    width: 56,
+                    height: 56,
+                    child: Assets.icons.icArrowRight.svg(
+                      fit: BoxFit.none,
+                    ),
+                  ),
+                ),
               ),
             ),
           ],

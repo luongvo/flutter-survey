@@ -20,6 +20,11 @@ class AppTheme {
             fontSize: 15,
             fontWeight: FontWeight.w400,
           ),
+          subtitle1: TextStyle(
+            color: Colors.white,
+            fontSize: 26,
+            fontWeight: FontWeight.w800,
+          ),
           button: TextStyle(
             color: ColorName.blackRussian,
             fontWeight: FontWeight.w800,
