@@ -3,26 +3,29 @@ import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/pages/widgets/dimmed_background.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  HomePageState createState() {
+    return new HomePageState();
+  }
+}
+
+class HomePageState extends State<HomePage> {
+  final _surveys = [1, 2, 3];
+  final _pageController = PageController();
+  final _currentPageNotifier = ValueNotifier<int>(0);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: Assets.images.bgHomeSample,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          _buildDimmedBackground(),
+        children: <Widget>[
+          _buildSurveyPageViewer(),
           SafeArea(
             child: Padding(
               padding: EdgeInsets.all(Dimens.defaultMarginPadding),
-              child: _buildHomeDetail(context),
+              child: _buildSurveyDetail(context),
             ),
           ),
         ],
@@ -30,7 +33,36 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildHomeDetail(BuildContext context) {
+  Widget _buildSurveyPageViewer() {
+    return PageView.builder(
+      itemCount: _surveys.length,
+      controller: _pageController,
+      itemBuilder: (BuildContext context, int index) {
+        return _buildSurveyPageView(context);
+      },
+      onPageChanged: (int index) {
+        _currentPageNotifier.value = index;
+      },
+    );
+  }
+
+  Widget _buildSurveyPageView(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: Assets.images.bgHomeSample,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        _buildDimmedBackground(),
+      ],
+    );
+  }
+
+  Widget _buildSurveyDetail(BuildContext context) {
     return Column(
       children: [
         _buildHomeHeader(context),
