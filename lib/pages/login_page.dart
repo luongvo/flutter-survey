@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
-import 'package:flutter_survey/resouces/dimens.dart';
+import 'package:flutter_survey/resources/dimens.dart';
 import 'package:flutter_survey/routes.dart';
 
 import 'widgets/blur_background.dart';
@@ -26,7 +26,7 @@ class LoginPage extends StatelessWidget {
           BlurBackground(),
           _buildDimmedBackground(),
           Padding(
-            padding: EdgeInsets.all(24.0),
+            padding: EdgeInsets.all(Dimens.defaultMarginPaddingLarge),
             child: Column(
               children: <Widget>[
                 Expanded(
@@ -60,9 +60,7 @@ class LoginPage extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyText1,
           textInputAction: TextInputAction.next,
         ),
-        SizedBox(
-          height: 20.0,
-        ),
+        SizedBox(height: Dimens.defaultMarginPadding),
         Stack(
           children: [
             TextField(
@@ -103,9 +101,7 @@ class LoginPage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(
-          height: 20.0,
-        ),
+        SizedBox(height: Dimens.defaultMarginPadding),
         SizedBox(
           width: double.infinity,
           child: TextButton(
