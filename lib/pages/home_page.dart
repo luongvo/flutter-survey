@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/pages/widgets/dimmed_background.dart';
 import 'package:flutter_survey/resources/dimens.dart';
+import 'package:page_view_indicators/circle_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+  // TODO
   final _surveys = [1, 2, 3];
   final _pageController = PageController();
   final _currentPageNotifier = ValueNotifier<int>(0);
@@ -118,45 +120,14 @@ class HomePageState extends State<HomePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
-              child: Container(
-                height: 8,
-                width: 8,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(width: 10.0),
-            ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
-              child: Container(
-                height: 8,
-                width: 8,
-                color: Colors.white.withOpacity(0.2),
-              ),
-            ),
-            SizedBox(width: 10.0),
-            ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
-              child: Container(
-                height: 8,
-                width: 8,
-                color: Colors.white.withOpacity(0.2),
-              ),
-            ),
-          ],
-        ),
+        _buildCircleIndicator(),
         SizedBox(height: Dimens.defaultMarginPaddingLarge),
         Text(
           // TODO
           'Working from home Check-In',
           style: Theme.of(context).textTheme.subtitle1,
         ),
-        SizedBox(
-          height: 10.0,
-        ),
+        SizedBox(height: 10.0),
         Row(
           children: [
             Expanded(
@@ -184,6 +155,21 @@ class HomePageState extends State<HomePage> {
           ],
         )
       ],
+    );
+  }
+
+  Widget _buildCircleIndicator() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: CirclePageIndicator(
+        size: 8,
+        selectedSize: 8,
+        dotSpacing: 10,
+        dotColor: Colors.white.withOpacity(0.2),
+        selectedDotColor: Colors.white,
+        itemCount: _surveys.length,
+        currentPageNotifier: _currentPageNotifier,
+      ),
     );
   }
 
