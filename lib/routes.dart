@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_survey/pages/home_page.dart';
-import 'package:flutter_survey/pages/login_page.dart';
+import 'package:flutter_survey/pages/home/home_page.dart';
+import 'package:flutter_survey/pages/login/login_page.dart';
 
 class Routes {
   Routes._();

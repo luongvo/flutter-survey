@@ -5,8 +5,8 @@ import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 import 'package:flutter_survey/routes.dart';
 
-import 'widgets/blur_background.dart';
-import 'widgets/dimmed_background.dart';
+import '../widgets/blur_background.dart';
+import '../widgets/dimmed_background.dart';
 
 class LoginPage extends StatelessWidget {
   @override
