@@ -46,9 +46,38 @@ class HomePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // TODO
-        Text('MONDAY, JUNE 15'),
-        Text('Today'),
+        Text(
+          // TODO
+          'MONDAY, JUNE 15',
+          style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                fontSize: 13,
+              ),
+        ),
+        SizedBox(height: 5.0),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                // TODO
+                'Today',
+                style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                      fontSize: 34,
+                    ),
+              ),
+            ),
+            Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: Assets.images.bgHomeAvatarSample,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ],
+        )
       ],
     );
   }
