@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/resouces/dimens.dart';
@@ -50,8 +51,10 @@ class LoginPage extends StatelessWidget {
       children: [
         TextField(
           autofocus: true,
-          // TODO localization https://github.com/luongvo/flutter-survey/issues/25
-          decoration: _formInputDecoration(context, "Email"),
+          decoration: _formInputDecoration(
+            context,
+            AppLocalizations.of(context)!.loginEmail,
+          ),
           keyboardType: TextInputType.emailAddress,
           style: Theme.of(context).textTheme.bodyText1,
           textInputAction: TextInputAction.next,
@@ -62,7 +65,10 @@ class LoginPage extends StatelessWidget {
         Stack(
           children: [
             TextField(
-              decoration: _formInputDecoration(context, "Password").copyWith(
+              decoration: _formInputDecoration(
+                context,
+                AppLocalizations.of(context)!.loginPassword,
+              ).copyWith(
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: Dimens.inputHorizontalPadding,
                   vertical: Dimens.inputVerticalPadding,
@@ -82,7 +88,7 @@ class LoginPage extends StatelessWidget {
                   height: double.infinity,
                   child: TextButton(
                     child: Text(
-                      "Forgot?",
+                      AppLocalizations.of(context)!.loginForgot,
                       style: Theme.of(context).textTheme.bodyText2!.copyWith(
                             color: ColorName.whiteAlpha50,
                           ),
@@ -118,7 +124,7 @@ class LoginPage extends StatelessWidget {
                 Theme.of(context).textTheme.button,
               ),
             ),
-            child: Text('Log in'),
+            child: Text(AppLocalizations.of(context)!.loginText),
             onPressed: () {
               // TODO login https://github.com/luongvo/flutter-survey/issues/7
             },
