@@ -28,9 +28,6 @@ jobs:
       - name: Get flutter dependencies
         run: flutter pub get
 
-      - name: Generate project assets (flutter_gen)
-        run: flutter packages pub run build_runner build --delete-conflicting-outputs
-
       - name: Make envfile
         run: |
           touch .env.staging
@@ -69,9 +66,6 @@ jobs:
 
       - name: Get flutter dependencies
         run: flutter pub get
-
-      - name: Generate project assets (flutter_gen)
-        run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
       - name: Make envfile
         run: |
