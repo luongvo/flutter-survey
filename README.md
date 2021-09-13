@@ -20,6 +20,6 @@ A new Flutter project.
 
 - Run the app with the desire app flavor:
 
-  - Staging: `$ fvm flutter run --flavor staging`
+  - Staging: `$ fvm flutter run --flavor staging -t lib/main-staging.dart`
 
-  - Production: `$ fvm flutter run --flavor production`
+  - Production: `$ fvm flutter run --flavor production -t lib/main-production.dart`
