@@ -22,7 +22,17 @@ class AppTheme {
           ),
           subtitle1: TextStyle(
             color: Colors.white,
+            fontSize: 13,
+            fontWeight: FontWeight.w800,
+          ),
+          headline4: TextStyle(
+            color: Colors.white,
             fontSize: 26,
+            fontWeight: FontWeight.w800,
+          ),
+          headline5: TextStyle(
+            color: Colors.white,
+            fontSize: 34,
             fontWeight: FontWeight.w800,
           ),
           button: TextStyle(

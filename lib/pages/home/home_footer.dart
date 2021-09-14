@@ -19,7 +19,7 @@ class HomeFooter extends StatelessWidget {
         Text(
           // TODO data binding https://github.com/luongvo/flutter-survey/issues/14
           'Working from home Check-In',
-          style: Theme.of(context).textTheme.subtitle1,
+          style: Theme.of(context).textTheme.headline4,
         ),
         const SizedBox(height: 10.0),
         Row(

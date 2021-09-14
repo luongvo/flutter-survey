@@ -10,9 +10,7 @@ class HomeHeader extends StatelessWidget {
         Text(
           // TODO data binding https://github.com/luongvo/flutter-survey/issues/14
           'MONDAY, JUNE 15',
-          style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                fontSize: 13,
-              ),
+          style: Theme.of(context).textTheme.subtitle1,
         ),
         const SizedBox(height: 5.0),
         Row(
@@ -21,9 +19,7 @@ class HomeHeader extends StatelessWidget {
               child: Text(
                 // TODO data binding https://github.com/luongvo/flutter-survey/issues/14
                 'Today',
-                style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                      fontSize: 34,
-                    ),
+                style: Theme.of(context).textTheme.headline5,
               ),
             ),
             Container(
