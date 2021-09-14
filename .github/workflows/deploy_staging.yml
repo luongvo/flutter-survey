@@ -28,12 +28,6 @@ jobs:
       - name: Get flutter dependencies
         run: flutter pub get
 
-      - name: Make envfile
-        run: |
-          touch .env.staging
-          echo SECRET= ${{ secrets.SECRET }} >> .env.staging
-          cat .env.staging
-
       - name: Decrypt large secret
         run: ./.github/workflows/decrypt_secret.sh
         env:
@@ -66,12 +60,6 @@ jobs:
 
       - name: Get flutter dependencies
         run: flutter pub get
-
-      - name: Make envfile
-        run: |
-          touch .env.staging
-          echo SECRET= ${{ secrets.SECRET }} >> .env.staging
-          cat .env.staging
 
       - name: Decrypt large secret
         run: ./.github/workflows/decrypt_secret.sh
