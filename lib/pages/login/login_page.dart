@@ -10,6 +10,7 @@ import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.
 import 'package:flutter_survey/resources/dimens.dart';
 import 'package:flutter_survey/routes.dart';
 import 'package:flutter_survey/usecase/login_use_case.dart';
+import 'package:flutter_survey/utils/keyboard_util.dart';
 
 import '../widgets/blur_background.dart';
 import '../widgets/dimmed_background.dart';
@@ -43,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
             orElse: () {},
           );
         },
-        child: _buildLoginPage(context));
+        child: _buildLoginPage());
   }
 
   @override
@@ -53,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  Widget _buildLoginPage(BuildContext context) {
+  Widget _buildLoginPage() {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -82,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                 Expanded(
                   child: Assets.icons.icNimbleLogo.svg(),
                 ),
-                _buildLoginForm(context),
+                _buildLoginForm(),
                 const Expanded(child: SizedBox.shrink()),
               ],
             ),
@@ -92,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildLoginForm(BuildContext context) {
+  Widget _buildLoginForm() {
     final forgotButtonWidth = 80.0;
 
     return Column(
@@ -182,7 +183,9 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _attemptLogin() {
+  Future<void> _attemptLogin() async {
+    KeyboardUtil.hideKeyboard(context);
+
     final LoginModel loginModel =
         context.read<LoginModel>(loginModelProvider.notifier);
     loginModel.login(_emailController.text, _passwordController.text);

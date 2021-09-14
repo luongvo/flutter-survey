@@ -9,7 +9,7 @@ class LoginModel extends StateNotifier<LoginState> {
 
   LoginModel(this._loginUseCase) : super(const LoginState.init());
 
-  void login(String email, String password) async {
+  Future<void> login(String email, String password) async {
     state = LoginState.loading();
     Result<void> result =
         await _loginUseCase.call(LoginInput(email: email, password: password));
