@@ -17,7 +17,7 @@ class HomeFooter extends StatelessWidget {
         _buildCircleIndicator(),
         SizedBox(height: Dimens.defaultMarginPaddingLarge),
         Text(
-          // TODO
+          // TODO data binding https://github.com/luongvo/flutter-survey/issues/14
           'Working from home Check-In',
           style: Theme.of(context).textTheme.subtitle1,
         ),
@@ -26,7 +26,7 @@ class HomeFooter extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                // TODO
+                // TODO data binding https://github.com/luongvo/flutter-survey/issues/14
                 'We would like to know how you feel about our work from home...',
                 style: Theme.of(context).textTheme.bodyText1,
               ),

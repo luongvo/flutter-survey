@@ -8,7 +8,7 @@ class HomeHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          // TODO
+          // TODO data binding https://github.com/luongvo/flutter-survey/issues/14
           'MONDAY, JUNE 15',
           style: Theme.of(context).textTheme.subtitle1!.copyWith(
                 fontSize: 13,
@@ -19,7 +19,7 @@ class HomeHeader extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                // TODO
+                // TODO data binding https://github.com/luongvo/flutter-survey/issues/14
                 'Today',
                 style: Theme.of(context).textTheme.subtitle1!.copyWith(
                       fontSize: 34,

@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  // TODO
+  // TODO fetch survey list https://github.com/luongvo/flutter-survey/issues/14
   final _surveys = [1, 2, 3];
   final _currentPageNotifier = ValueNotifier<int>(0);
 
