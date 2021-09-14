@@ -36,5 +36,5 @@ jobs:
       - name: Statically analyze the Dart code for any errors.
         run: flutter analyze .
 
-      - name: Run widget tests, unit test for our flutter project.
-        run: flutter test --machine --coverage
+#      - name: Run widget tests, unit test for our flutter project.
+#        run: flutter test --machine --coverage
