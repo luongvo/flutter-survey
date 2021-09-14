@@ -48,7 +48,6 @@ mixin _$LoginState {
     required TResult Function() success,
   }) =>
       throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
@@ -58,7 +57,6 @@ mixin _$LoginState {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Init value) init,
@@ -67,7 +65,6 @@ mixin _$LoginState {
     required TResult Function(_Success value) success,
   }) =>
       throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Init value)? init,
@@ -91,7 +88,6 @@ class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
   _$LoginStateCopyWithImpl(this._value, this._then);
 
   final LoginState _value;
-
   // ignore: unused_field
   final $Res Function(LoginState) _then;
 }
@@ -282,7 +278,6 @@ abstract class _Loading implements LoginState {
 abstract class _$ErrorCopyWith<$Res> {
   factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
       __$ErrorCopyWithImpl<$Res>;
-
   $Res call({String? error});
 }
 
@@ -395,7 +390,6 @@ abstract class _Error implements LoginState {
   const factory _Error(String? error) = _$_Error;
 
   String? get error => throw _privateConstructorUsedError;
-
   @JsonKey(ignore: true)
   _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
 }

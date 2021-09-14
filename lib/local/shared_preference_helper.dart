@@ -24,6 +24,8 @@ abstract class SharedPreferencesHelper {
   Future<void> saveTokenExpiration(int expiration);
 
   Future<void> clear();
+
+  bool get isLoggedIn;
 }
 
 @Singleton(as: SharedPreferencesHelper)
@@ -75,5 +77,10 @@ class SharedPreferencesHelperImpl implements SharedPreferencesHelper {
   @override
   Future<void> clear() async {
     _prefs.clear();
+  }
+
+  @override
+  bool get isLoggedIn {
+    return _prefs.containsKey(_PREF_KEY_ACCESS_TOKEN);
   }
 }
