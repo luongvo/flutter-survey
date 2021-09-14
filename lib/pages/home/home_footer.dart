@@ -15,13 +15,13 @@ class HomeFooter extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildCircleIndicator(),
-        SizedBox(height: Dimens.defaultMarginPaddingLarge),
+        const SizedBox(height: Dimens.defaultMarginPaddingLarge),
         Text(
           // TODO data binding https://github.com/luongvo/flutter-survey/issues/14
           'Working from home Check-In',
           style: Theme.of(context).textTheme.subtitle1,
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         Row(
           children: [
             Expanded(
@@ -32,7 +32,7 @@ class HomeFooter extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: Dimens.defaultMarginPadding),
+              padding: const EdgeInsets.only(left: Dimens.defaultMarginPadding),
               child: ClipOval(
                 child: Material(
                   color: Colors.white,

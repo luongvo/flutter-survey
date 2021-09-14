@@ -28,12 +28,12 @@ class HomePageState extends State<HomePage> {
           ),
           SafeArea(
             child: Padding(
-              padding: EdgeInsets.all(Dimens.defaultMarginPadding),
+              padding: const EdgeInsets.all(Dimens.defaultMarginPadding),
               child: Column(
                 children: [
                   HomeHeader(),
                   Expanded(
-                    child: SizedBox.shrink(),
+                    child: const SizedBox.shrink(),
                   ),
                   HomeFooter(
                     surveys: _surveys,

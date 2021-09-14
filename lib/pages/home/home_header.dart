@@ -14,7 +14,7 @@ class HomeHeader extends StatelessWidget {
                 fontSize: 13,
               ),
         ),
-        SizedBox(height: 5.0),
+        const SizedBox(height: 5.0),
         Row(
           children: [
             Expanded(

@@ -26,16 +26,14 @@ class LoginPage extends StatelessWidget {
           BlurBackground(),
           _buildDimmedBackground(),
           Padding(
-            padding: EdgeInsets.all(Dimens.defaultMarginPaddingLarge),
+            padding: const EdgeInsets.all(Dimens.defaultMarginPaddingLarge),
             child: Column(
               children: <Widget>[
                 Expanded(
                   child: Assets.icons.icNimbleLogo.svg(),
                 ),
                 _buildLoginForm(context),
-                Expanded(
-                  child: SizedBox.shrink(),
-                ),
+                const Expanded(child: SizedBox.shrink()),
               ],
             ),
           ),
@@ -60,7 +58,7 @@ class LoginPage extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyText1,
           textInputAction: TextInputAction.next,
         ),
-        SizedBox(height: Dimens.defaultMarginPadding),
+        const SizedBox(height: Dimens.defaultMarginPadding),
         Stack(
           children: [
             TextField(
@@ -68,7 +66,7 @@ class LoginPage extends StatelessWidget {
                 context,
                 AppLocalizations.of(context)!.loginPassword,
               ).copyWith(
-                contentPadding: EdgeInsets.symmetric(
+                contentPadding: const EdgeInsets.symmetric(
                   horizontal: Dimens.inputHorizontalPadding,
                   vertical: Dimens.inputVerticalPadding,
                 ).copyWith(
@@ -101,7 +99,7 @@ class LoginPage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: Dimens.defaultMarginPadding),
+        const SizedBox(height: Dimens.defaultMarginPadding),
         SizedBox(
           width: double.infinity,
           child: TextButton(
@@ -110,7 +108,9 @@ class LoginPage extends StatelessWidget {
               foregroundColor: MaterialStateProperty.all(Colors.black),
               overlayColor: MaterialStateProperty.all(Colors.black12),
               padding: MaterialStateProperty.all(
-                EdgeInsets.symmetric(vertical: Dimens.inputVerticalPadding),
+                const EdgeInsets.symmetric(
+                  vertical: Dimens.inputVerticalPadding,
+                ),
               ),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
@@ -140,7 +140,7 @@ class LoginPage extends StatelessWidget {
             Dimens.inputBorderRadius,
           ),
         ),
-        contentPadding: EdgeInsets.symmetric(
+        contentPadding: const EdgeInsets.symmetric(
           horizontal: Dimens.inputHorizontalPadding,
           vertical: Dimens.inputVerticalPadding,
         ),
@@ -159,6 +159,6 @@ class LoginPage extends StatelessWidget {
           Colors.black.withOpacity(0.8),
           Colors.black,
         ],
-        stops: [0.0, 0.6, 1.0],
+        stops: const [0.0, 0.6, 1.0],
       );
 }
