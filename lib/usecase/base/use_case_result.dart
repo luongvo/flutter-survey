@@ -18,7 +18,7 @@ class Failed<T> extends Result<T> {
 
 class UseCaseException implements Exception {
   final NetworkExceptions networkExceptions;
-  final Exception actualException;
+  final Exception? actualException;
 
   UseCaseException(this.networkExceptions, this.actualException);
 }

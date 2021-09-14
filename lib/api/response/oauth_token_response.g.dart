@@ -8,11 +8,11 @@ part of 'oauth_token_response.dart';
 
 OauthTokenResponse _$OauthTokenResponseFromJson(Map<String, dynamic> json) {
   return OauthTokenResponse(
-    accessToken: json['access_token'] as String?,
-    tokenType: json['token_type'] as String?,
-    expiresIn: (json['expires_in'] as num?)?.toDouble(),
-    refreshToken: json['refresh_token'] as String?,
-    createdAt: (json['created_at'] as num?)?.toDouble(),
+    accessToken: json['access_token'] as String,
+    tokenType: json['token_type'] as String,
+    expiresIn: json['expires_in'] as int,
+    refreshToken: json['refresh_token'] as String,
+    createdAt: json['created_at'] as int,
   );
 }
 

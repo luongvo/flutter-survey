@@ -19,12 +19,13 @@ class LoginUseCase extends UseCase<void, LoginInput> {
   const LoginUseCase(this._repository);
 
   @override
-  Future<Result<void>> call(LoginInput credential) {
+  Future<Result<void>> call(LoginInput input) {
+    // TODO persist token result
     return _repository
-        .login(email: credential.email, password: credential.password)
+        .login(email: input.email, password: input.password)
         .then((value) =>
             Success(null) as Result<void>) // ignore: unnecessary_cast
-        .onError<Exception>((err, stackTrace) => Failed(
-            UseCaseException(NetworkExceptions.fromDioException(err), err)));
+        .onError<NetworkExceptions>(
+            (err, stackTrace) => Failed(UseCaseException(err, null)));
   }
 }
