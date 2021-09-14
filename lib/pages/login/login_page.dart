@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
-import 'package:flutter_survey/resouces/dimens.dart';
+import 'package:flutter_survey/resources/dimens.dart';
+import 'package:flutter_survey/routes.dart';
 
-import 'widgets/blur_background.dart';
-import 'widgets/dimmed_background.dart';
+import '../widgets/blur_background.dart';
+import '../widgets/dimmed_background.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -23,18 +24,23 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           BlurBackground(),
-          _buildDimmedBackground(),
+          DimmedBackground(
+            colors: [
+              Colors.black.withOpacity(0.2),
+              Colors.black.withOpacity(0.8),
+              Colors.black,
+            ],
+            stops: const [0.0, 0.6, 1.0],
+          ),
           Padding(
-            padding: EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(Dimens.defaultMarginPaddingLarge),
             child: Column(
               children: <Widget>[
                 Expanded(
                   child: Assets.icons.icNimbleLogo.svg(),
                 ),
                 _buildLoginForm(context),
-                Expanded(
-                  child: SizedBox.shrink(),
-                ),
+                const Expanded(child: SizedBox.shrink()),
               ],
             ),
           ),
@@ -59,9 +65,7 @@ class LoginPage extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyText1,
           textInputAction: TextInputAction.next,
         ),
-        SizedBox(
-          height: 20.0,
-        ),
+        const SizedBox(height: Dimens.defaultMarginPadding),
         Stack(
           children: [
             TextField(
@@ -69,7 +73,7 @@ class LoginPage extends StatelessWidget {
                 context,
                 AppLocalizations.of(context)!.loginPassword,
               ).copyWith(
-                contentPadding: EdgeInsets.symmetric(
+                contentPadding: const EdgeInsets.symmetric(
                   horizontal: Dimens.inputHorizontalPadding,
                   vertical: Dimens.inputVerticalPadding,
                 ).copyWith(
@@ -102,9 +106,7 @@ class LoginPage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(
-          height: 20.0,
-        ),
+        const SizedBox(height: Dimens.defaultMarginPadding),
         SizedBox(
           width: double.infinity,
           child: TextButton(
@@ -113,7 +115,9 @@ class LoginPage extends StatelessWidget {
               foregroundColor: MaterialStateProperty.all(Colors.black),
               overlayColor: MaterialStateProperty.all(Colors.black12),
               padding: MaterialStateProperty.all(
-                EdgeInsets.symmetric(vertical: Dimens.inputVerticalPadding),
+                const EdgeInsets.symmetric(
+                  vertical: Dimens.inputVerticalPadding,
+                ),
               ),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
@@ -127,6 +131,7 @@ class LoginPage extends StatelessWidget {
             child: Text(AppLocalizations.of(context)!.loginText),
             onPressed: () {
               // TODO login https://github.com/luongvo/flutter-survey/issues/7
+              Navigator.of(context).pushNamed(Routes.HOME_PAGE);
             },
           ),
         ),
@@ -142,7 +147,7 @@ class LoginPage extends StatelessWidget {
             Dimens.inputBorderRadius,
           ),
         ),
-        contentPadding: EdgeInsets.symmetric(
+        contentPadding: const EdgeInsets.symmetric(
           horizontal: Dimens.inputHorizontalPadding,
           vertical: Dimens.inputVerticalPadding,
         ),
@@ -153,14 +158,5 @@ class LoginPage extends StatelessWidget {
             .bodyText1!
             .copyWith(color: ColorName.whiteAlpha18),
         hintText: hint,
-      );
-
-  Widget _buildDimmedBackground() => DimmedBackground(
-        colors: [
-          Colors.black.withOpacity(0.2),
-          Colors.black.withOpacity(0.8),
-          Colors.black,
-        ],
-        stops: [0.0, 0.6, 1.0],
       );
 }
