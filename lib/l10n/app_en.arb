@@ -3,5 +3,7 @@
   "loginPassword": "Password",
   "loginForgot": "Forgot?",
   "loginText": "Log In",
-  "loginError": "Login failed! Please recheck your email or password"
+  "loginError": "Login failed! Please recheck your email or password",
+  "validationErrorEmailInvalid": "Please enter a valid email",
+  "validationErrorPasswordInvalid": "Please enter a valid password"
 }

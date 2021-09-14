@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,6 +17,8 @@ import 'package:flutter_survey/utils/keyboard_util.dart';
 import '../widgets/blur_background.dart';
 import '../widgets/dimmed_background.dart';
 
+const PASSWORD_LENGTH_MIN = 6;
+
 final loginModelProvider =
     StateNotifierProvider.autoDispose<LoginModel, LoginState>((ref) {
   return LoginModel(getIt.get<LoginUseCase>());
@@ -27,8 +30,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +89,11 @@ class _LoginPageState extends State<LoginPage> {
                 Expanded(
                   child: Assets.icons.icNimbleLogo.svg(),
                 ),
-                _buildLoginForm(),
+                Form(
+                  key: _formKey,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  child: _buildLoginForm(),
+                ),
                 const Expanded(child: SizedBox.shrink()),
               ],
             ),
@@ -108,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        TextField(
+        TextFormField(
           autofocus: true,
           controller: _emailController,
           decoration: CustomInputDecoration(
@@ -118,11 +126,12 @@ class _LoginPageState extends State<LoginPage> {
           keyboardType: TextInputType.emailAddress,
           style: Theme.of(context).textTheme.bodyText1,
           textInputAction: TextInputAction.next,
+          validator: _emailValidator,
         ),
         const SizedBox(height: Dimens.defaultMarginPadding),
         Stack(
           children: [
-            TextField(
+            TextFormField(
               controller: _passwordController,
               decoration: CustomInputDecoration(
                 context: context,
@@ -139,24 +148,23 @@ class _LoginPageState extends State<LoginPage> {
               obscuringCharacter: "●",
               style: Theme.of(context).textTheme.bodyText1,
               textInputAction: TextInputAction.done,
-              onSubmitted: (_) => _attemptLogin(),
+              validator: _passwordValidator,
+              onFieldSubmitted: (_) => _attemptLogin(),
             ),
-            Positioned.fill(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: SizedBox(
-                  height: double.infinity,
-                  child: TextButton(
-                    child: Text(
-                      AppLocalizations.of(context)!.loginForgot,
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            color: ColorName.whiteAlpha50,
-                          ),
-                    ),
-                    onPressed: () {
-                      // TODO forgot https://github.com/luongvo/flutter-survey/issues/8
-                    },
+            Align(
+              alignment: Alignment.centerRight,
+              child: SizedBox(
+                height: 56,
+                child: TextButton(
+                  child: Text(
+                    AppLocalizations.of(context)!.loginForgot,
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: ColorName.whiteAlpha50,
+                        ),
                   ),
+                  onPressed: () {
+                    // TODO forgot https://github.com/luongvo/flutter-survey/issues/8
+                  },
                 ),
               ),
             ),
@@ -192,11 +200,29 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<void> _attemptLogin() async {
-    KeyboardUtil.hideKeyboard(context);
+  String? _emailValidator(String? value) {
+    if (value == null || !EmailValidator.validate(value)) {
+      return AppLocalizations.of(context)!.validationErrorEmailInvalid;
+    }
+    return null;
+  }
 
-    final LoginModel loginModel =
-        context.read<LoginModel>(loginModelProvider.notifier);
-    loginModel.login(_emailController.text, _passwordController.text);
+  String? _passwordValidator(String? value) {
+    if (value == null || value.length < PASSWORD_LENGTH_MIN) {
+      return AppLocalizations.of(context)!.validationErrorEmailInvalid;
+    }
+    return null;
+  }
+
+  Future<void> _attemptLogin() async {
+    if (_formKey.currentState!.validate()) {
+      KeyboardUtil.hideKeyboard(context);
+
+      final LoginModel loginModel =
+          context.read<LoginModel>(loginModelProvider.notifier);
+      loginModel.login(_emailController.text, _passwordController.text);
+    } else {
+      return null;
+    }
   }
 }
