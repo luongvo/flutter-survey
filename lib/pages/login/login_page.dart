@@ -24,7 +24,14 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           BlurBackground(),
-          _buildDimmedBackground(),
+          DimmedBackground(
+            colors: [
+              Colors.black.withOpacity(0.2),
+              Colors.black.withOpacity(0.8),
+              Colors.black,
+            ],
+            stops: const [0.0, 0.6, 1.0],
+          ),
           Padding(
             padding: const EdgeInsets.all(Dimens.defaultMarginPaddingLarge),
             child: Column(
@@ -151,14 +158,5 @@ class LoginPage extends StatelessWidget {
             .bodyText1!
             .copyWith(color: ColorName.whiteAlpha18),
         hintText: hint,
-      );
-
-  Widget _buildDimmedBackground() => DimmedBackground(
-        colors: [
-          Colors.black.withOpacity(0.2),
-          Colors.black.withOpacity(0.8),
-          Colors.black,
-        ],
-        stops: const [0.0, 0.6, 1.0],
       );
 }

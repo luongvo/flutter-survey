@@ -34,16 +34,14 @@ class SurveyPageViewer extends StatelessWidget {
             ),
           ),
         ),
-        _buildDimmedBackground(),
+        DimmedBackground(
+          colors: [
+            Colors.black.withOpacity(0.2),
+            Colors.black.withOpacity(0.7),
+          ],
+          stops: const [0.0, 1.0],
+        ),
       ],
     );
   }
-
-  Widget _buildDimmedBackground() => DimmedBackground(
-        colors: [
-          Colors.black.withOpacity(0.2),
-          Colors.black.withOpacity(0.7),
-        ],
-        stops: const [0.0, 1.0],
-      );
 }
