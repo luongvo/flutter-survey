@@ -1,17 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_survey/di/di.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
+import 'package:flutter_survey/pages/login/login_model.dart';
+import 'package:flutter_survey/pages/login/login_state.dart';
 import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 import 'package:flutter_survey/routes.dart';
+import 'package:flutter_survey/usecase/login_use_case.dart';
 
 import '../widgets/blur_background.dart';
 import '../widgets/dimmed_background.dart';
 
-class LoginPage extends StatelessWidget {
+final loginModelProvider =
+    StateNotifierProvider.autoDispose<LoginModel, LoginState>((ref) {
+  return LoginModel(getIt.get<LoginUseCase>());
+});
+
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    return ProviderListener(
+        provider: loginModelProvider,
+        onChange: (BuildContext ctx, LoginState loginState) {
+          loginState.maybeWhen(
+            error: (error) {
+              // TODO error
+            },
+            success: () async {
+              await Navigator.of(context).pushNamed(Routes.HOME_PAGE);
+            },
+            orElse: () {},
+          );
+        },
+        child: _buildLoginPage(context));
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Widget _buildLoginPage(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -58,6 +100,7 @@ class LoginPage extends StatelessWidget {
       children: [
         TextField(
           autofocus: true,
+          controller: _emailController,
           decoration: CustomInputDecoration(
             context: context,
             hint: AppLocalizations.of(context)!.loginEmail,
@@ -70,6 +113,7 @@ class LoginPage extends StatelessWidget {
         Stack(
           children: [
             TextField(
+              controller: _passwordController,
               decoration: CustomInputDecoration(
                 context: context,
                 hint: AppLocalizations.of(context)!.loginPassword,
@@ -85,6 +129,7 @@ class LoginPage extends StatelessWidget {
               obscuringCharacter: "●",
               style: Theme.of(context).textTheme.bodyText1,
               textInputAction: TextInputAction.done,
+              onSubmitted: (_) => _attemptLogin(),
             ),
             Positioned.fill(
               child: Align(
@@ -130,13 +175,16 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             child: Text(AppLocalizations.of(context)!.loginText),
-            onPressed: () {
-              // TODO login https://github.com/luongvo/flutter-survey/issues/7
-              Navigator.of(context).pushNamed(Routes.HOME_PAGE);
-            },
+            onPressed: () => _attemptLogin(),
           ),
         ),
       ],
     );
+  }
+
+  void _attemptLogin() {
+    final LoginModel loginModel =
+        context.read<LoginModel>(loginModelProvider.notifier);
+    loginModel.login(_emailController.text, _passwordController.text);
   }
 }
