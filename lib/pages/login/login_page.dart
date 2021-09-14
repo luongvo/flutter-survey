@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                   content: Text(AppLocalizations.of(context)!.loginError)));
             },
             success: () async {
-              await Navigator.of(context).pushNamed(Routes.HOME_PAGE);
+              await Navigator.of(context).popAndPushNamed(Routes.HOME_PAGE);
             },
             orElse: () {},
           );
