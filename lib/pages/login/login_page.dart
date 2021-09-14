@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
+import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 import 'package:flutter_survey/routes.dart';
 
@@ -57,9 +58,9 @@ class LoginPage extends StatelessWidget {
       children: [
         TextField(
           autofocus: true,
-          decoration: _formInputDecoration(
-            context,
-            AppLocalizations.of(context)!.loginEmail,
+          decoration: CustomInputDecoration(
+            context: context,
+            hint: AppLocalizations.of(context)!.loginEmail,
           ),
           keyboardType: TextInputType.emailAddress,
           style: Theme.of(context).textTheme.bodyText1,
@@ -69,9 +70,9 @@ class LoginPage extends StatelessWidget {
         Stack(
           children: [
             TextField(
-              decoration: _formInputDecoration(
-                context,
-                AppLocalizations.of(context)!.loginPassword,
+              decoration: CustomInputDecoration(
+                context: context,
+                hint: AppLocalizations.of(context)!.loginPassword,
               ).copyWith(
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: Dimens.inputHorizontalPadding,
@@ -138,25 +139,4 @@ class LoginPage extends StatelessWidget {
       ],
     );
   }
-
-  InputDecoration _formInputDecoration(BuildContext context, String hint) =>
-      InputDecoration(
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(
-            Dimens.inputBorderRadius,
-          ),
-        ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: Dimens.inputHorizontalPadding,
-          vertical: Dimens.inputVerticalPadding,
-        ),
-        fillColor: ColorName.whiteAlpha18,
-        filled: true,
-        hintStyle: Theme.of(context)
-            .textTheme
-            .bodyText1!
-            .copyWith(color: ColorName.whiteAlpha18),
-        hintText: hint,
-      );
 }
