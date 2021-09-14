@@ -7,6 +7,7 @@ import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/pages/login/login_model.dart';
 import 'package:flutter_survey/pages/login/login_state.dart';
 import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
+import 'package:flutter_survey/pages/widgets/loading_indicator.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 import 'package:flutter_survey/routes.dart';
 import 'package:flutter_survey/usecase/login_use_case.dart';
@@ -36,7 +37,8 @@ class _LoginPageState extends State<LoginPage> {
         onChange: (BuildContext ctx, LoginState loginState) {
           loginState.maybeWhen(
             error: (error) {
-              // TODO error
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(AppLocalizations.of(context)!.loginError)));
             },
             success: () async {
               await Navigator.of(context).pushNamed(Routes.HOME_PAGE);
@@ -88,6 +90,13 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           ),
+          Consumer(builder: (_, ScopedReader watch, __) {
+            final loginModel = watch(loginModelProvider);
+            return loginModel.maybeWhen(
+              loading: () => LoadingIndicator(),
+              orElse: () => SizedBox.shrink(),
+            );
+          }),
         ],
       ),
     );

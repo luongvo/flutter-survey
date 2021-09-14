@@ -2,5 +2,6 @@
   "loginEmail": "Email",
   "loginPassword": "Password",
   "loginForgot": "Forgot?",
-  "loginText": "Log In"
+  "loginText": "Log In",
+  "loginError": "Login failed! Please recheck your email or password"
 }
