@@ -21,6 +21,8 @@ class NetworkExceptions with _$NetworkExceptions {
 
   const factory NetworkExceptions.requestTimeout() = RequestTimeout;
 
+  const factory NetworkExceptions.receiveTimeout() = ReceiveTimeout;
+
   const factory NetworkExceptions.sendTimeout() = SendTimeout;
 
   const factory NetworkExceptions.conflict() = Conflict;
@@ -57,7 +59,7 @@ class NetworkExceptions with _$NetworkExceptions {
               networkExceptions = NetworkExceptions.noInternetConnection();
               break;
             case DioErrorType.receiveTimeout:
-              networkExceptions = NetworkExceptions.sendTimeout();
+              networkExceptions = NetworkExceptions.receiveTimeout();
               break;
             case DioErrorType.sendTimeout:
               networkExceptions = NetworkExceptions.sendTimeout();
@@ -65,7 +67,7 @@ class NetworkExceptions with _$NetworkExceptions {
             case DioErrorType.response:
               switch (error.response?.statusCode) {
                 case 400:
-                  networkExceptions = NetworkExceptions.unauthorisedRequest();
+                  networkExceptions = NetworkExceptions.badRequest();
                   break;
                 case 401:
                   networkExceptions = NetworkExceptions.unauthorisedRequest();
@@ -129,7 +131,7 @@ class NetworkExceptions with _$NetworkExceptions {
     }, serviceUnavailable: () {
       errorMessage = "Service unavailable";
     }, methodNotAllowed: () {
-      errorMessage = "Method Not Allowed";
+      errorMessage = "Method not allowed";
     }, badRequest: () {
       errorMessage = "Bad request";
     }, unauthorisedRequest: () {
@@ -144,6 +146,8 @@ class NetworkExceptions with _$NetworkExceptions {
       errorMessage = "Error due to a conflict";
     }, sendTimeout: () {
       errorMessage = "Send timeout in connection with API server";
+    }, receiveTimeout: () {
+      errorMessage = "Receive timeout in connection with API server";
     }, unableToProcess: () {
       errorMessage = "Unable to process the data";
     }, defaultError: (String error) {

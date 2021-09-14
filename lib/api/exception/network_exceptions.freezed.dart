@@ -46,6 +46,10 @@ class _$NetworkExceptionsTearOff {
     return const RequestTimeout();
   }
 
+  ReceiveTimeout receiveTimeout() {
+    return const ReceiveTimeout();
+  }
+
   SendTimeout sendTimeout() {
     return const SendTimeout();
   }
@@ -103,6 +107,7 @@ mixin _$NetworkExceptions {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -124,6 +129,7 @@ mixin _$NetworkExceptions {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -146,6 +152,7 @@ mixin _$NetworkExceptions {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -167,6 +174,7 @@ mixin _$NetworkExceptions {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -246,6 +254,7 @@ class _$RequestCancelled implements RequestCancelled {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -270,6 +279,7 @@ class _$RequestCancelled implements RequestCancelled {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -298,6 +308,7 @@ class _$RequestCancelled implements RequestCancelled {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -322,6 +333,7 @@ class _$RequestCancelled implements RequestCancelled {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -392,6 +404,7 @@ class _$UnauthorisedRequest implements UnauthorisedRequest {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -416,6 +429,7 @@ class _$UnauthorisedRequest implements UnauthorisedRequest {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -444,6 +458,7 @@ class _$UnauthorisedRequest implements UnauthorisedRequest {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -468,6 +483,7 @@ class _$UnauthorisedRequest implements UnauthorisedRequest {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -537,6 +553,7 @@ class _$BadRequest implements BadRequest {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -561,6 +578,7 @@ class _$BadRequest implements BadRequest {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -589,6 +607,7 @@ class _$BadRequest implements BadRequest {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -613,6 +632,7 @@ class _$BadRequest implements BadRequest {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -705,6 +725,7 @@ class _$NotFound implements NotFound {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -729,6 +750,7 @@ class _$NotFound implements NotFound {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -757,6 +779,7 @@ class _$NotFound implements NotFound {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -781,6 +804,7 @@ class _$NotFound implements NotFound {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -856,6 +880,7 @@ class _$MethodNotAllowed implements MethodNotAllowed {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -880,6 +905,7 @@ class _$MethodNotAllowed implements MethodNotAllowed {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -908,6 +934,7 @@ class _$MethodNotAllowed implements MethodNotAllowed {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -932,6 +959,7 @@ class _$MethodNotAllowed implements MethodNotAllowed {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -1002,6 +1030,7 @@ class _$NotAcceptable implements NotAcceptable {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -1026,6 +1055,7 @@ class _$NotAcceptable implements NotAcceptable {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -1054,6 +1084,7 @@ class _$NotAcceptable implements NotAcceptable {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -1078,6 +1109,7 @@ class _$NotAcceptable implements NotAcceptable {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -1148,6 +1180,7 @@ class _$RequestTimeout implements RequestTimeout {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -1172,6 +1205,7 @@ class _$RequestTimeout implements RequestTimeout {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -1200,6 +1234,7 @@ class _$RequestTimeout implements RequestTimeout {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -1224,6 +1259,7 @@ class _$RequestTimeout implements RequestTimeout {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -1245,6 +1281,156 @@ class _$RequestTimeout implements RequestTimeout {
 
 abstract class RequestTimeout implements NetworkExceptions {
   const factory RequestTimeout() = _$RequestTimeout;
+}
+
+/// @nodoc
+abstract class $ReceiveTimeoutCopyWith<$Res> {
+  factory $ReceiveTimeoutCopyWith(
+          ReceiveTimeout value, $Res Function(ReceiveTimeout) then) =
+      _$ReceiveTimeoutCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$ReceiveTimeoutCopyWithImpl<$Res>
+    extends _$NetworkExceptionsCopyWithImpl<$Res>
+    implements $ReceiveTimeoutCopyWith<$Res> {
+  _$ReceiveTimeoutCopyWithImpl(
+      ReceiveTimeout _value, $Res Function(ReceiveTimeout) _then)
+      : super(_value, (v) => _then(v as ReceiveTimeout));
+
+  @override
+  ReceiveTimeout get _value => super._value as ReceiveTimeout;
+}
+
+/// @nodoc
+
+class _$ReceiveTimeout implements ReceiveTimeout {
+  const _$ReceiveTimeout();
+
+  @override
+  String toString() {
+    return 'NetworkExceptions.receiveTimeout()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is ReceiveTimeout);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() requestCancelled,
+    required TResult Function() unauthorisedRequest,
+    required TResult Function() badRequest,
+    required TResult Function(String reason) notFound,
+    required TResult Function() methodNotAllowed,
+    required TResult Function() notAcceptable,
+    required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
+    required TResult Function() sendTimeout,
+    required TResult Function() conflict,
+    required TResult Function() internalServerError,
+    required TResult Function() notImplemented,
+    required TResult Function() serviceUnavailable,
+    required TResult Function() noInternetConnection,
+    required TResult Function() formatException,
+    required TResult Function() unableToProcess,
+    required TResult Function(String error) defaultError,
+    required TResult Function() unexpectedError,
+  }) {
+    return receiveTimeout();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? requestCancelled,
+    TResult Function()? unauthorisedRequest,
+    TResult Function()? badRequest,
+    TResult Function(String reason)? notFound,
+    TResult Function()? methodNotAllowed,
+    TResult Function()? notAcceptable,
+    TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
+    TResult Function()? sendTimeout,
+    TResult Function()? conflict,
+    TResult Function()? internalServerError,
+    TResult Function()? notImplemented,
+    TResult Function()? serviceUnavailable,
+    TResult Function()? noInternetConnection,
+    TResult Function()? formatException,
+    TResult Function()? unableToProcess,
+    TResult Function(String error)? defaultError,
+    TResult Function()? unexpectedError,
+    required TResult orElse(),
+  }) {
+    if (receiveTimeout != null) {
+      return receiveTimeout();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RequestCancelled value) requestCancelled,
+    required TResult Function(UnauthorisedRequest value) unauthorisedRequest,
+    required TResult Function(BadRequest value) badRequest,
+    required TResult Function(NotFound value) notFound,
+    required TResult Function(MethodNotAllowed value) methodNotAllowed,
+    required TResult Function(NotAcceptable value) notAcceptable,
+    required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
+    required TResult Function(SendTimeout value) sendTimeout,
+    required TResult Function(Conflict value) conflict,
+    required TResult Function(InternalServerError value) internalServerError,
+    required TResult Function(NotImplemented value) notImplemented,
+    required TResult Function(ServiceUnavailable value) serviceUnavailable,
+    required TResult Function(NoInternetConnection value) noInternetConnection,
+    required TResult Function(FormatException value) formatException,
+    required TResult Function(UnableToProcess value) unableToProcess,
+    required TResult Function(DefaultError value) defaultError,
+    required TResult Function(UnexpectedError value) unexpectedError,
+  }) {
+    return receiveTimeout(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RequestCancelled value)? requestCancelled,
+    TResult Function(UnauthorisedRequest value)? unauthorisedRequest,
+    TResult Function(BadRequest value)? badRequest,
+    TResult Function(NotFound value)? notFound,
+    TResult Function(MethodNotAllowed value)? methodNotAllowed,
+    TResult Function(NotAcceptable value)? notAcceptable,
+    TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
+    TResult Function(SendTimeout value)? sendTimeout,
+    TResult Function(Conflict value)? conflict,
+    TResult Function(InternalServerError value)? internalServerError,
+    TResult Function(NotImplemented value)? notImplemented,
+    TResult Function(ServiceUnavailable value)? serviceUnavailable,
+    TResult Function(NoInternetConnection value)? noInternetConnection,
+    TResult Function(FormatException value)? formatException,
+    TResult Function(UnableToProcess value)? unableToProcess,
+    TResult Function(DefaultError value)? defaultError,
+    TResult Function(UnexpectedError value)? unexpectedError,
+    required TResult orElse(),
+  }) {
+    if (receiveTimeout != null) {
+      return receiveTimeout(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ReceiveTimeout implements NetworkExceptions {
+  const factory ReceiveTimeout() = _$ReceiveTimeout;
 }
 
 /// @nodoc
@@ -1294,6 +1480,7 @@ class _$SendTimeout implements SendTimeout {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -1318,6 +1505,7 @@ class _$SendTimeout implements SendTimeout {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -1346,6 +1534,7 @@ class _$SendTimeout implements SendTimeout {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -1370,6 +1559,7 @@ class _$SendTimeout implements SendTimeout {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -1437,6 +1627,7 @@ class _$Conflict implements Conflict {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -1461,6 +1652,7 @@ class _$Conflict implements Conflict {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -1489,6 +1681,7 @@ class _$Conflict implements Conflict {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -1513,6 +1706,7 @@ class _$Conflict implements Conflict {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -1583,6 +1777,7 @@ class _$InternalServerError implements InternalServerError {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -1607,6 +1802,7 @@ class _$InternalServerError implements InternalServerError {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -1635,6 +1831,7 @@ class _$InternalServerError implements InternalServerError {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -1659,6 +1856,7 @@ class _$InternalServerError implements InternalServerError {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -1729,6 +1927,7 @@ class _$NotImplemented implements NotImplemented {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -1753,6 +1952,7 @@ class _$NotImplemented implements NotImplemented {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -1781,6 +1981,7 @@ class _$NotImplemented implements NotImplemented {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -1805,6 +2006,7 @@ class _$NotImplemented implements NotImplemented {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -1875,6 +2077,7 @@ class _$ServiceUnavailable implements ServiceUnavailable {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -1899,6 +2102,7 @@ class _$ServiceUnavailable implements ServiceUnavailable {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -1927,6 +2131,7 @@ class _$ServiceUnavailable implements ServiceUnavailable {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -1951,6 +2156,7 @@ class _$ServiceUnavailable implements ServiceUnavailable {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -2021,6 +2227,7 @@ class _$NoInternetConnection implements NoInternetConnection {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -2045,6 +2252,7 @@ class _$NoInternetConnection implements NoInternetConnection {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -2073,6 +2281,7 @@ class _$NoInternetConnection implements NoInternetConnection {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -2097,6 +2306,7 @@ class _$NoInternetConnection implements NoInternetConnection {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -2167,6 +2377,7 @@ class _$FormatException implements FormatException {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -2191,6 +2402,7 @@ class _$FormatException implements FormatException {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -2219,6 +2431,7 @@ class _$FormatException implements FormatException {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -2243,6 +2456,7 @@ class _$FormatException implements FormatException {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -2313,6 +2527,7 @@ class _$UnableToProcess implements UnableToProcess {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -2337,6 +2552,7 @@ class _$UnableToProcess implements UnableToProcess {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -2365,6 +2581,7 @@ class _$UnableToProcess implements UnableToProcess {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -2389,6 +2606,7 @@ class _$UnableToProcess implements UnableToProcess {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -2484,6 +2702,7 @@ class _$DefaultError implements DefaultError {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -2508,6 +2727,7 @@ class _$DefaultError implements DefaultError {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -2536,6 +2756,7 @@ class _$DefaultError implements DefaultError {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -2560,6 +2781,7 @@ class _$DefaultError implements DefaultError {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
@@ -2635,6 +2857,7 @@ class _$UnexpectedError implements UnexpectedError {
     required TResult Function() methodNotAllowed,
     required TResult Function() notAcceptable,
     required TResult Function() requestTimeout,
+    required TResult Function() receiveTimeout,
     required TResult Function() sendTimeout,
     required TResult Function() conflict,
     required TResult Function() internalServerError,
@@ -2659,6 +2882,7 @@ class _$UnexpectedError implements UnexpectedError {
     TResult Function()? methodNotAllowed,
     TResult Function()? notAcceptable,
     TResult Function()? requestTimeout,
+    TResult Function()? receiveTimeout,
     TResult Function()? sendTimeout,
     TResult Function()? conflict,
     TResult Function()? internalServerError,
@@ -2687,6 +2911,7 @@ class _$UnexpectedError implements UnexpectedError {
     required TResult Function(MethodNotAllowed value) methodNotAllowed,
     required TResult Function(NotAcceptable value) notAcceptable,
     required TResult Function(RequestTimeout value) requestTimeout,
+    required TResult Function(ReceiveTimeout value) receiveTimeout,
     required TResult Function(SendTimeout value) sendTimeout,
     required TResult Function(Conflict value) conflict,
     required TResult Function(InternalServerError value) internalServerError,
@@ -2711,6 +2936,7 @@ class _$UnexpectedError implements UnexpectedError {
     TResult Function(MethodNotAllowed value)? methodNotAllowed,
     TResult Function(NotAcceptable value)? notAcceptable,
     TResult Function(RequestTimeout value)? requestTimeout,
+    TResult Function(ReceiveTimeout value)? receiveTimeout,
     TResult Function(SendTimeout value)? sendTimeout,
     TResult Function(Conflict value)? conflict,
     TResult Function(InternalServerError value)? internalServerError,
