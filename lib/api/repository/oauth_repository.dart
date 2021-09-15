@@ -5,18 +5,18 @@ import 'package:flutter_survey/env.dart';
 import 'package:flutter_survey/models/oauth_token.dart';
 import 'package:injectable/injectable.dart';
 
-abstract class OauthRepository {
+abstract class OAuthRepository {
   Future<OAuthToken> login({
     required String email,
     required String password,
   });
 }
 
-@Singleton(as: OauthRepository)
-class OauthRepositoryImpl extends OauthRepository {
-  late OauthService _oauthService;
+@Singleton(as: OAuthRepository)
+class OAuthRepositoryImpl extends OAuthRepository {
+  late OAuthService _oauthService;
 
-  OauthRepositoryImpl(this._oauthService);
+  OAuthRepositoryImpl(this._oauthService);
 
   @override
   Future<OAuthToken> login({
@@ -25,7 +25,7 @@ class OauthRepositoryImpl extends OauthRepository {
   }) async {
     try {
       final response = await _oauthService
-          .login(OauthTokenRequest(
+          .login(OAuthTokenRequest(
             email: email,
             password: password,
             clientId: Env.basicAuthClientId,

@@ -6,8 +6,8 @@ part of 'oauth_token_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-OauthTokenRequest _$OauthTokenRequestFromJson(Map<String, dynamic> json) {
-  return OauthTokenRequest(
+OAuthTokenRequest _$OAuthTokenRequestFromJson(Map<String, dynamic> json) {
+  return OAuthTokenRequest(
     grantType: json['grant_type'] as String,
     email: json['email'] as String,
     password: json['password'] as String,
@@ -16,7 +16,7 @@ OauthTokenRequest _$OauthTokenRequestFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$OauthTokenRequestToJson(OauthTokenRequest instance) =>
+Map<String, dynamic> _$OAuthTokenRequestToJson(OAuthTokenRequest instance) =>
     <String, dynamic>{
       'grant_type': instance.grantType,
       'email': instance.email,

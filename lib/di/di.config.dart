@@ -25,16 +25,16 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
   final networkModule = _$NetworkModule();
   final localModule = _$LocalModule();
   gh.factory<_i3.LoginUseCase>(() => _i3.LoginUseCase(
-      get<_i4.OauthRepository>(), get<_i5.SharedPreferencesHelper>()));
+      get<_i4.OAuthRepository>(), get<_i5.SharedPreferencesHelper>()));
   gh.singleton<_i6.DioProvider>(_i6.DioProvider());
-  gh.singleton<_i7.OauthService>(
-      networkModule.provideOauthService(get<_i6.DioProvider>()));
+  gh.singleton<_i7.OAuthService>(
+      networkModule.provideOAuthService(get<_i6.DioProvider>()));
   await gh.singletonAsync<_i8.SharedPreferences>(() => localModule.sharedPref,
       preResolve: true);
   gh.singleton<_i5.SharedPreferencesHelper>(
       _i5.SharedPreferencesHelperImpl(get<_i8.SharedPreferences>()));
-  gh.singleton<_i4.OauthRepository>(
-      _i4.OauthRepositoryImpl(get<_i7.OauthService>()));
+  gh.singleton<_i4.OAuthRepository>(
+      _i4.OAuthRepositoryImpl(get<_i7.OAuthService>()));
   return get;
 }
 

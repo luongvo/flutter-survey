@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'oauth_token_response.g.dart';
 
 @JsonSerializable()
-class OauthTokenResponse extends BaseResponse {
+class OAuthTokenResponse extends BaseResponse {
   @JsonKey(name: "access_token")
   String accessToken;
   @JsonKey(name: "token_type")
@@ -16,7 +16,7 @@ class OauthTokenResponse extends BaseResponse {
   @JsonKey(name: "created_at")
   int createdAt;
 
-  OauthTokenResponse({
+  OAuthTokenResponse({
     required this.accessToken,
     required this.tokenType,
     required this.expiresIn,
@@ -24,8 +24,8 @@ class OauthTokenResponse extends BaseResponse {
     required this.createdAt,
   });
 
-  factory OauthTokenResponse.fromJson(Map<String, dynamic> json) =>
-      _$OauthTokenResponseFromJson(json);
+  factory OAuthTokenResponse.fromJson(Map<String, dynamic> json) =>
+      _$OAuthTokenResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$OauthTokenResponseToJson(this);
+  Map<String, dynamic> toJson() => _$OAuthTokenResponseToJson(this);
 }

@@ -6,8 +6,8 @@ import 'package:injectable/injectable.dart';
 @module
 abstract class NetworkModule {
   @singleton
-  OauthService provideOauthService(DioProvider dioProvider) {
-    return OauthService(
+  OAuthService provideOAuthService(DioProvider dioProvider) {
+    return OAuthService(
       dioProvider.getNonAuthenticatedDio(),
       baseUrl: Env.restApiEndpoint,
     );

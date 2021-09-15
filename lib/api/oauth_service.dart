@@ -7,11 +7,11 @@ import 'package:retrofit/retrofit.dart';
 part 'oauth_service.g.dart';
 
 @RestApi()
-abstract class OauthService {
-  factory OauthService(Dio dio, {String baseUrl}) = _OauthService;
+abstract class OAuthService {
+  factory OAuthService(Dio dio, {String baseUrl}) = _OAuthService;
 
   @POST('/v1/oauth/token')
-  Future<BaseHttpResponse<OauthTokenResponse>> login(
-    @Body() OauthTokenRequest body,
+  Future<BaseHttpResponse<OAuthTokenResponse>> login(
+    @Body() OAuthTokenRequest body,
   );
 }

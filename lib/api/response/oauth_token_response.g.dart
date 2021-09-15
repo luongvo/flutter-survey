@@ -6,8 +6,8 @@ part of 'oauth_token_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-OauthTokenResponse _$OauthTokenResponseFromJson(Map<String, dynamic> json) {
-  return OauthTokenResponse(
+OAuthTokenResponse _$OAuthTokenResponseFromJson(Map<String, dynamic> json) {
+  return OAuthTokenResponse(
     accessToken: json['access_token'] as String,
     tokenType: json['token_type'] as String,
     expiresIn: json['expires_in'] as int,
@@ -16,7 +16,7 @@ OauthTokenResponse _$OauthTokenResponseFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$OauthTokenResponseToJson(OauthTokenResponse instance) =>
+Map<String, dynamic> _$OAuthTokenResponseToJson(OAuthTokenResponse instance) =>
     <String, dynamic>{
       'access_token': instance.accessToken,
       'token_type': instance.tokenType,

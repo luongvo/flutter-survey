@@ -16,7 +16,7 @@ class LoginInput {
 
 @Injectable()
 class LoginUseCase extends UseCase<void, LoginInput> {
-  final OauthRepository _repository;
+  final OAuthRepository _repository;
   final SharedPreferencesHelper _sharedPreferencesHelper;
 
   const LoginUseCase(this._repository, this._sharedPreferencesHelper);

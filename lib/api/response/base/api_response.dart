@@ -19,16 +19,16 @@ class ApiResponse<T extends BaseResponse> {
   Map<String, dynamic> toJson() => _$ApiResponseToJson(this);
 
   static T _dataFromJson<T>(Map<String, dynamic> json) {
-    if (T == OauthTokenResponse) {
-      return OauthTokenResponse.fromJson(json) as T;
+    if (T == OAuthTokenResponse) {
+      return OAuthTokenResponse.fromJson(json) as T;
     } else {
       throw Exception("_dataFromJson Not supported response type");
     }
   }
 
   static Map<String, dynamic> _dataToJson<T>(T value) {
-    if (T is OauthTokenResponse) {
-      return (T as OauthTokenResponse).toJson();
+    if (T is OAuthTokenResponse) {
+      return (T as OAuthTokenResponse).toJson();
     } else {
       throw Exception("_dataToJson Not supported response type");
     }
