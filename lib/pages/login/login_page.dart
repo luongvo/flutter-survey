@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/di/di.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
-import 'package:flutter_survey/pages/login/login_model.dart';
 import 'package:flutter_survey/pages/login/login_state.dart';
+import 'package:flutter_survey/pages/login/login_view_model.dart';
 import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
 import 'package:flutter_survey/pages/widgets/loading_indicator.dart';
 import 'package:flutter_survey/resources/dimens.dart';
@@ -19,9 +19,9 @@ import '../widgets/dimmed_background.dart';
 
 const PASSWORD_LENGTH_MIN = 6;
 
-final loginModelProvider =
-    StateNotifierProvider.autoDispose<LoginModel, LoginState>((ref) {
-  return LoginModel(getIt.get<LoginUseCase>());
+final loginViewModelProvider =
+    StateNotifierProvider.autoDispose<LoginViewModel, LoginState>((ref) {
+  return LoginViewModel(getIt.get<LoginUseCase>());
 });
 
 class LoginPage extends StatefulWidget {
@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return ProviderListener(
-        provider: loginModelProvider,
+        provider: loginViewModelProvider,
         onChange: (BuildContext ctx, LoginState loginState) {
           loginState.maybeWhen(
             error: (error) {
@@ -99,8 +99,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           Consumer(builder: (_, ScopedReader watch, __) {
-            final loginModel = watch(loginModelProvider);
-            return loginModel.maybeWhen(
+            final loginViewModel = watch(loginViewModelProvider);
+            return loginViewModel.maybeWhen(
               loading: () => LoadingIndicator(),
               orElse: () => SizedBox.shrink(),
             );
@@ -218,9 +218,9 @@ class _LoginPageState extends State<LoginPage> {
     if (_formKey.currentState!.validate()) {
       KeyboardUtil.hideKeyboard(context);
 
-      final LoginModel loginModel =
-          context.read<LoginModel>(loginModelProvider.notifier);
-      loginModel.login(_emailController.text, _passwordController.text);
+      final LoginViewModel loginViewModel =
+          context.read<LoginViewModel>(loginViewModelProvider.notifier);
+      loginViewModel.login(_emailController.text, _passwordController.text);
     } else {
       return null;
     }
