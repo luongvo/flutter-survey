@@ -204,14 +204,12 @@ class _LoginPageState extends State<LoginPage> {
     if (value == null || !EmailValidator.validate(value)) {
       return AppLocalizations.of(context)!.validationErrorEmailInvalid;
     }
-    return null;
   }
 
   String? _passwordValidator(String? value) {
     if (value == null || value.length < PASSWORD_LENGTH_MIN) {
       return AppLocalizations.of(context)!.validationErrorEmailInvalid;
     }
-    return null;
   }
 
   Future<void> _attemptLogin() async {
@@ -221,8 +219,6 @@ class _LoginPageState extends State<LoginPage> {
       final LoginViewModel loginViewModel =
           context.read<LoginViewModel>(loginViewModelProvider.notifier);
       loginViewModel.login(_emailController.text, _passwordController.text);
-    } else {
-      return null;
     }
   }
 }
