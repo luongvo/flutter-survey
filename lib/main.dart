@@ -4,10 +4,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_survey/resources/app_theme.dart';
 import 'package:flutter_survey/routes.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
-  runApp(MyApp());
+  return runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

@@ -18,7 +18,7 @@ A new Flutter project.
 
   - Production: `.env`
 
-- Generate project assets: `$ flutter packages pub run build_runner build`
+- Generate project assets: `$ flutter packages pub run build_runner build --delete-conflicting-outputs`
 
 - Run the app with the desire app flavor:
 
