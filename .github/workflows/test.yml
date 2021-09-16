@@ -14,8 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
     steps:
-      # Setup Java environment in order to build the Android app.
       - uses: actions/checkout@v2.3.2
+
+      # Setup Java environment in order to build the Android app.
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
@@ -29,14 +30,11 @@ jobs:
       - name: Get flutter dependencies.
         run: flutter pub get
 
-      - name: Generate project assets (flutter_gen).
-        run: flutter packages pub run build_runner build
-
       - name: Check for any formatting issues in the code.
         run: flutter format --set-exit-if-changed .
 
       - name: Statically analyze the Dart code for any errors.
         run: flutter analyze .
 
-      - name: Run widget tests, unit test for our flutter project.
-        run: flutter test --machine --coverage
+#      - name: Run widget tests, unit test for our flutter project.
+#        run: flutter test --machine --coverage

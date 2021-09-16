@@ -16,7 +16,7 @@ void main() {
     // Verify that our counter starts at 0.
     expect(find.text('Email'), findsOneWidget);
     expect(find.text('Password'), findsOneWidget);
-    expect(find.text('Log in'), findsOneWidget);
+    expect(find.text('Log In'), findsOneWidget);
     expect(find.text('Forgot?'), findsOneWidget);
   });
 }

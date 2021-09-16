@@ -1,0 +1,102 @@
+name: CI
+on:
+  # Trigger the workflow on push action in develop branch
+  # So it will trigger when the PR of the feature branch was merged.
+  push:
+    branches:
+      - develop
+      - 'release/**'
+jobs:
+  build_and_deploy_android:
+    name: Build & Deploy Android
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v2.3.2
+
+      # Setup Java environment in order to build the Android app.
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      # Setup the flutter environment.
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+          flutter-version: '2.2.3'
+
+      - name: Get flutter dependencies
+        run: flutter pub get
+
+      - name: Decrypt large secret
+        run: ./.github/workflows/decrypt_secret.sh
+        env:
+          LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
+
+      # App Bundle requires Firebase connected to Play Store to upload https://appdistribution.page.link/KPoa
+      - name: Build Android apk
+        run: flutter build apk --flavor staging --debug --build-number $GITHUB_RUN_NUMBER
+
+      - name: Upload Android Staging to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.FIREBASE_ANDROID_APP_ID_STAGING}}
+          token: ${{secrets.FIREBASE_TOKEN}}
+          groups: dev
+          file: build/app/outputs/flutter-apk/app-staging-debug.apk
+
+  build_ios_on_mac:
+    name: Build iOS
+    runs-on: macOS-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v2.3.2
+
+      # Setup the flutter environment.
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+          flutter-version: '2.2.3'
+
+      - name: Get flutter dependencies
+        run: flutter pub get
+
+      - name: Decrypt large secret
+        run: ./.github/workflows/decrypt_secret.sh
+        env:
+          LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
+
+      - name: Install distribution certificate & provisioning profile
+        run: |
+          cd ios
+          fastlane codesigning keychain_password:${{ secrets.IOS_KEYCHAIN_PASSPHASE }} certificate_password:${{ secrets.IOS_PRIVATE_KEY_P12_PWD }}
+
+      - name: Build iOS archive
+        run: flutter build ipa --flavor staging --release --build-number $GITHUB_RUN_NUMBER --export-options-plist=ios/config/ExportOptions.plist
+
+      - name: Upload ipa artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: flutter_survey.ipa
+          path: build/ios/ipa/flutter_survey.ipa
+          if-no-files-found: error
+
+  deploy_ios_on_linux:
+    name: Deploy iOS
+    needs: build_ios_on_mac
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Download ipa artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: flutter_survey.ipa
+
+      # This container action is only supported on Linux https://github.com/wzieba/Firebase-Distribution-Github-Action/issues/24
+      - name: Upload iOS Staging to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.FIREBASE_IOS_APP_ID_STAGING}}
+          token: ${{secrets.FIREBASE_TOKEN}}
+          groups: dev
+          file: flutter_survey.ipa
