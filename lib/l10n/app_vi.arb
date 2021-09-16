@@ -2,5 +2,8 @@
   "loginEmail": "Email",
   "loginPassword": "Mật khẩu",
   "loginForgot": "Quên?",
-  "loginText": "Đăng nhập"
+  "loginText": "Đăng nhập",
+  "loginError": "Đăng nhập thất bại! Vui lòng kiểm tra lại email hoặc mật khẩu",
+  "validationErrorEmailInvalid": "Vui lòng nhập đúng email",
+  "validationErrorPasswordInvalid": "Vui lòng nhập đúng mật khẩu"
 }
