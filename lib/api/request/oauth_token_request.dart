@@ -7,15 +7,15 @@ const String GRANT_TYPE_PASSWORD = "password";
 @JsonSerializable()
 class OAuthTokenRequest {
   @JsonKey(name: 'grant_type')
-  String grantType;
+  final String grantType;
   @JsonKey(name: 'email')
-  String email;
+  final String email;
   @JsonKey(name: 'password')
-  String password;
+  final String password;
   @JsonKey(name: 'client_id')
-  String clientId;
+  final String clientId;
   @JsonKey(name: 'client_secret')
-  String clientSecret;
+  final String clientSecret;
 
   OAuthTokenRequest({
     this.grantType = GRANT_TYPE_PASSWORD,

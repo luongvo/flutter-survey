@@ -8,7 +8,7 @@ part 'api_response.g.dart';
 class ApiResponse<T extends BaseResponse> {
   dynamic id;
   String type;
-  @JsonKey(name: 'attributes', fromJson: _dataFromJson, toJson: _dataToJson)
+  @JsonKey(fromJson: _dataFromJson, toJson: _dataToJson)
   T attributes;
 
   ApiResponse({required this.id, required this.type, required this.attributes});
