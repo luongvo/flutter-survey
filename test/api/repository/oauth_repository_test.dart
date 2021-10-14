@@ -17,7 +17,7 @@ void main() {
     'BASIC_AUTH_CLIENT_SECRET': 'CLIENT_SECRET',
   });
 
-  group("OAuthRepository", () {
+  group("OAuthRepositoryTest", () {
     late MockOAuthService mockOAuthService;
     late OAuthRepository oauthRepository;
 
