@@ -9,7 +9,7 @@ import '../../test/mock/mock_data.mocks.dart';
 import '../fake/fake_shared_preference_helper.dart';
 
 void main() {
-  group('Login use case', () {
+  group('LoginUseCase', () {
     late MockOAuthRepository mockRepository;
     late FakeSharedPreferencesHelper fakeSharePref;
     late LoginUseCase loginUseCase;

@@ -2,14 +2,19 @@
 // in flutter_survey/test/mock/mock_data.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i6;
+import 'dart:async' as _i7;
 
-import 'package:flutter_survey/api/exception/network_exceptions.dart' as _i4;
-import 'package:flutter_survey/api/repository/oauth_repository.dart' as _i5;
-import 'package:flutter_survey/models/oauth_token.dart' as _i2;
-import 'package:flutter_survey/usecase/base/base_use_case.dart' as _i3;
-import 'package:flutter_survey/usecase/login_use_case.dart' as _i7;
-import 'package:mockito/mockito.dart' as _i1;
+import 'package:flutter_survey/api/exception/network_exceptions.dart' as _i5;
+import 'package:flutter_survey/api/oauth_service.dart' as _i6;
+import 'package:flutter_survey/api/repository/oauth_repository.dart' as _i10;
+import 'package:flutter_survey/api/request/oauth_token_request.dart' as _i9;
+import 'package:flutter_survey/api/response/base/base_http_response.dart'
+    as _i1;
+import 'package:flutter_survey/api/response/oauth_token_response.dart' as _i8;
+import 'package:flutter_survey/models/oauth_token.dart' as _i3;
+import 'package:flutter_survey/usecase/base/base_use_case.dart' as _i4;
+import 'package:flutter_survey/usecase/login_use_case.dart' as _i11;
+import 'package:mockito/mockito.dart' as _i2;
 
 // ignore_for_file: avoid_redundant_argument_values
 // ignore_for_file: avoid_setters_without_getters
@@ -19,27 +24,51 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: unnecessary_parenthesis
 
-class _FakeOAuthToken_0 extends _i1.Fake implements _i2.OAuthToken {}
+class _FakeBaseHttpResponse_0<T extends _i1.BaseResponse> extends _i2.Fake
+    implements _i1.BaseHttpResponse<T> {}
 
-class _FakeResult_1<T> extends _i1.Fake implements _i3.Result<T> {}
+class _FakeOAuthToken_1 extends _i2.Fake implements _i3.OAuthToken {}
 
-class _FakeNetworkExceptions_2 extends _i1.Fake
-    implements _i4.NetworkExceptions {}
+class _FakeResult_2<T> extends _i2.Fake implements _i4.Result<T> {}
+
+class _FakeNetworkExceptions_3 extends _i2.Fake
+    implements _i5.NetworkExceptions {}
+
+/// A class which mocks [OAuthService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockOAuthService extends _i2.Mock implements _i6.OAuthService {
+  MockOAuthService() {
+    _i2.throwOnMissingStub(this);
+  }
+
+  @override
+  _i7.Future<_i1.BaseHttpResponse<_i8.OAuthTokenResponse>> login(
+          _i9.OAuthTokenRequest? body) =>
+      (super.noSuchMethod(Invocation.method(#login, [body]),
+              returnValue:
+                  Future<_i1.BaseHttpResponse<_i8.OAuthTokenResponse>>.value(
+                      _FakeBaseHttpResponse_0<_i8.OAuthTokenResponse>()))
+          as _i7.Future<_i1.BaseHttpResponse<_i8.OAuthTokenResponse>>);
+
+  @override
+  String toString() => super.toString();
+}
 
 /// A class which mocks [OAuthRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockOAuthRepository extends _i1.Mock implements _i5.OAuthRepository {
+class MockOAuthRepository extends _i2.Mock implements _i10.OAuthRepository {
   MockOAuthRepository() {
-    _i1.throwOnMissingStub(this);
+    _i2.throwOnMissingStub(this);
   }
 
   @override
-  _i6.Future<_i2.OAuthToken> login({String? email, String? password}) => (super
+  _i7.Future<_i3.OAuthToken> login({String? email, String? password}) => (super
       .noSuchMethod(
           Invocation.method(#login, [], {#email: email, #password: password}),
-          returnValue: Future<_i2.OAuthToken>.value(_FakeOAuthToken_0())) as _i6
-      .Future<_i2.OAuthToken>);
+          returnValue: Future<_i3.OAuthToken>.value(_FakeOAuthToken_1())) as _i7
+      .Future<_i3.OAuthToken>);
 
   @override
   String toString() => super.toString();
@@ -48,17 +77,17 @@ class MockOAuthRepository extends _i1.Mock implements _i5.OAuthRepository {
 /// A class which mocks [LoginUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLoginUseCase extends _i1.Mock implements _i7.LoginUseCase {
+class MockLoginUseCase extends _i2.Mock implements _i11.LoginUseCase {
   MockLoginUseCase() {
-    _i1.throwOnMissingStub(this);
+    _i2.throwOnMissingStub(this);
   }
 
   @override
-  _i6.Future<_i3.Result<void>> call(_i7.LoginInput? input) =>
+  _i7.Future<_i4.Result<void>> call(_i11.LoginInput? input) =>
       (super.noSuchMethod(Invocation.method(#call, [input]),
               returnValue:
-                  Future<_i3.Result<void>>.value(_FakeResult_1<void>()))
-          as _i6.Future<_i3.Result<void>>);
+                  Future<_i4.Result<void>>.value(_FakeResult_2<void>()))
+          as _i7.Future<_i4.Result<void>>);
 
   @override
   String toString() => super.toString();
@@ -67,15 +96,15 @@ class MockLoginUseCase extends _i1.Mock implements _i7.LoginUseCase {
 /// A class which mocks [UseCaseException].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockUseCaseException extends _i1.Mock implements _i3.UseCaseException {
+class MockUseCaseException extends _i2.Mock implements _i4.UseCaseException {
   MockUseCaseException() {
-    _i1.throwOnMissingStub(this);
+    _i2.throwOnMissingStub(this);
   }
 
   @override
-  _i4.NetworkExceptions get networkExceptions =>
+  _i5.NetworkExceptions get networkExceptions =>
       (super.noSuchMethod(Invocation.getter(#networkExceptions),
-          returnValue: _FakeNetworkExceptions_2()) as _i4.NetworkExceptions);
+          returnValue: _FakeNetworkExceptions_3()) as _i5.NetworkExceptions);
 
   @override
   String toString() => super.toString();
