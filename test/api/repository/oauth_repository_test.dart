@@ -50,6 +50,7 @@ void main() {
                   attributes: oauthTokenResponse,
                 ),
               ));
+
       final result = await oauthRepository.login(
         email: "email",
         password: "password",
@@ -59,21 +60,19 @@ void main() {
 
     test('When calling login failed, it returns NetworkExceptions error',
         () async {
-      when(mockOAuthService.login(any)).thenAnswer((_) => Future.error(DioError(
+      when(mockOAuthService.login(any)).thenThrow(DioError(
           response: Response(
             statusCode: 400,
             requestOptions: RequestOptions(path: ''),
           ),
           type: DioErrorType.response,
-          requestOptions: RequestOptions(path: ''))));
-      try {
-        await oauthRepository.login(
-          email: "email",
-          password: "password",
-        );
-      } catch (e) {
-        expect(e, isInstanceOf<NetworkExceptions>());
-      }
+          requestOptions: RequestOptions(path: '')));
+
+      final result = () => oauthRepository.login(
+            email: "email",
+            password: "password",
+          );
+      expect(result, throwsA(isA<NetworkExceptions>()));
     });
   });
 }
