@@ -6,15 +6,15 @@ part 'oauth_token_response.g.dart';
 @JsonSerializable()
 class OAuthTokenResponse extends BaseResponse {
   @JsonKey(name: "access_token")
-  String accessToken;
+  final String accessToken;
   @JsonKey(name: "token_type")
-  String tokenType;
+  final String tokenType;
   @JsonKey(name: "expires_in")
-  int expiresIn;
+  final int expiresIn;
   @JsonKey(name: "refresh_token")
-  String refreshToken;
+  final String refreshToken;
   @JsonKey(name: "created_at")
-  int createdAt;
+  final int createdAt;
 
   OAuthTokenResponse({
     required this.accessToken,

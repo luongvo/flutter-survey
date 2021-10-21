@@ -7,7 +7,7 @@ abstract class BaseResponse {}
 
 @JsonSerializable()
 class BaseHttpResponse<T extends BaseResponse> {
-  ApiResponse<T> data;
+  final ApiResponse<T> data;
 
   BaseHttpResponse({required this.data});
 

@@ -1,8 +1,10 @@
-class OAuthToken {
-  String accessToken;
-  String refreshToken;
-  String tokenType;
-  int expiresIn;
+import 'package:equatable/equatable.dart';
+
+class OAuthToken extends Equatable {
+  final String accessToken;
+  final String refreshToken;
+  final String tokenType;
+  final int expiresIn;
 
   OAuthToken({
     required this.accessToken,
@@ -10,4 +12,7 @@ class OAuthToken {
     required this.tokenType,
     required this.expiresIn,
   });
+
+  @override
+  List<Object> get props => [accessToken, refreshToken, tokenType, expiresIn];
 }
