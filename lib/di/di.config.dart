@@ -6,16 +6,19 @@
 
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:shared_preferences/shared_preferences.dart' as _i8;
+import 'package:shared_preferences/shared_preferences.dart' as _i10;
 
-import '../api/oauth_service.dart' as _i7;
-import '../api/repository/oauth_repository.dart' as _i4;
-import '../local/shared_preference_helper.dart' as _i5;
-import '../usecase/login_use_case.dart' as _i3;
-import 'module/local_module.dart' as _i10;
-import 'module/network_module.dart' as _i9;
+import '../api/oauth_service.dart' as _i9;
+import '../api/repository/oauth_repository.dart' as _i6;
+import '../api/repository/survey_repository.dart' as _i4;
+import '../api/survey_service.dart' as _i11;
+import '../local/shared_preference_helper.dart' as _i7;
+import '../usecase/get_surveys_use_case.dart' as _i3;
+import '../usecase/login_use_case.dart' as _i5;
+import 'module/local_module.dart' as _i13;
+import 'module/network_module.dart' as _i12;
 import 'provider/dio_provider.dart'
-    as _i6; // ignore_for_file: unnecessary_lambdas
+    as _i8; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -24,20 +27,26 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
   final gh = _i2.GetItHelper(get, environment, environmentFilter);
   final networkModule = _$NetworkModule();
   final localModule = _$LocalModule();
-  gh.factory<_i3.LoginUseCase>(() => _i3.LoginUseCase(
-      get<_i4.OAuthRepository>(), get<_i5.SharedPreferencesHelper>()));
-  gh.singleton<_i6.DioProvider>(_i6.DioProvider());
-  gh.singleton<_i7.OAuthService>(
-      networkModule.provideOAuthService(get<_i6.DioProvider>()));
-  await gh.singletonAsync<_i8.SharedPreferences>(() => localModule.sharedPref,
+  gh.factory<_i3.GetSurveysUseCase>(
+      () => _i3.GetSurveysUseCase(get<_i4.SurveyRepository>()));
+  gh.factory<_i5.LoginUseCase>(() => _i5.LoginUseCase(
+      get<_i6.OAuthRepository>(), get<_i7.SharedPreferencesHelper>()));
+  gh.singleton<_i8.DioProvider>(_i8.DioProvider());
+  gh.singleton<_i9.OAuthService>(
+      networkModule.provideOAuthService(get<_i8.DioProvider>()));
+  await gh.singletonAsync<_i10.SharedPreferences>(() => localModule.sharedPref,
       preResolve: true);
-  gh.singleton<_i5.SharedPreferencesHelper>(
-      _i5.SharedPreferencesHelperImpl(get<_i8.SharedPreferences>()));
-  gh.singleton<_i4.OAuthRepository>(
-      _i4.OAuthRepositoryImpl(get<_i7.OAuthService>()));
+  gh.singleton<_i7.SharedPreferencesHelper>(
+      _i7.SharedPreferencesHelperImpl(get<_i10.SharedPreferences>()));
+  gh.singleton<_i11.SurveyService>(
+      networkModule.provideSurveyService(get<_i8.DioProvider>()));
+  gh.singleton<_i6.OAuthRepository>(
+      _i6.OAuthRepositoryImpl(get<_i9.OAuthService>()));
+  gh.singleton<_i4.SurveyRepository>(
+      _i4.SurveyRepositoryImpl(get<_i11.SurveyService>()));
   return get;
 }
 
-class _$NetworkModule extends _i9.NetworkModule {}
+class _$NetworkModule extends _i12.NetworkModule {}
 
-class _$LocalModule extends _i10.LocalModule {}
+class _$LocalModule extends _i13.LocalModule {}

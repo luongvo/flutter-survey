@@ -1,5 +1,5 @@
 import 'package:flutter_survey/api/response/base/api_response.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'base_http_response.g.dart';
 
@@ -15,4 +15,22 @@ class BaseHttpResponse<T extends BaseResponse> {
       _$BaseHttpResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$BaseHttpResponseToJson(this);
+}
+
+class BaseHttpResponseList<T extends BaseResponse> {
+  List<ApiResponse<T>> data;
+
+  BaseHttpResponseList({required this.data});
+
+  factory BaseHttpResponseList.fromJson(Map<String, dynamic> json) {
+    return BaseHttpResponseList<T>(
+      data: (json['data'] as List<dynamic>)
+          .map((e) => ApiResponse<T>.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'data': this.data,
+      };
 }
