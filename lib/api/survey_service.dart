@@ -13,7 +13,7 @@ class SurveyApi {
 abstract class SurveyService {
   factory SurveyService(Dio dio, {String baseUrl}) = _SurveyService;
 
-  @GET('/api/v1/surveys?page[number]={pageNumber}&page[size]={pageSize}')
+  @GET('/v1/surveys?page[number]={pageNumber}&page[size]={pageSize}')
   Future<BaseHttpResponseList<SurveyResponse>> getSurveyList(
     @Path('pageNumber') int pageNumber,
     @Path('pageSize') int pageSize,
