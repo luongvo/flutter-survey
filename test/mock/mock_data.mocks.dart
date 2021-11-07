@@ -2,18 +2,23 @@
 // in flutter_survey/test/mock/mock_data.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i7;
+import 'dart:async' as _i8;
 
+import 'package:dio/dio.dart' as _i6;
 import 'package:flutter_survey/api/exception/network_exceptions.dart' as _i5;
-import 'package:flutter_survey/api/oauth_service.dart' as _i6;
-import 'package:flutter_survey/api/repository/oauth_repository.dart' as _i10;
-import 'package:flutter_survey/api/request/oauth_token_request.dart' as _i9;
+import 'package:flutter_survey/api/oauth_service.dart' as _i7;
+import 'package:flutter_survey/api/repository/oauth_repository.dart' as _i13;
+import 'package:flutter_survey/api/repository/survey_repository.dart' as _i14;
+import 'package:flutter_survey/api/request/oauth_token_request.dart' as _i10;
 import 'package:flutter_survey/api/response/base/base_http_response.dart'
     as _i1;
-import 'package:flutter_survey/api/response/oauth_token_response.dart' as _i8;
+import 'package:flutter_survey/api/response/oauth_token_response.dart' as _i9;
+import 'package:flutter_survey/api/response/survey_response.dart' as _i12;
+import 'package:flutter_survey/api/survey_service.dart' as _i11;
 import 'package:flutter_survey/models/oauth_token.dart' as _i3;
+import 'package:flutter_survey/models/survey.dart' as _i15;
 import 'package:flutter_survey/usecase/base/base_use_case.dart' as _i4;
-import 'package:flutter_survey/usecase/login_use_case.dart' as _i11;
+import 'package:flutter_survey/usecase/login_use_case.dart' as _i16;
 import 'package:mockito/mockito.dart' as _i2;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -27,30 +32,55 @@ import 'package:mockito/mockito.dart' as _i2;
 class _FakeBaseHttpResponse_0<T extends _i1.BaseResponse> extends _i2.Fake
     implements _i1.BaseHttpResponse<T> {}
 
-class _FakeOAuthToken_1 extends _i2.Fake implements _i3.OAuthToken {}
+class _FakeBaseHttpResponseList_1<T extends _i1.BaseResponse> extends _i2.Fake
+    implements _i1.BaseHttpResponseList<T> {}
 
-class _FakeResult_2<T> extends _i2.Fake implements _i4.Result<T> {}
+class _FakeOAuthToken_2 extends _i2.Fake implements _i3.OAuthToken {}
 
-class _FakeNetworkExceptions_3 extends _i2.Fake
+class _FakeResult_3<T> extends _i2.Fake implements _i4.Result<T> {}
+
+class _FakeNetworkExceptions_4 extends _i2.Fake
     implements _i5.NetworkExceptions {}
+
+class _FakeRequestOptions_5 extends _i2.Fake implements _i6.RequestOptions {}
 
 /// A class which mocks [OAuthService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockOAuthService extends _i2.Mock implements _i6.OAuthService {
+class MockOAuthService extends _i2.Mock implements _i7.OAuthService {
   MockOAuthService() {
     _i2.throwOnMissingStub(this);
   }
 
   @override
-  _i7.Future<_i1.BaseHttpResponse<_i8.OAuthTokenResponse>> login(
-          _i9.OAuthTokenRequest? body) =>
+  _i8.Future<_i1.BaseHttpResponse<_i9.OAuthTokenResponse>> login(
+          _i10.OAuthTokenRequest? body) =>
       (super.noSuchMethod(Invocation.method(#login, [body]),
               returnValue:
-                  Future<_i1.BaseHttpResponse<_i8.OAuthTokenResponse>>.value(
-                      _FakeBaseHttpResponse_0<_i8.OAuthTokenResponse>()))
-          as _i7.Future<_i1.BaseHttpResponse<_i8.OAuthTokenResponse>>);
+                  Future<_i1.BaseHttpResponse<_i9.OAuthTokenResponse>>.value(
+                      _FakeBaseHttpResponse_0<_i9.OAuthTokenResponse>()))
+          as _i8.Future<_i1.BaseHttpResponse<_i9.OAuthTokenResponse>>);
+  @override
+  String toString() => super.toString();
+}
 
+/// A class which mocks [SurveyService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSurveyService extends _i2.Mock implements _i11.SurveyService {
+  MockSurveyService() {
+    _i2.throwOnMissingStub(this);
+  }
+
+  @override
+  _i8.Future<_i1.BaseHttpResponseList<_i12.SurveyResponse>> getSurveyList(
+          int? pageNumber, int? pageSize) =>
+      (super.noSuchMethod(
+              Invocation.method(#getSurveyList, [pageNumber, pageSize]),
+              returnValue:
+                  Future<_i1.BaseHttpResponseList<_i12.SurveyResponse>>.value(
+                      _FakeBaseHttpResponseList_1<_i12.SurveyResponse>()))
+          as _i8.Future<_i1.BaseHttpResponseList<_i12.SurveyResponse>>);
   @override
   String toString() => super.toString();
 }
@@ -58,18 +88,35 @@ class MockOAuthService extends _i2.Mock implements _i6.OAuthService {
 /// A class which mocks [OAuthRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockOAuthRepository extends _i2.Mock implements _i10.OAuthRepository {
+class MockOAuthRepository extends _i2.Mock implements _i13.OAuthRepository {
   MockOAuthRepository() {
     _i2.throwOnMissingStub(this);
   }
 
   @override
-  _i7.Future<_i3.OAuthToken> login({String? email, String? password}) => (super
+  _i8.Future<_i3.OAuthToken> login({String? email, String? password}) => (super
       .noSuchMethod(
           Invocation.method(#login, [], {#email: email, #password: password}),
-          returnValue: Future<_i3.OAuthToken>.value(_FakeOAuthToken_1())) as _i7
+          returnValue: Future<_i3.OAuthToken>.value(_FakeOAuthToken_2())) as _i8
       .Future<_i3.OAuthToken>);
+  @override
+  String toString() => super.toString();
+}
 
+/// A class which mocks [SurveyRepository].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSurveyRepository extends _i2.Mock implements _i14.SurveyRepository {
+  MockSurveyRepository() {
+    _i2.throwOnMissingStub(this);
+  }
+
+  @override
+  _i8.Future<List<_i15.Survey>> getSurveys(int? pageNumber, int? pageSize) =>
+      (super.noSuchMethod(
+              Invocation.method(#getSurveys, [pageNumber, pageSize]),
+              returnValue: Future<List<_i15.Survey>>.value(<_i15.Survey>[]))
+          as _i8.Future<List<_i15.Survey>>);
   @override
   String toString() => super.toString();
 }
@@ -77,18 +124,17 @@ class MockOAuthRepository extends _i2.Mock implements _i10.OAuthRepository {
 /// A class which mocks [LoginUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLoginUseCase extends _i2.Mock implements _i11.LoginUseCase {
+class MockLoginUseCase extends _i2.Mock implements _i16.LoginUseCase {
   MockLoginUseCase() {
     _i2.throwOnMissingStub(this);
   }
 
   @override
-  _i7.Future<_i4.Result<void>> call(_i11.LoginInput? input) =>
+  _i8.Future<_i4.Result<void>> call(_i16.LoginInput? input) =>
       (super.noSuchMethod(Invocation.method(#call, [input]),
               returnValue:
-                  Future<_i4.Result<void>>.value(_FakeResult_2<void>()))
-          as _i7.Future<_i4.Result<void>>);
-
+                  Future<_i4.Result<void>>.value(_FakeResult_3<void>()))
+          as _i8.Future<_i4.Result<void>>);
   @override
   String toString() => super.toString();
 }
@@ -104,8 +150,50 @@ class MockUseCaseException extends _i2.Mock implements _i4.UseCaseException {
   @override
   _i5.NetworkExceptions get networkExceptions =>
       (super.noSuchMethod(Invocation.getter(#networkExceptions),
-          returnValue: _FakeNetworkExceptions_3()) as _i5.NetworkExceptions);
+          returnValue: _FakeNetworkExceptions_4()) as _i5.NetworkExceptions);
+  @override
+  String toString() => super.toString();
+}
 
+/// A class which mocks [DioError].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDioError extends _i2.Mock implements _i6.DioError {
+  MockDioError() {
+    _i2.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.RequestOptions get requestOptions =>
+      (super.noSuchMethod(Invocation.getter(#requestOptions),
+          returnValue: _FakeRequestOptions_5()) as _i6.RequestOptions);
+  @override
+  set requestOptions(_i6.RequestOptions? _requestOptions) =>
+      super.noSuchMethod(Invocation.setter(#requestOptions, _requestOptions),
+          returnValueForMissingStub: null);
+  @override
+  set response(_i6.Response<dynamic>? _response) =>
+      super.noSuchMethod(Invocation.setter(#response, _response),
+          returnValueForMissingStub: null);
+  @override
+  _i6.DioErrorType get type => (super.noSuchMethod(Invocation.getter(#type),
+      returnValue: _i6.DioErrorType.connectTimeout) as _i6.DioErrorType);
+  @override
+  set type(_i6.DioErrorType? _type) =>
+      super.noSuchMethod(Invocation.setter(#type, _type),
+          returnValueForMissingStub: null);
+  @override
+  set error(dynamic _error) =>
+      super.noSuchMethod(Invocation.setter(#error, _error),
+          returnValueForMissingStub: null);
+  @override
+  set stackTrace(StackTrace? stack) =>
+      super.noSuchMethod(Invocation.setter(#stackTrace, stack),
+          returnValueForMissingStub: null);
+  @override
+  String get message =>
+      (super.noSuchMethod(Invocation.getter(#message), returnValue: '')
+          as String);
   @override
   String toString() => super.toString();
 }

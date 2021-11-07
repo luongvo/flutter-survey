@@ -4,10 +4,7 @@ import 'package:flutter_survey/models/survey.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class SurveyRepository {
-  Future<List<Survey>> getSurveys({
-    required int pageNumber,
-    required int pageSize,
-  });
+  Future<List<Survey>> getSurveys(int pageNumber, int pageSize);
 }
 
 @Singleton(as: SurveyRepository)
@@ -17,10 +14,7 @@ class SurveyRepositoryImpl extends SurveyRepository {
   SurveyRepositoryImpl(this._surveyService);
 
   @override
-  Future<List<Survey>> getSurveys({
-    required int pageNumber,
-    required int pageSize,
-  }) async {
+  Future<List<Survey>> getSurveys(int pageNumber, int pageSize) async {
     try {
       final responses = await _surveyService
           .getSurveyList(pageNumber, pageSize)
