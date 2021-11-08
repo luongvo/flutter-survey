@@ -17,10 +17,6 @@ class SurveyResponse extends BaseResponse {
   String? coverImageUrl;
   @JsonKey(name: "created_at")
   String? createdAt;
-  @JsonKey(name: "active_at")
-  String? activeAt;
-  @JsonKey(name: "inactive_at")
-  String? inactiveAt;
   @JsonKey(name: "survey_type")
   String? surveyType;
 
@@ -32,8 +28,6 @@ class SurveyResponse extends BaseResponse {
       this.isActive,
       this.coverImageUrl,
       this.createdAt,
-      this.activeAt,
-      this.inactiveAt,
       this.surveyType});
 
   factory SurveyResponse.fromJson(Map<String, dynamic> json) =>

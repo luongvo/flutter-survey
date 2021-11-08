@@ -15,8 +15,6 @@ SurveyResponse _$SurveyResponseFromJson(Map<String, dynamic> json) {
     isActive: json['is_active'] as bool?,
     coverImageUrl: json['cover_image_url'] as String?,
     createdAt: json['created_at'] as String?,
-    activeAt: json['active_at'] as String?,
-    inactiveAt: json['inactive_at'] as String?,
     surveyType: json['survey_type'] as String?,
   );
 }
@@ -30,7 +28,5 @@ Map<String, dynamic> _$SurveyResponseToJson(SurveyResponse instance) =>
       'is_active': instance.isActive,
       'cover_image_url': instance.coverImageUrl,
       'created_at': instance.createdAt,
-      'active_at': instance.activeAt,
-      'inactive_at': instance.inactiveAt,
       'survey_type': instance.surveyType,
     };
