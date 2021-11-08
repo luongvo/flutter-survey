@@ -16,12 +16,10 @@ class SurveyRepositoryImpl extends SurveyRepository {
   @override
   Future<List<Survey>> getSurveys(int pageNumber, int pageSize) async {
     try {
-      final responses = await _surveyService
-          .getSurveyList(pageNumber, pageSize)
-          .then((response) => response.data
-              .map((apiResponse) => apiResponse.attributes)
+      return await _surveyService.getSurveyList(pageNumber, pageSize).then(
+          (response) => response.data
+              .map((apiResponse) => apiResponse.attributes.toSurvey())
               .toList());
-      return responses.map((response) => response.toSurvey()).toList();
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);
     }

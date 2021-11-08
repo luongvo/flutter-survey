@@ -24,16 +24,14 @@ void main() {
     test(
         'When calling getSurveys successfully, it returns corresponding response',
         () async {
-      final surveyResponses =
+      final response =
           BaseHttpResponseList<SurveyResponse>.fromJson(surveysJson);
-      final surveys = surveyResponses.data
-          .map((response) => response.attributes)
-          .toList()
-          .map((response) => response.toSurvey())
+      final surveys = response.data
+          .map((apiResponse) => apiResponse.attributes.toSurvey())
           .toList();
 
       when(mockSurveyService.getSurveyList(any, any))
-          .thenAnswer((_) async => surveyResponses);
+          .thenAnswer((_) async => response);
       final result = await surveyRepository.getSurveys(1, 2);
 
       expect(result, surveys);
