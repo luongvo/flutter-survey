@@ -9,9 +9,9 @@ class HomeViewModel extends StateNotifier<HomeState> {
     init();
   }
 
-  Future<void> init() async {
+  void init() {
     // TODO fetch survey list https://github.com/luongvo/flutter-survey/issues/14
-    await _getSurveysUseCase.call(GetSurveysInput(
+    _getSurveysUseCase.call(GetSurveysInput(
       pageNumber: 1,
       pageSize: 2,
     ));
