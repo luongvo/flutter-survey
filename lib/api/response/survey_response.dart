@@ -7,10 +7,6 @@ part 'survey_response.g.dart';
 class SurveyResponse extends BaseResponse {
   String? title;
   String? description;
-  @JsonKey(name: "thank_email_above_threshold")
-  String? thankEmailAbove;
-  @JsonKey(name: "thank_email_below_threshold")
-  String? thankEmailBelow;
   @JsonKey(name: "is_active")
   bool? isActive;
   @JsonKey(name: "cover_image_url")
@@ -23,8 +19,6 @@ class SurveyResponse extends BaseResponse {
   SurveyResponse(
       {this.title,
       this.description,
-      this.thankEmailAbove,
-      this.thankEmailBelow,
       this.isActive,
       this.coverImageUrl,
       this.createdAt,
