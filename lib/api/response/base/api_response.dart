@@ -1,6 +1,7 @@
 import 'package:flutter_survey/api/response/base/base_http_response.dart';
 import 'package:flutter_survey/api/response/oauth_token_response.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter_survey/api/response/survey_response.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'api_response.g.dart';
 
@@ -21,6 +22,8 @@ class ApiResponse<T extends BaseResponse> {
   static T _dataFromJson<T>(Map<String, dynamic> json) {
     if (T == OAuthTokenResponse) {
       return OAuthTokenResponse.fromJson(json) as T;
+    } else if (T == SurveyResponse) {
+      return SurveyResponse.fromJson(json) as T;
     } else {
       throw Exception("_dataFromJson Not supported response type");
     }
@@ -29,6 +32,8 @@ class ApiResponse<T extends BaseResponse> {
   static Map<String, dynamic> _dataToJson<T>(T value) {
     if (T is OAuthTokenResponse) {
       return (T as OAuthTokenResponse).toJson();
+    } else if (T == SurveyResponse) {
+      return (T as SurveyResponse).toJson();
     } else {
       throw Exception("_dataToJson Not supported response type");
     }

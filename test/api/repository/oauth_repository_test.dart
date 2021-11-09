@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_survey/api/exception/network_exceptions.dart';
 import 'package:flutter_survey/api/repository/oauth_repository.dart';
@@ -60,13 +59,7 @@ void main() {
 
     test('When calling login failed, it returns NetworkExceptions error',
         () async {
-      when(mockOAuthService.login(any)).thenThrow(DioError(
-          response: Response(
-            statusCode: 400,
-            requestOptions: RequestOptions(path: ''),
-          ),
-          type: DioErrorType.response,
-          requestOptions: RequestOptions(path: '')));
+      when(mockOAuthService.login(any)).thenThrow(MockDioError());
 
       final result = () => oauthRepository.login(
             email: "email",

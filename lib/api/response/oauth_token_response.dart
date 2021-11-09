@@ -1,5 +1,5 @@
 import 'package:flutter_survey/api/response/base/base_http_response.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'oauth_token_response.g.dart';
 
