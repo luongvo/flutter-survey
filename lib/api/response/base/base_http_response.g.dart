@@ -7,11 +7,10 @@ part of 'base_http_response.dart';
 // **************************************************************************
 
 BaseHttpResponse<T> _$BaseHttpResponseFromJson<T extends BaseResponse>(
-    Map<String, dynamic> json) {
-  return BaseHttpResponse<T>(
-    data: ApiResponse.fromJson(json['data'] as Map<String, dynamic>),
-  );
-}
+        Map<String, dynamic> json) =>
+    BaseHttpResponse<T>(
+      data: ApiResponse<T>.fromJson(json['data'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$BaseHttpResponseToJson<T extends BaseResponse>(
         BaseHttpResponse<T> instance) =>

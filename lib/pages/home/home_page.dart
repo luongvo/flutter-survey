@@ -14,34 +14,32 @@ final homeViewModelProvider =
   return HomeViewModel(getIt.get<GetSurveysUseCase>());
 });
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   @override
   _HomePageState createState() {
     return new _HomePageState();
   }
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   // TODO fetch survey list https://github.com/luongvo/flutter-survey/issues/14
   final _surveys = [1, 2, 3];
   final _currentPageNotifier = ValueNotifier<int>(0);
 
   @override
   Widget build(BuildContext context) {
-    return ProviderListener(
-        provider: homeViewModelProvider,
-        onChange: (BuildContext ctx, HomeState homeState) {
-          homeState.maybeWhen(
-            error: (error) {
-              // TODO
-            },
-            success: () async {
-              // TODO
-            },
-            orElse: () {},
-          );
+    ref.listen<HomeState>(homeViewModelProvider, (_, homeState) {
+      homeState.maybeWhen(
+        error: (error) {
+          // TODO
         },
-        child: _buildHomePage());
+        success: () async {
+          // TODO
+        },
+        orElse: () {},
+      );
+    });
+    return _buildHomePage();
   }
 
   Widget _buildHomePage() {

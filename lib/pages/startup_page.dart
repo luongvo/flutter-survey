@@ -12,8 +12,8 @@ final sharedPreferencesProvider =
 
 class StartupPage extends ConsumerWidget {
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final sharedPreferenceHelper = watch(sharedPreferencesProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sharedPreferenceHelper = ref.watch(sharedPreferencesProvider);
     if (sharedPreferenceHelper.isLoggedIn) {
       return HomePage();
     }

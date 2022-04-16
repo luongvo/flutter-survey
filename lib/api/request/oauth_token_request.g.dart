@@ -6,15 +6,14 @@ part of 'oauth_token_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-OAuthTokenRequest _$OAuthTokenRequestFromJson(Map<String, dynamic> json) {
-  return OAuthTokenRequest(
-    grantType: json['grant_type'] as String,
-    email: json['email'] as String,
-    password: json['password'] as String,
-    clientId: json['client_id'] as String,
-    clientSecret: json['client_secret'] as String,
-  );
-}
+OAuthTokenRequest _$OAuthTokenRequestFromJson(Map<String, dynamic> json) =>
+    OAuthTokenRequest(
+      grantType: json['grant_type'] as String? ?? GRANT_TYPE_PASSWORD,
+      email: json['email'] as String,
+      password: json['password'] as String,
+      clientId: json['client_id'] as String,
+      clientSecret: json['client_secret'] as String,
+    );
 
 Map<String, dynamic> _$OAuthTokenRequestToJson(OAuthTokenRequest instance) =>
     <String, dynamic>{

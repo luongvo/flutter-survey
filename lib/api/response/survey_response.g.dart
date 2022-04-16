@@ -6,16 +6,15 @@ part of 'survey_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SurveyResponse _$SurveyResponseFromJson(Map<String, dynamic> json) {
-  return SurveyResponse(
-    title: json['title'] as String?,
-    description: json['description'] as String?,
-    isActive: json['is_active'] as bool?,
-    coverImageUrl: json['cover_image_url'] as String?,
-    createdAt: json['created_at'] as String?,
-    surveyType: json['survey_type'] as String?,
-  );
-}
+SurveyResponse _$SurveyResponseFromJson(Map<String, dynamic> json) =>
+    SurveyResponse(
+      title: json['title'] as String?,
+      description: json['description'] as String?,
+      isActive: json['is_active'] as bool?,
+      coverImageUrl: json['cover_image_url'] as String?,
+      createdAt: json['created_at'] as String?,
+      surveyType: json['survey_type'] as String?,
+    );
 
 Map<String, dynamic> _$SurveyResponseToJson(SurveyResponse instance) =>
     <String, dynamic>{

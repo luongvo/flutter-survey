@@ -24,33 +24,31 @@ final loginViewModelProvider =
   return LoginViewModel(getIt.get<LoginUseCase>());
 });
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return ProviderListener(
-        provider: loginViewModelProvider,
-        onChange: (BuildContext ctx, LoginState loginState) {
-          loginState.maybeWhen(
-            error: (error) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(AppLocalizations.of(context)!.loginError)));
-            },
-            success: () async {
-              await Navigator.of(context).popAndPushNamed(Routes.HOME_PAGE);
-            },
-            orElse: () {},
-          );
+    ref.listen<LoginState>(loginViewModelProvider, (_, loginState) {
+      loginState.maybeWhen(
+        error: (error) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(AppLocalizations.of(context)!.loginError)));
         },
-        child: _buildLoginPage());
+        success: () async {
+          await Navigator.of(context).popAndPushNamed(Routes.HOME_PAGE);
+        },
+        orElse: () {},
+      );
+    });
+    return _buildLoginPage();
   }
 
   @override
@@ -98,8 +96,8 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           ),
-          Consumer(builder: (_, ScopedReader watch, __) {
-            final loginViewModel = watch(loginViewModelProvider);
+          Consumer(builder: (_, WidgetRef ref, __) {
+            final loginViewModel = ref.watch(loginViewModelProvider);
             return loginViewModel.maybeWhen(
               loading: () => LoadingIndicator(),
               orElse: () => SizedBox.shrink(),
@@ -216,9 +214,9 @@ class _LoginPageState extends State<LoginPage> {
     if (_formKey.currentState!.validate()) {
       KeyboardUtil.hideKeyboard(context);
 
-      final LoginViewModel loginViewModel =
-          context.read<LoginViewModel>(loginViewModelProvider.notifier);
-      loginViewModel.login(_emailController.text, _passwordController.text);
+      ref
+          .read(loginViewModelProvider.notifier)
+          .login(_emailController.text, _passwordController.text);
     }
   }
 }

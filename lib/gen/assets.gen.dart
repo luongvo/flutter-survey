@@ -2,16 +2,18 @@
 /// *****************************************************
 ///  FlutterGen
 /// *****************************************************
-
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/services.dart';
 
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/ic_arrow_right.svg
   SvgGenImage get icArrowRight =>
       const SvgGenImage('assets/icons/ic_arrow_right.svg');
+
+  /// File path: assets/icons/ic_nimble_logo.svg
   SvgGenImage get icNimbleLogo =>
       const SvgGenImage('assets/icons/ic_nimble_logo.svg');
 }
@@ -19,10 +21,15 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/bg_home_avatar_sample.png
   AssetGenImage get bgHomeAvatarSample =>
       const AssetGenImage('assets/images/bg_home_avatar_sample.png');
+
+  /// File path: assets/images/bg_home_sample.png
   AssetGenImage get bgHomeSample =>
       const AssetGenImage('assets/images/bg_home_sample.png');
+
+  /// File path: assets/images/bg_login.jpg
   AssetGenImage get bgLogin =>
       const AssetGenImage('assets/images/bg_login.jpg');
 }
@@ -104,6 +111,8 @@ class SvgGenImage {
     String? semanticsLabel,
     bool excludeFromSemantics = false,
     Clip clipBehavior = Clip.hardEdge,
+    bool cacheColorFilter = false,
+    SvgTheme? theme,
   }) {
     return SvgPicture.asset(
       _assetName,
@@ -122,6 +131,8 @@ class SvgGenImage {
       semanticsLabel: semanticsLabel,
       excludeFromSemantics: excludeFromSemantics,
       clipBehavior: clipBehavior,
+      cacheColorFilter: cacheColorFilter,
+      theme: theme,
     );
   }
 

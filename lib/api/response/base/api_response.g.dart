@@ -7,14 +7,13 @@ part of 'api_response.dart';
 // **************************************************************************
 
 ApiResponse<T> _$ApiResponseFromJson<T extends BaseResponse>(
-    Map<String, dynamic> json) {
-  return ApiResponse<T>(
-    id: json['id'],
-    type: json['type'] as String,
-    attributes:
-        ApiResponse._dataFromJson(json['attributes'] as Map<String, dynamic>),
-  );
-}
+        Map<String, dynamic> json) =>
+    ApiResponse<T>(
+      id: json['id'],
+      type: json['type'] as String,
+      attributes:
+          ApiResponse._dataFromJson(json['attributes'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$ApiResponseToJson<T extends BaseResponse>(
         ApiResponse<T> instance) =>
