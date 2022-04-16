@@ -28,6 +28,9 @@ jobs:
       - name: Get flutter dependencies
         run: flutter pub get
 
+      - name: Run code generator.
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
       - name: Decrypt large secret
         run: ./.github/workflows/decrypt_secret.sh
         env:
@@ -60,6 +63,9 @@ jobs:
 
       - name: Get flutter dependencies
         run: flutter pub get
+
+      - name: Run code generator.
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
       - name: Decrypt large secret
         run: ./.github/workflows/decrypt_secret.sh
