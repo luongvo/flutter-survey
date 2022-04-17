@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/gen/fonts.gen.dart';

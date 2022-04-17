@@ -201,12 +201,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   String? _emailValidator(String? value) {
     if (value == null || !EmailValidator.validate(value)) {
       return AppLocalizations.of(context)!.validationErrorEmailInvalid;
+    } else {
+      return null;
     }
   }
 
   String? _passwordValidator(String? value) {
     if (value == null || value.length < PASSWORD_LENGTH_MIN) {
       return AppLocalizations.of(context)!.validationErrorEmailInvalid;
+    } else {
+      return null;
     }
   }
 
