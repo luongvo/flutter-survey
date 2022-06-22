@@ -23,10 +23,13 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
-          flutter-version: '2.2.3'
+          flutter-version: '2.10.0'
 
       - name: Get flutter dependencies
         run: flutter pub get
+
+      - name: Run code generator.
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
       - name: Decrypt large secret
         run: ./.github/workflows/decrypt_secret.sh
@@ -56,10 +59,13 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
-          flutter-version: '2.2.3'
+          flutter-version: '2.10.0'
 
       - name: Get flutter dependencies
         run: flutter pub get
+
+      - name: Run code generator.
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
       - name: Decrypt large secret
         run: ./.github/workflows/decrypt_secret.sh
