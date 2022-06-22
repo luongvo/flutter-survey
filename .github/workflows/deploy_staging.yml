@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
     steps:
-      - uses: actions/checkout@v2.3.2
+      - uses: actions/checkout@v3
 
       # Setup Java environment in order to build the Android app.
       - uses: actions/setup-java@v1
@@ -41,7 +41,7 @@ jobs:
         run: flutter build apk --flavor staging --debug --build-number $GITHUB_RUN_NUMBER
 
       - name: Upload Android Staging to Firebase
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.3
         with:
           appId: ${{secrets.FIREBASE_ANDROID_APP_ID_STAGING}}
           token: ${{secrets.FIREBASE_TOKEN}}
@@ -53,7 +53,7 @@ jobs:
     runs-on: macOS-latest
     environment: staging
     steps:
-      - uses: actions/checkout@v2.3.2
+      - uses: actions/checkout@v3
 
       # Setup the flutter environment.
       - uses: subosito/flutter-action@v1
@@ -100,7 +100,7 @@ jobs:
 
       # This container action is only supported on Linux https://github.com/wzieba/Firebase-Distribution-Github-Action/issues/24
       - name: Upload iOS Staging to Firebase
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.3
         with:
           appId: ${{secrets.FIREBASE_IOS_APP_ID_STAGING}}
           token: ${{secrets.FIREBASE_TOKEN}}
