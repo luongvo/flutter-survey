@@ -27,7 +27,7 @@ class LoginUseCase extends UseCase<void, LoginInput> {
         .login(email: input.email, password: input.password)
         .then((value) => _persistTokenData(value))
         .onError<NetworkExceptions>(
-            (err, stackTrace) => Failed(UseCaseException(err, null)));
+            (err, stackTrace) => Failed(UseCaseException(err)));
   }
 
   Result<dynamic> _persistTokenData(OAuthToken data) {

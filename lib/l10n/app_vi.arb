@@ -1,4 +1,5 @@
 {
+  "errorGeneric": "Đã có lỗi xảy ra. Vui lòng thử lại.",
   "loginEmail": "Email",
   "loginPassword": "Mật khẩu",
   "loginForgot": "Quên?",

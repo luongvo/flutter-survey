@@ -27,6 +27,6 @@ class GetSurveysUseCase extends UseCase<List<Survey>, GetSurveysInput> {
         .then((value) =>
             Success(value) as Result<List<Survey>>) // ignore: unnecessary_cast
         .onError<NetworkExceptions>(
-            (err, stackTrace) => Failed(UseCaseException(err, null)));
+            (err, stackTrace) => Failed(UseCaseException(err)));
   }
 }

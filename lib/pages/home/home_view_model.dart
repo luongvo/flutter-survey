@@ -36,7 +36,11 @@ class HomeViewModel extends StateNotifier<HomeState> {
       _surveysSubject.add(uiModels);
       state = const HomeState.success();
     } else {
-      // _handleError(result as Failed);
+      _handleError(result as Failed);
     }
+  }
+
+  _handleError(Failed result) {
+    state = HomeState.error(result.getErrorMessage());
   }
 }

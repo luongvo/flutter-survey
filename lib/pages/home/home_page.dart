@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/di/di.dart';
+import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/pages/home/home_footer.dart';
 import 'package:flutter_survey/pages/home/home_header.dart';
 import 'package:flutter_survey/pages/home/home_state.dart';
@@ -34,11 +35,13 @@ class _HomePageState extends ConsumerState<HomePage> {
     return ref.watch(homeViewModelProvider).when(
           init: () => const SizedBox.shrink(),
           loading: () {
+            // TODO https://github.com/luongvo/flutter-survey/issues/12
             return SizedBox.shrink();
           },
           success: () => _buildHomePage(uiModels ?? []),
           error: (message) {
-            // TODO handle error
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(message ?? context.localization.errorGeneric)));
             return _buildHomePage(uiModels ?? []);
           },
         );
