@@ -33,7 +33,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
     ));
     if (result is Success<List<Survey>>) {
       final uiModels =
-      result.value.map((job) => SurveyUiModel.fromSurvey(job)).toList();
+          result.value.map((job) => SurveyUiModel.fromSurvey(job)).toList();
       _surveysSubject.add(uiModels);
       state = const HomeState.success();
     } else {
