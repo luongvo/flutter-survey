@@ -42,6 +42,7 @@ dependencies:
   retrofit: ^3.0.1+1
   package_info_plus: ^1.4.2
   page_view_indicators: ^2.0.0
+  rxdart: ^0.27.3
   shared_preferences: ^2.0.13
 
 dev_dependencies:

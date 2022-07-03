@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
+import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
 
 class HomeFooter extends StatelessWidget {
-  final List<int> surveys;
+  final List<SurveyUiModel> surveys;
   final ValueNotifier<int> currentPageNotifier;
 
   HomeFooter({required this.surveys, required this.currentPageNotifier});

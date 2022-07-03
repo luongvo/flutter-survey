@@ -14,12 +14,12 @@ class Survey extends Equatable {
 
   @override
   List<Object?> get props => [title, description, coverImageUrl];
-}
 
-extension SurveyExtension on SurveyResponse {
-  Survey toSurvey() => Survey(
-        title: this.title ?? "",
-        description: this.description ?? "",
-        coverImageUrl: this.coverImageUrl ?? "",
-      );
+  factory Survey.fromSurveyResponse(SurveyResponse surveyResponse) {
+    return Survey(
+      title: surveyResponse.title ?? "",
+      description: surveyResponse.description ?? "",
+      coverImageUrl: surveyResponse.coverImageUrl ?? "",
+    );
+  }
 }

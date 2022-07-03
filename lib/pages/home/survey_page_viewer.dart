@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
+import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/pages/widgets/dimmed_background.dart';
 
 class SurveyPageViewer extends StatelessWidget {
-  final List<int> surveys;
+  final List<SurveyUiModel> surveys;
   final ValueNotifier<int> currentPageNotifier;
   final _pageController = PageController();
 
