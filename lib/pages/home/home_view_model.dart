@@ -11,9 +11,7 @@ const _pageSize = 10;
 class HomeViewModel extends StateNotifier<HomeState> {
   final GetSurveysUseCase _getSurveysUseCase;
 
-  HomeViewModel(this._getSurveysUseCase) : super(const HomeState.init()) {
-    loadSurveys();
-  }
+  HomeViewModel(this._getSurveysUseCase) : super(const HomeState.init());
 
   int _page = 1;
 
@@ -25,6 +23,9 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   Future<void> loadSurveys({bool isRefresh = false}) async {
     _page = 1;
+    if (!isRefresh) {
+      state = const HomeState.loading();
+    }
 
     final result = await _getSurveysUseCase.call(GetSurveysInput(
       pageNumber: _page,
@@ -32,7 +33,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
     ));
     if (result is Success<List<Survey>>) {
       final uiModels =
-          result.value.map((job) => SurveyUiModel.fromSurvey(job)).toList();
+      result.value.map((job) => SurveyUiModel.fromSurvey(job)).toList();
       _surveysSubject.add(uiModels);
       state = const HomeState.success();
     } else {

@@ -30,6 +30,12 @@ class _HomePageState extends ConsumerState<HomePage> {
   final _currentPageNotifier = ValueNotifier<int>(0);
 
   @override
+  void initState() {
+    super.initState();
+    ref.read(homeViewModelProvider.notifier).loadSurveys();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final uiModels = ref.watch(_uiModelsStreamProvider).value;
     return ref.watch(homeViewModelProvider).when(
