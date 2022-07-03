@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
+import 'package:intl/intl.dart';
+
+const String PATTERN_FULL_DATE_MONTH_DAY = 'EEEE, MMMM dd';
 
 class HomeHeader extends StatelessWidget {
   @override
@@ -8,8 +12,7 @@ class HomeHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          // TODO data binding https://github.com/luongvo/flutter-survey/issues/14
-          'MONDAY, JUNE 15',
+          _composeCurrentDate(),
           style: Theme.of(context).textTheme.subtitle1,
         ),
         const SizedBox(height: 5.0),
@@ -17,8 +20,7 @@ class HomeHeader extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                // TODO data binding https://github.com/luongvo/flutter-survey/issues/14
-                'Today',
+                context.localization.homeToday,
                 style: Theme.of(context).textTheme.headline5,
               ),
             ),
@@ -37,5 +39,11 @@ class HomeHeader extends StatelessWidget {
         )
       ],
     );
+  }
+
+  String _composeCurrentDate() {
+    final now = DateTime.now();
+    final formatter = DateFormat(PATTERN_FULL_DATE_MONTH_DAY);
+    return formatter.format(now).toUpperCase();
   }
 }
