@@ -6,6 +6,7 @@
   "loginText": "Đăng nhập",
   "loginError": "Đăng nhập thất bại! Vui lòng kiểm tra lại email hoặc mật khẩu",
   "homeToday": "Hôm nay",
+  "surveyStart": "Bắt đầu khảo sát",
   "validationErrorEmailInvalid": "Vui lòng nhập đúng email",
   "validationErrorPasswordInvalid": "Vui lòng nhập đúng mật khẩu"
 }
