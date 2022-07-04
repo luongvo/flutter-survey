@@ -18,4 +18,9 @@ abstract class SurveyService {
     @Path('pageNumber') int pageNumber,
     @Path('pageSize') int pageSize,
   );
+
+  @GET('/v1/surveys/{surveyId}')
+  Future<BaseHttpResponse<SurveyResponse>> getSurveyDetail(
+    @Path('surveyId') String surveyId,
+  );
 }
