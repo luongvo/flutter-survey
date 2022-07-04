@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
+import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/pages/widgets/dimmed_background.dart';
 import 'package:flutter_survey/resources/dimens.dart';
@@ -28,9 +29,31 @@ class StartSurvey extends StatelessWidget {
           ],
           stops: const [0.0, 1.0],
         ),
-        Padding(
-          padding: const EdgeInsets.all(Dimens.defaultMarginPadding),
-          child: _buildContent(context),
+        _buildPage(context),
+      ],
+    );
+  }
+
+  Column _buildPage(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: Dimens.defaultMarginPaddingLarge),
+        GestureDetector(
+          onTap: () => context.navigateBack(),
+          child: SizedBox(
+            width: 56,
+            height: 56,
+            child: Assets.icons.icBack.svg(
+              fit: BoxFit.none,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(Dimens.defaultMarginPadding),
+            child: _buildContent(context),
+          ),
         ),
       ],
     );
@@ -40,13 +63,14 @@ class StartSurvey extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: Dimens.defaultMarginPaddingLarge),
         Text(
+          // TODO
           "Working from home Check-In",
           style: Theme.of(context).textTheme.headline5,
         ),
         const SizedBox(height: 10.0),
         Text(
+          // TODO
           "We would like to know how you feel about our work from home (WFH) experience.",
           style: Theme.of(context).textTheme.bodyText1,
         ),

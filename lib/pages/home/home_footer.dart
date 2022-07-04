@@ -30,11 +30,11 @@ class HomeFooter extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(left: Dimens.defaultMarginPadding),
-              child: ClipOval(
-                child: Material(
-                  color: Colors.white,
-                  child: GestureDetector(
-                    onTap: () => _navigateToSurvey(context),
+              child: GestureDetector(
+                onTap: () => _navigateToSurvey(context),
+                child: ClipOval(
+                  child: Material(
+                    color: Colors.white,
                     child: SizedBox(
                       width: 56,
                       height: 56,
