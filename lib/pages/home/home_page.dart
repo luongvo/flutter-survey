@@ -46,8 +46,10 @@ class _HomePageState extends ConsumerState<HomePage> {
           },
           success: () => _buildHomePage(uiModels ?? []),
           error: (message) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(message ?? context.localization.errorGeneric)));
+            WidgetsBinding.instance?.addPostFrameCallback((_) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(message ?? context.localization.errorGeneric)));
+            });
             return _buildHomePage(uiModels ?? []);
           },
         );
