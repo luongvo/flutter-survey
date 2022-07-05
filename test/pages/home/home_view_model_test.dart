@@ -38,8 +38,12 @@ void main() {
       when(mockGetSurveysUseCase.call(any))
           .thenAnswer((_) async => Success(surveys));
       final stateStream = container.read(homeViewModelProvider.notifier).stream;
+      final surveysStream =
+          container.read(homeViewModelProvider.notifier).surveysStream;
       expect(stateStream,
           emitsInOrder([HomeState.loading(), HomeState.success()]));
+      expect(surveysStream, emitsInOrder([surveys]));
+
       container.read(homeViewModelProvider.notifier).loadSurveys();
     });
 

@@ -16,8 +16,8 @@ final homeViewModelProvider =
   return HomeViewModel(getIt.get<GetSurveysUseCase>());
 });
 
-final _uiModelsStreamProvider = StreamProvider.autoDispose<List<SurveyUiModel>>(
-    (ref) => ref.watch(homeViewModelProvider.notifier).surveyUiModelsStream);
+final _surveysStreamProvider = StreamProvider.autoDispose<List<SurveyUiModel>>(
+    (ref) => ref.watch(homeViewModelProvider.notifier).surveysStream);
 
 class HomePage extends ConsumerStatefulWidget {
   @override
@@ -37,7 +37,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final uiModels = ref.watch(_uiModelsStreamProvider).value;
+    final uiModels = ref.watch(_surveysStreamProvider).value;
     return ref.watch(homeViewModelProvider).when(
           init: () => const SizedBox.shrink(),
           loading: () {

@@ -18,8 +18,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
   final BehaviorSubject<List<SurveyUiModel>> _surveysSubject =
       BehaviorSubject();
 
-  Stream<List<SurveyUiModel>> get surveyUiModelsStream =>
-      _surveysSubject.stream;
+  Stream<List<SurveyUiModel>> get surveysStream => _surveysSubject.stream;
 
   Future<void> loadSurveys({bool isRefresh = false}) async {
     _page = 1;
@@ -43,5 +42,11 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   _handleError(Failed result) {
     state = HomeState.error(result.getErrorMessage());
+  }
+
+  @override
+  void dispose() async {
+    await _surveysSubject.close();
+    super.dispose();
   }
 }
