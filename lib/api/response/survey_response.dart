@@ -1,5 +1,4 @@
 import 'package:flutter_survey/api/response/base/base_response_converter.dart';
-import 'package:flutter_survey/api/response/question_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'survey_response.g.dart';
