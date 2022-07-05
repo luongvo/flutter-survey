@@ -1,7 +1,6 @@
 import 'package:flutter_survey/api/exception/network_exceptions.dart';
 import 'package:flutter_survey/api/repository/survey_repository.dart';
-import 'package:flutter_survey/api/response/base/base_http_response.dart';
-import 'package:flutter_survey/api/response/survey_response.dart';
+import 'package:flutter_survey/api/response/surveys_response.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -23,8 +22,7 @@ void main() {
     test(
         'When calling getSurveys successfully, it returns corresponding response',
         () async {
-      final response =
-          BaseHttpResponseList<SurveyResponse>.fromJson(surveysJson);
+      final response = SurveysResponse.fromJson(surveysJson);
 
       when(mockSurveyService.getSurveyList(any, any))
           .thenAnswer((_) async => response);

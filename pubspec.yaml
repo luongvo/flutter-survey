@@ -40,6 +40,7 @@ dependencies:
   freezed_annotation: ^1.1.0
   get_it: ^7.2.0
   injectable: ^1.5.3
+  japx: ^2.0.4
   retrofit: ^3.0.1+1
   package_info_plus: ^1.4.2
   page_view_indicators: ^2.0.0

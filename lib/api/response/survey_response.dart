@@ -1,10 +1,12 @@
-import 'package:flutter_survey/api/response/base/base_http_response.dart';
+import 'package:flutter_survey/api/response/base/base_response_converter.dart';
+import 'package:flutter_survey/api/response/question_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'survey_response.g.dart';
 
 @JsonSerializable()
-class SurveyResponse extends BaseResponse {
+class SurveyResponse {
+  final String id;
   String? title;
   String? description;
   @JsonKey(name: "is_active")
@@ -16,16 +18,16 @@ class SurveyResponse extends BaseResponse {
   @JsonKey(name: "survey_type")
   String? surveyType;
 
-  SurveyResponse(
-      {this.title,
-      this.description,
-      this.isActive,
-      this.coverImageUrl,
-      this.createdAt,
-      this.surveyType});
+  SurveyResponse({
+    required this.id,
+    this.title,
+    this.description,
+    this.isActive,
+    this.coverImageUrl,
+    this.createdAt,
+    this.surveyType,
+  });
 
   factory SurveyResponse.fromJson(Map<String, dynamic> json) =>
-      _$SurveyResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$SurveyResponseToJson(this);
+      _$SurveyResponseFromJson(fromJsonApi(json));
 }

@@ -17,12 +17,12 @@ class Survey extends Equatable {
   @override
   List<Object?> get props => [id, title, description, coverImageUrl];
 
-  factory Survey.fromSurveyResponse(String id, SurveyResponse surveyResponse) {
+  factory Survey.fromSurveyResponse(SurveyResponse response) {
     return Survey(
-      id: id,
-      title: surveyResponse.title ?? "",
-      description: surveyResponse.description ?? "",
-      coverImageUrl: surveyResponse.coverImageUrl ?? "",
+      id: response.id,
+      title: response.title ?? "",
+      description: response.description ?? "",
+      coverImageUrl: response.coverImageUrl ?? "",
     );
   }
 }

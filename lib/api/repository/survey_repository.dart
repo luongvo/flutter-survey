@@ -18,14 +18,13 @@ class SurveyRepositoryImpl extends SurveyRepository {
   @override
   Future<List<Survey>> getSurveys(int pageNumber, int pageSize) async {
     try {
-      return await _surveyService
-          .getSurveyList(pageNumber, pageSize)
-          .then((response) => response.data
-              .map((apiResponse) => Survey.fromSurveyResponse(
-                    apiResponse.id,
-                    apiResponse.attributes,
-                  ))
-              .toList());
+      final response = await _surveyService.getSurveyList(
+        pageNumber,
+        pageSize,
+      );
+      return response.surveys
+          .map((response) => Survey.fromSurveyResponse(response))
+          .toList();
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);
     }
@@ -34,12 +33,8 @@ class SurveyRepositoryImpl extends SurveyRepository {
   @override
   Future<Survey> getSurveyDetail(String surveyId) async {
     try {
-      return await _surveyService
-          .getSurveyDetail(surveyId)
-          .then((response) => Survey.fromSurveyResponse(
-                response.data.id,
-                response.data.attributes,
-              ));
+      final response = await _surveyService.getSurveyDetail(surveyId);
+      return Survey.fromSurveyResponse(response);
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);
     }

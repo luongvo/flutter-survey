@@ -1,10 +1,10 @@
-import 'package:flutter_survey/api/response/base/base_http_response.dart';
+import 'package:flutter_survey/api/response/base/base_response_converter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'oauth_token_response.g.dart';
 
 @JsonSerializable()
-class OAuthTokenResponse extends BaseResponse {
+class OAuthTokenResponse {
   @JsonKey(name: "access_token")
   final String accessToken;
   @JsonKey(name: "token_type")
@@ -25,7 +25,5 @@ class OAuthTokenResponse extends BaseResponse {
   });
 
   factory OAuthTokenResponse.fromJson(Map<String, dynamic> json) =>
-      _$OAuthTokenResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$OAuthTokenResponseToJson(this);
+      _$OAuthTokenResponseFromJson(fromJsonApi(json));
 }
