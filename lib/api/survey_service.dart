@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_survey/api/response/survey_response.dart';
+import 'package:flutter_survey/api/response/survey_detail_response.dart';
 import 'package:flutter_survey/api/response/surveys_response.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -20,7 +20,7 @@ abstract class SurveyService {
   );
 
   @GET('/v1/surveys/{surveyId}')
-  Future<SurveyResponse> getSurveyDetail(
+  Future<SurveyDetailResponse> getSurveyDetail(
     @Path('surveyId') String surveyId,
   );
 }
