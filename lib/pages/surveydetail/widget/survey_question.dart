@@ -69,7 +69,10 @@ class SurveyQuestion extends StatelessWidget {
           style: Theme.of(context).textTheme.headline5,
         ),
         Expanded(child: SizedBox.shrink()),
-        SurveyAnswer(displayType: displayType),
+        Align(
+          alignment: Alignment.center,
+          child: SurveyAnswer(displayType: displayType),
+        ),
         Expanded(child: SizedBox.shrink()),
         Row(
           children: [

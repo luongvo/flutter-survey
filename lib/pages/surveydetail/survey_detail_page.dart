@@ -91,14 +91,18 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
   }
 
   Widget _buildSurveyQuestionPager(SurveyUiModel survey) {
+    // TODO bind question list https://github.com/luongvo/flutter-survey/issues/19
+    final pages = [
+      SurveyStart(survey: survey),
+      SurveyQuestion(displayType: DisplayType.dropdown),
+      SurveyQuestion(displayType: DisplayType.star),
+    ];
     return PageView.builder(
       // TODO disable swiping https://github.com/luongvo/flutter-survey/issues/19
       // physics: NeverScrollableScrollPhysics(),
       controller: pageController,
-      itemCount: 5,
-      itemBuilder: (context, i) => i == 0
-          ? SurveyStart(survey: survey)
-          : SurveyQuestion(displayType: DisplayType.dropdown),
+      itemCount: pages.length,
+      itemBuilder: (context, i) => pages[i],
     );
   }
 }

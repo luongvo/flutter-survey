@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/models/question.dart';
 
 class SurveyAnswer extends StatelessWidget {
@@ -12,6 +14,16 @@ class SurveyAnswer extends StatelessWidget {
     switch (displayType) {
       case DisplayType.dropdown:
         return _buildPicker(context);
+      case DisplayType.star:
+        return _buildRating(
+          activeIcon: Assets.icons.icStarActive,
+          inactiveIcon: Assets.icons.icStarInactive,
+          // TODO bind data https://github.com/luongvo/flutter-survey/issues/19
+          itemCount: 5,
+          onRate: (rating) {
+            // TODO https://github.com/luongvo/flutter-survey/issues/21
+          },
+        );
       default:
         return SizedBox.shrink();
     }
@@ -48,6 +60,23 @@ class SurveyAnswer extends StatelessWidget {
         itemExtent: 50,
         hideHeader: true,
       ).makePicker(),
+    );
+  }
+
+  Widget _buildRating({
+    required AssetGenImage activeIcon,
+    required AssetGenImage inactiveIcon,
+    required int itemCount,
+    required Function onRate,
+  }) {
+    return RatingBar(
+      itemCount: itemCount,
+      ratingWidget: RatingWidget(
+        full: activeIcon.image(width: 30, height: 30),
+        half: SizedBox.shrink(),
+        empty: inactiveIcon.image(width: 30, height: 30),
+      ),
+      onRatingUpdate: (rating) => onRate(rating.toInt()),
     );
   }
 }
