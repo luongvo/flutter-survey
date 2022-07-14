@@ -8,13 +8,9 @@ class SurveyResponse {
   final String id;
   String? title;
   String? description;
-  @JsonKey(name: "is_active")
   bool? isActive;
-  @JsonKey(name: "cover_image_url")
   String? coverImageUrl;
-  @JsonKey(name: "created_at")
   String? createdAt;
-  @JsonKey(name: "survey_type")
   String? surveyType;
 
   SurveyResponse({

@@ -7,15 +7,10 @@ part 'question_response.g.dart';
 class QuestionResponse {
   final String id;
   final String? text;
-  @JsonKey(name: 'display_order')
   final int? displayOrder;
-  @JsonKey(name: 'display_type')
   final String? displayType;
-  @JsonKey(name: 'image_url')
   final String? imageUrl;
-  @JsonKey(name: 'cover_image_url')
   final String? coverImageUrl;
-  @JsonKey(name: 'cover_image_opacity')
   final double? coverImageOpacity;
 
   QuestionResponse({

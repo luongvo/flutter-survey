@@ -5,15 +5,10 @@ part 'oauth_token_response.g.dart';
 
 @JsonSerializable()
 class OAuthTokenResponse {
-  @JsonKey(name: "access_token")
   final String accessToken;
-  @JsonKey(name: "token_type")
   final String tokenType;
-  @JsonKey(name: "expires_in")
   final int expiresIn;
-  @JsonKey(name: "refresh_token")
   final String refreshToken;
-  @JsonKey(name: "created_at")
   final int createdAt;
 
   OAuthTokenResponse({
