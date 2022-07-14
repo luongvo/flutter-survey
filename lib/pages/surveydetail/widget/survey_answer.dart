@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/models/answer.dart';
 import 'package:flutter_survey/models/question.dart';
@@ -63,6 +64,13 @@ class SurveyAnswer extends StatelessWidget {
             onItemChanged: (answerId, text) {
               // TODO https://github.com/luongvo/flutter-survey/issues/21
             });
+      case DisplayType.textarea:
+        return _buildTextArea(
+          context: context,
+          onItemChanged: (text) {
+            // TODO https://github.com/luongvo/flutter-survey/issues/21
+          },
+        );
       default:
         return SizedBox.shrink();
     }
@@ -171,6 +179,24 @@ class SurveyAnswer extends StatelessWidget {
                 ),
               ))
           .toList(),
+    );
+  }
+
+  Widget _buildTextArea({
+    required BuildContext context,
+    required Function onItemChanged,
+  }) {
+    return TextFormField(
+      autofocus: true,
+      onChanged: (text) => onItemChanged(text),
+      decoration: CustomInputDecoration(
+        context: context,
+        hint: context.localization.surveyAnswerTextAreaHint,
+      ),
+      style: Theme.of(context).textTheme.bodyText1,
+      keyboardType: TextInputType.multiline,
+      textInputAction: TextInputAction.done,
+      maxLines: 5,
     );
   }
 }

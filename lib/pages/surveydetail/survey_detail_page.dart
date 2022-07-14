@@ -99,6 +99,7 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
       SurveyQuestion(displayType: DisplayType.nps),
       SurveyQuestion(displayType: DisplayType.choice),
       SurveyQuestion(displayType: DisplayType.textfield),
+      SurveyQuestion(displayType: DisplayType.textarea),
     ];
     return PageView.builder(
       // TODO disable swiping https://github.com/luongvo/flutter-survey/issues/19

@@ -26,8 +26,7 @@ class HomeFooter extends StatelessWidget {
             Expanded(
               child: Text(
                 survey.description,
-                style: Theme
-                    .of(context)
+                style: Theme.of(context)
                     .textTheme
                     .bodyText1!
                     .copyWith(color: ColorName.whiteAlpha70),

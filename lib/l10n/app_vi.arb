@@ -9,6 +9,7 @@
   "surveyStart": "Bắt đầu khảo sát",
   "surveyAnswerNpsExtremelyLikely": "Rất có thể",
   "surveyAnswerNpsNotAtAllLikely": "Hoàn toàn không thể",
+  "surveyAnswerTextAreaHint": "Ý kiến của bạn",
   "validationErrorEmailInvalid": "Vui lòng nhập đúng email",
   "validationErrorPasswordInvalid": "Vui lòng nhập đúng mật khẩu"
 }
