@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/resources/dimens.dart';
+import 'package:flutter_survey/routes.dart';
 
 class HomeFooter extends StatelessWidget {
   final SurveyUiModel survey;
@@ -29,14 +30,17 @@ class HomeFooter extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(left: Dimens.defaultMarginPadding),
-              child: ClipOval(
-                child: Material(
-                  color: Colors.white,
-                  child: SizedBox(
-                    width: 56,
-                    height: 56,
-                    child: Assets.icons.icArrowRight.svg(
-                      fit: BoxFit.none,
+              child: GestureDetector(
+                onTap: () => _navigateToSurvey(context),
+                child: ClipOval(
+                  child: Material(
+                    color: Colors.white,
+                    child: SizedBox(
+                      width: 56,
+                      height: 56,
+                      child: Assets.icons.icArrowRight.svg(
+                        fit: BoxFit.none,
+                      ),
                     ),
                   ),
                 ),
@@ -46,5 +50,9 @@ class HomeFooter extends StatelessWidget {
         )
       ],
     );
+  }
+
+  void _navigateToSurvey(BuildContext context) {
+    Navigator.pushNamed(context, Routes.SURVEY, arguments: survey);
   }
 }
