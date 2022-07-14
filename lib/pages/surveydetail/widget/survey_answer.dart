@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
+import 'package:flutter_survey/models/answer.dart';
 import 'package:flutter_survey/models/question.dart';
 import 'package:flutter_survey/pages/common/multi_selection.dart';
 import 'package:flutter_survey/pages/common/number_rating.dart';
+import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
 
 class SurveyAnswer extends StatelessWidget {
   final DisplayType displayType;
@@ -41,6 +43,26 @@ class SurveyAnswer extends StatelessWidget {
             // TODO https://github.com/luongvo/flutter-survey/issues/21
           },
         );
+      case DisplayType.textfield:
+        return _buildTextFields(
+            context: context,
+            answers: [
+              Answer(
+                id: "1",
+                text: "Answer 1",
+                displayOrder: 0,
+                displayType: "textfield",
+              ),
+              Answer(
+                id: "2",
+                text: "Answer 2",
+                displayOrder: 1,
+                displayType: "textfield",
+              ),
+            ],
+            onItemChanged: (answerId, text) {
+              // TODO https://github.com/luongvo/flutter-survey/issues/21
+            });
       default:
         return SizedBox.shrink();
     }
@@ -122,6 +144,33 @@ class SurveyAnswer extends StatelessWidget {
         items: answers.map((answer) => SelectionModel("id", answer)).toList(),
         onChanged: (items) => onItemsChanged(items),
       ),
+    );
+  }
+
+  Widget _buildTextFields({
+    required BuildContext context,
+    required List<Answer> answers,
+    required Function onItemChanged,
+  }) {
+    return Column(
+      children: answers
+          .map((value) => Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: TextFormField(
+                  autofocus: true,
+                  onChanged: (text) => onItemChanged(value.id, text),
+                  decoration: CustomInputDecoration(
+                    context: context,
+                    hint: value.text,
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  style: Theme.of(context).textTheme.bodyText1,
+                  textInputAction: (answers.last.id != value.id)
+                      ? TextInputAction.next
+                      : TextInputAction.done,
+                ),
+              ))
+          .toList(),
     );
   }
 }

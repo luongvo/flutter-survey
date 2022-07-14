@@ -48,6 +48,7 @@ enum DisplayType {
   star,
   choice,
   nps,
+  textfield,
   dropdown,
   unknown
 }
