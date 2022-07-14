@@ -1,9 +1,8 @@
+import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
+import 'package:flutter_survey/extensions/date_time_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
-import 'package:intl/intl.dart';
-
-const String PATTERN_FULL_DATE_MONTH_DAY = 'EEEE, MMMM dd';
 
 class HomeHeader extends StatelessWidget {
   @override
@@ -12,7 +11,7 @@ class HomeHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          _composeCurrentDate(),
+          clock.now().toFormattedFullDayMonthYear().toUpperCase(),
           style: Theme.of(context).textTheme.subtitle1,
         ),
         const SizedBox(height: 5.0),
@@ -39,11 +38,5 @@ class HomeHeader extends StatelessWidget {
         )
       ],
     );
-  }
-
-  String _composeCurrentDate() {
-    final now = DateTime.now();
-    final formatter = DateFormat(PATTERN_FULL_DATE_MONTH_DAY);
-    return formatter.format(now).toUpperCase();
   }
 }

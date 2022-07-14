@@ -8,5 +8,5 @@ class Dimens {
   static const double inputHorizontalPadding = 12.0;
   static const double inputVerticalPadding = 19.0;
 
-  static const double homeFooterHeight = 150;
+  static const double homeFooterHeight = 150.0;
 }
