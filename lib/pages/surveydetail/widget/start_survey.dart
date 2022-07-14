@@ -64,13 +64,13 @@ class StartSurvey extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          // TODO
+          // TODO bind data
           "Working from home Check-In",
           style: Theme.of(context).textTheme.headline5,
         ),
         const SizedBox(height: 10.0),
         Text(
-          // TODO
+          // TODO bind data
           "We would like to know how you feel about our work from home (WFH) experience.",
           style: Theme.of(context).textTheme.bodyText1,
         ),
