@@ -3,6 +3,7 @@ import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/models/question.dart';
+import 'package:flutter_survey/pages/common/multi_selection.dart';
 import 'package:flutter_survey/pages/common/number_rating.dart';
 
 class SurveyAnswer extends StatelessWidget {
@@ -30,6 +31,13 @@ class SurveyAnswer extends StatelessWidget {
           // TODO bind data https://github.com/luongvo/flutter-survey/issues/19
           itemCount: 10,
           onRate: (rating) {
+            // TODO https://github.com/luongvo/flutter-survey/issues/21
+          },
+        );
+      case DisplayType.choice:
+        return _buildMultiChoice(
+          answers: ["Choice 1", "Choice 2", "Choice 3"],
+          onItemsChanged: (items) {
             // TODO https://github.com/luongvo/flutter-survey/issues/21
           },
         );
@@ -99,6 +107,20 @@ class SurveyAnswer extends StatelessWidget {
         itemCount: itemCount,
         onRatingUpdate: (value) => onRate(value.toInt()),
         wrapAlignment: WrapAlignment.center,
+      ),
+    );
+  }
+
+  Widget _buildMultiChoice({
+    required List<String> answers,
+    required Function onItemsChanged,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.all(80),
+      child: MultiSelection(
+        // TODO bind id https://github.com/luongvo/flutter-survey/issues/19
+        items: answers.map((answer) => SelectionModel("id", answer)).toList(),
+        onChanged: (items) => onItemsChanged(items),
       ),
     );
   }
