@@ -7,6 +7,8 @@
   "loginError": "Đăng nhập thất bại! Vui lòng kiểm tra lại email hoặc mật khẩu",
   "homeToday": "Hôm nay",
   "surveyStart": "Bắt đầu khảo sát",
+  "surveyAnswerNpsExtremelyLikely": "Rất có thể",
+  "surveyAnswerNpsNotAtAllLikely": "Hoàn toàn không thể",
   "validationErrorEmailInvalid": "Vui lòng nhập đúng email",
   "validationErrorPasswordInvalid": "Vui lòng nhập đúng mật khẩu"
 }

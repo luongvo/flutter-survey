@@ -3,6 +3,7 @@ import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/models/question.dart';
+import 'package:flutter_survey/pages/common/number_rating.dart';
 
 class SurveyAnswer extends StatelessWidget {
   final DisplayType displayType;
@@ -20,6 +21,14 @@ class SurveyAnswer extends StatelessWidget {
           inactiveIcon: Assets.icons.icStarInactive,
           // TODO bind data https://github.com/luongvo/flutter-survey/issues/19
           itemCount: 5,
+          onRate: (rating) {
+            // TODO https://github.com/luongvo/flutter-survey/issues/21
+          },
+        );
+      case DisplayType.nps:
+        return _buildNumberRating(
+          // TODO bind data https://github.com/luongvo/flutter-survey/issues/19
+          itemCount: 10,
           onRate: (rating) {
             // TODO https://github.com/luongvo/flutter-survey/issues/21
           },
@@ -77,6 +86,20 @@ class SurveyAnswer extends StatelessWidget {
         empty: inactiveIcon.image(width: 30, height: 30),
       ),
       onRatingUpdate: (rating) => onRate(rating.toInt()),
+    );
+  }
+
+  Widget _buildNumberRating({
+    required int itemCount,
+    required Function onRate,
+  }) {
+    return Container(
+      height: 120,
+      child: NumberRating(
+        itemCount: itemCount,
+        onRatingUpdate: (value) => onRate(value.toInt()),
+        wrapAlignment: WrapAlignment.center,
+      ),
     );
   }
 }

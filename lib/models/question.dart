@@ -46,6 +46,7 @@ class Question extends Equatable {
 
 enum DisplayType {
   star,
+  nps,
   dropdown,
   unknown
 }
