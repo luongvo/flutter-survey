@@ -3,7 +3,6 @@ import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
-import 'package:flutter_survey/pages/widgets/dimmed_background.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 
 class SurveyStart extends StatelessWidget {
@@ -13,26 +12,7 @@ class SurveyStart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: Image.network(survey.coverImageUrl).image,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        DimmedBackground(
-          colors: [
-            Colors.black.withOpacity(0.2),
-            Colors.black.withOpacity(0.7),
-          ],
-          stops: const [0.0, 1.0],
-        ),
-        _buildPage(context),
-      ],
-    );
+    return _buildPage(context);
   }
 
   Column _buildPage(BuildContext context) {

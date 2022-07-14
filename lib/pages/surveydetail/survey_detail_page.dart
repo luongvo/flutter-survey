@@ -4,9 +4,10 @@ import 'package:flutter_survey/di/di.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/pages/surveydetail/survey_detail_state.dart';
 import 'package:flutter_survey/pages/surveydetail/survey_detail_view_model.dart';
-import 'package:flutter_survey/pages/surveydetail/widget/start_survey.dart';
 import 'package:flutter_survey/pages/surveydetail/widget/survey_question.dart';
+import 'package:flutter_survey/pages/surveydetail/widget/survey_start.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
+import 'package:flutter_survey/pages/widgets/dimmed_background.dart';
 import 'package:flutter_survey/usecase/get_survey_detail_use_case.dart';
 
 final surveyDetailViewModelProvider =
@@ -53,27 +54,49 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
           error: (message) {
             WidgetsBinding.instance?.addPostFrameCallback((_) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(message ?? context.localization.errorGeneric)));
-        });
-        return _buildSurveyPage(uiModel);
-      },
-    );
+                  content: Text(message ?? context.localization.errorGeneric)));
+            });
+            return _buildSurveyPage(uiModel);
+          },
+        );
   }
 
   Widget _buildSurveyPage(SurveyUiModel? survey) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: survey != null
-          ? PageView.builder(
-              // TODO disable swiping https://github.com/luongvo/flutter-survey/issues/19
-              // physics: NeverScrollableScrollPhysics(),
-              controller: pageController,
-              itemCount: 5,
-              itemBuilder: (context, i) => i == 0
-                  ? SurveyStart(survey: survey)
-                  : SurveyQuestion(survey: survey),
+          ? Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: Image.network(survey.coverImageUrl).image,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                DimmedBackground(
+                  colors: [
+                    Colors.black.withOpacity(0.2),
+                    Colors.black.withOpacity(0.7),
+                  ],
+                  stops: const [0.0, 1.0],
+                ),
+                _buildSurveyQuestionPager(survey)
+              ],
             )
           : const SizedBox.shrink(),
+    );
+  }
+
+  Widget _buildSurveyQuestionPager(SurveyUiModel survey) {
+    return PageView.builder(
+      // TODO disable swiping https://github.com/luongvo/flutter-survey/issues/19
+      // physics: NeverScrollableScrollPhysics(),
+      controller: pageController,
+      itemCount: 5,
+      itemBuilder: (context, i) =>
+          i == 0 ? SurveyStart(survey: survey) : SurveyQuestion(survey: survey),
     );
   }
 }
