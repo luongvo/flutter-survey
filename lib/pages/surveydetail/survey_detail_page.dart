@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/di/di.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
+import 'package:flutter_survey/models/question.dart';
 import 'package:flutter_survey/pages/surveydetail/survey_detail_state.dart';
 import 'package:flutter_survey/pages/surveydetail/survey_detail_view_model.dart';
 import 'package:flutter_survey/pages/surveydetail/widget/survey_question.dart';
@@ -95,8 +96,9 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
       // physics: NeverScrollableScrollPhysics(),
       controller: pageController,
       itemCount: 5,
-      itemBuilder: (context, i) =>
-          i == 0 ? SurveyStart(survey: survey) : SurveyQuestion(survey: survey),
+      itemBuilder: (context, i) => i == 0
+          ? SurveyStart(survey: survey)
+          : SurveyQuestion(displayType: DisplayType.dropdown),
     );
   }
 }

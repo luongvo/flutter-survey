@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
-import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
+import 'package:flutter_survey/models/question.dart';
+import 'package:flutter_survey/pages/surveydetail/widget/survey_answer.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 
 class SurveyQuestion extends StatelessWidget {
-  final SurveyUiModel survey;
+  final DisplayType displayType;
 
-  SurveyQuestion({required this.survey});
+  SurveyQuestion({required this.displayType});
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +68,8 @@ class SurveyQuestion extends StatelessWidget {
           "How fulfilled did you feel during this WFH period?",
           style: Theme.of(context).textTheme.headline5,
         ),
+        Expanded(child: SizedBox.shrink()),
+        SurveyAnswer(displayType: displayType),
         Expanded(child: SizedBox.shrink()),
         Row(
           children: [

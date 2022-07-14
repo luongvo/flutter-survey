@@ -43,3 +43,8 @@ class Question extends Equatable {
     );
   }
 }
+
+enum DisplayType {
+  dropdown,
+  unknown
+}
