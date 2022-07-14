@@ -5,6 +5,7 @@ import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/pages/surveydetail/survey_detail_state.dart';
 import 'package:flutter_survey/pages/surveydetail/survey_detail_view_model.dart';
 import 'package:flutter_survey/pages/surveydetail/widget/start_survey.dart';
+import 'package:flutter_survey/pages/surveydetail/widget/survey_question.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/usecase/get_survey_detail_use_case.dart';
 
@@ -25,6 +26,8 @@ class SurveyDetailPage extends ConsumerStatefulWidget {
 }
 
 class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
+  final PageController pageController = PageController(initialPage: 0);
+
   @override
   void initState() {
     super.initState();
@@ -32,6 +35,12 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
       final survey = context.arguments as SurveyUiModel;
       ref.read(surveyDetailViewModelProvider.notifier).loadSurveyDetail(survey);
     });
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -44,18 +53,26 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
           error: (message) {
             WidgetsBinding.instance?.addPostFrameCallback((_) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(message ?? context.localization.errorGeneric)));
-            });
-            return _buildSurveyPage(uiModel);
-          },
-        );
+              content: Text(message ?? context.localization.errorGeneric)));
+        });
+        return _buildSurveyPage(uiModel);
+      },
+    );
   }
 
   Widget _buildSurveyPage(SurveyUiModel? survey) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: survey != null
-          ? StartSurvey(survey: survey)
+          ? PageView.builder(
+              // TODO disable swiping https://github.com/luongvo/flutter-survey/issues/19
+              // physics: NeverScrollableScrollPhysics(),
+              controller: pageController,
+              itemCount: 5,
+              itemBuilder: (context, i) => i == 0
+                  ? SurveyStart(survey: survey)
+                  : SurveyQuestion(survey: survey),
+            )
           : const SizedBox.shrink(),
     );
   }

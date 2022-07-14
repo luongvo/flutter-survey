@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/pages/widgets/dimmed_background.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 
-class SurveyStart extends StatelessWidget {
+class SurveyQuestion extends StatelessWidget {
   final SurveyUiModel survey;
 
-  SurveyStart({required this.survey});
+  SurveyQuestion({required this.survey});
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +39,25 @@ class SurveyStart extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: Dimens.defaultMarginPaddingLarge),
-        GestureDetector(
-          onTap: () => context.navigateBack(),
-          child: SizedBox(
-            width: 56,
-            height: 56,
-            child: Assets.icons.icBack.svg(
-              fit: BoxFit.none,
+        Row(
+          children: [
+            Expanded(child: SizedBox.shrink()),
+            Padding(
+              padding: const EdgeInsets.only(left: Dimens.defaultMarginPadding),
+              child: GestureDetector(
+                onTap: () {
+                  // TODO https://github.com/luongvo/flutter-survey/issues/19
+                },
+                child: SizedBox(
+                  width: 56,
+                  height: 56,
+                  child: Assets.icons.icClose.svg(
+                    fit: BoxFit.none,
+                  ),
+                ),
+              ),
             ),
-          ),
+          ],
         ),
         Expanded(
           child: Padding(
@@ -65,48 +74,42 @@ class SurveyStart extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          survey.title,
-          style: Theme.of(context).textTheme.headline5,
-        ),
-        const SizedBox(height: 10.0),
-        Text(
-          survey.description,
+          // TODO bind index https://github.com/luongvo/flutter-survey/issues/19
+          "1/5",
           style: Theme.of(context)
               .textTheme
               .bodyText1!
               .copyWith(color: ColorName.whiteAlpha70),
         ),
+        const SizedBox(height: 10.0),
+        Text(
+          // TODO bind data https://github.com/luongvo/flutter-survey/issues/19
+          "How fulfilled did you feel during this WFH period?",
+          style: Theme.of(context).textTheme.headline5,
+        ),
         Expanded(child: SizedBox.shrink()),
         Row(
           children: [
             Expanded(child: SizedBox.shrink()),
-            TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.white),
-                foregroundColor: MaterialStateProperty.all(Colors.black),
-                overlayColor: MaterialStateProperty.all(Colors.black12),
-                padding: MaterialStateProperty.all(
-                  const EdgeInsets.symmetric(
-                    vertical: Dimens.inputVerticalPadding,
+            Padding(
+              padding: const EdgeInsets.only(left: Dimens.defaultMarginPadding),
+              child: GestureDetector(
+                onTap: () {
+                  // TODO https://github.com/luongvo/flutter-survey/issues/19
+                },
+                child: ClipOval(
+                  child: Material(
+                    color: Colors.white,
+                    child: SizedBox(
+                      width: 56,
+                      height: 56,
+                      child: Assets.icons.icArrowRight.svg(
+                        fit: BoxFit.none,
+                      ),
+                    ),
                   ),
                 ),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(Dimens.inputBorderRadius)),
-                ),
-                textStyle: MaterialStateProperty.all(
-                  Theme.of(context).textTheme.button,
-                ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: Dimens.defaultMarginPadding),
-                child: Text(context.localization.surveyStart),
-              ),
-              onPressed: () {
-                // TODO start
-              },
             ),
           ],
         ),

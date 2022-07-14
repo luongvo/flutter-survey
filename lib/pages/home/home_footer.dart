@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
+import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 import 'package:flutter_survey/routes.dart';
@@ -25,7 +26,11 @@ class HomeFooter extends StatelessWidget {
             Expanded(
               child: Text(
                 survey.description,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .bodyText1!
+                    .copyWith(color: ColorName.whiteAlpha70),
               ),
             ),
             Padding(
