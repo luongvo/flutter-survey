@@ -49,7 +49,7 @@ void main() {
           .call(LoginInput(email: 'email', password: 'password'));
 
       expect(result, isA<Failed>());
-      expect((result as Failed).exception.networkExceptions,
+      expect((result as Failed).exception.actualException,
           NetworkExceptions.unauthorisedRequest());
     });
   });

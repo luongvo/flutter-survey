@@ -1,4 +1,7 @@
+import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_survey/extensions/build_context_ext.dart';
+import 'package:flutter_survey/extensions/date_time_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -8,8 +11,7 @@ class HomeHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          // TODO data binding https://github.com/luongvo/flutter-survey/issues/14
-          'MONDAY, JUNE 15',
+          clock.now().toFormattedFullDayMonthYear().toUpperCase(),
           style: Theme.of(context).textTheme.subtitle1,
         ),
         const SizedBox(height: 5.0),
@@ -17,8 +19,7 @@ class HomeHeader extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                // TODO data binding https://github.com/luongvo/flutter-survey/issues/14
-                'Today',
+                context.localization.homeToday,
                 style: Theme.of(context).textTheme.headline5,
               ),
             ),

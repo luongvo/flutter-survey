@@ -42,31 +42,10 @@ void main() {
     });
 
     test(
-        'When calling login with negative result as unauthorizedRequest error, it returns Failed state accordingly',
+        'When calling login with negative result, it returns Failed state accordingly',
         () {
       final mockException = MockUseCaseException();
-      when(mockException.networkExceptions)
-          .thenReturn(NetworkExceptions.unauthorisedRequest());
-      when(mockLoginUseCase.call(any))
-          .thenAnswer((_) async => Failed(mockException));
-      final stateStream =
-          container.read(loginViewModelProvider.notifier).stream;
-      expect(
-          stateStream,
-          emitsInOrder([
-            LoginState.loading(),
-            LoginState.error(null),
-          ]));
-      container
-          .read(loginViewModelProvider.notifier)
-          .login('email', 'password');
-    });
-
-    test(
-        'When calling login with negative result as other errors, it returns Failed state accordingly',
-        () {
-      final mockException = MockUseCaseException();
-      when(mockException.networkExceptions)
+      when(mockException.actualException)
           .thenReturn(NetworkExceptions.internalServerError());
       when(mockLoginUseCase.call(any))
           .thenAnswer((_) async => Failed(mockException));

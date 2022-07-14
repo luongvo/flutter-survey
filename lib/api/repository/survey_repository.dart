@@ -18,7 +18,8 @@ class SurveyRepositoryImpl extends SurveyRepository {
     try {
       return await _surveyService.getSurveyList(pageNumber, pageSize).then(
           (response) => response.data
-              .map((apiResponse) => apiResponse.attributes.toSurvey())
+              .map((apiResponse) =>
+                  Survey.fromSurveyResponse(apiResponse.attributes))
               .toList());
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);

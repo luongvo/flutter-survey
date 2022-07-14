@@ -1,8 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/di/di.dart';
+import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/pages/login/login_state.dart';
@@ -39,8 +39,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     ref.listen<LoginState>(loginViewModelProvider, (_, loginState) {
       loginState.maybeWhen(
         error: (error) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(AppLocalizations.of(context)!.loginError)));
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(context.localization.loginError)));
         },
         success: () async {
           await Navigator.of(context).popAndPushNamed(Routes.HOME_PAGE);
@@ -119,7 +119,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           controller: _emailController,
           decoration: CustomInputDecoration(
             context: context,
-            hint: AppLocalizations.of(context)!.loginEmail,
+            hint: context.localization.loginEmail,
           ),
           keyboardType: TextInputType.emailAddress,
           style: Theme.of(context).textTheme.bodyText1,
@@ -133,7 +133,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               controller: _passwordController,
               decoration: CustomInputDecoration(
                 context: context,
-                hint: AppLocalizations.of(context)!.loginPassword,
+                hint: context.localization.loginPassword,
               ).copyWith(
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: Dimens.inputHorizontalPadding,
@@ -155,7 +155,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 height: 56,
                 child: TextButton(
                   child: Text(
-                    AppLocalizations.of(context)!.loginForgot,
+                    context.localization.loginForgot,
                     style: Theme.of(context).textTheme.bodyText2!.copyWith(
                           color: ColorName.whiteAlpha50,
                         ),
@@ -190,7 +190,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 Theme.of(context).textTheme.button,
               ),
             ),
-            child: Text(AppLocalizations.of(context)!.loginText),
+            child: Text(context.localization.loginText),
             onPressed: () => _attemptLogin(),
           ),
         ),
@@ -200,7 +200,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   String? _emailValidator(String? value) {
     if (value == null || !EmailValidator.validate(value)) {
-      return AppLocalizations.of(context)!.validationErrorEmailInvalid;
+      return context.localization.validationErrorEmailInvalid;
     } else {
       return null;
     }
@@ -208,7 +208,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   String? _passwordValidator(String? value) {
     if (value == null || value.length < PASSWORD_LENGTH_MIN) {
-      return AppLocalizations.of(context)!.validationErrorEmailInvalid;
+      return context.localization.validationErrorEmailInvalid;
     } else {
       return null;
     }

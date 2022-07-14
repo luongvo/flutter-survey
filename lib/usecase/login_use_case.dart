@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clock/clock.dart';
 import 'package:flutter_survey/api/exception/network_exceptions.dart';
 import 'package:flutter_survey/api/repository/oauth_repository.dart';
 import 'package:flutter_survey/local/shared_preference_helper.dart';
@@ -27,7 +28,7 @@ class LoginUseCase extends UseCase<void, LoginInput> {
         .login(email: input.email, password: input.password)
         .then((value) => _persistTokenData(value))
         .onError<NetworkExceptions>(
-            (err, stackTrace) => Failed(UseCaseException(err, null)));
+            (err, stackTrace) => Failed(UseCaseException(err)));
   }
 
   Result<dynamic> _persistTokenData(OAuthToken data) {
@@ -36,7 +37,7 @@ class LoginUseCase extends UseCase<void, LoginInput> {
     _sharedPreferencesHelper.saveRefreshToken(data.refreshToken);
 
     _sharedPreferencesHelper.saveTokenExpiration(
-        data.expiresIn * 1000 + DateTime.now().millisecondsSinceEpoch);
+        data.expiresIn * 1000 + clock.now().millisecondsSinceEpoch);
 
     return Success(null);
   }
