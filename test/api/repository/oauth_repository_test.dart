@@ -1,8 +1,6 @@
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_survey/api/exception/network_exceptions.dart';
 import 'package:flutter_survey/api/repository/oauth_repository.dart';
-import 'package:flutter_survey/api/response/base/api_response.dart';
-import 'package:flutter_survey/api/response/base/base_http_response.dart';
 import 'package:flutter_survey/api/response/oauth_token_response.dart';
 import 'package:flutter_survey/models/oauth_token.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -42,13 +40,7 @@ void main() {
         expiresIn: 0,
       );
       when(mockOAuthService.login(any))
-          .thenAnswer((_) async => BaseHttpResponse<OAuthTokenResponse>(
-                data: ApiResponse(
-                  id: "",
-                  type: "type",
-                  attributes: oauthTokenResponse,
-                ),
-              ));
+          .thenAnswer((_) async => oauthTokenResponse);
 
       final result = await oauthRepository.login(
         email: "email",
