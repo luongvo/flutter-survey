@@ -37,7 +37,7 @@ class NumberRating extends StatefulWidget {
 
   /// Defines color for glow.
   ///
-  /// Default is [ThemeData.accentColor].
+  /// Default is [ThemeData.colorScheme.secondary].
   final Color? glowColor;
 
   /// Sets maximum rating
@@ -313,7 +313,7 @@ class _NumberRatingState extends State<NumberRating> {
             builder: (context, glow, child) {
               if (glow && widget.glow) {
                 final glowColor =
-                    widget.glowColor ?? Theme.of(context).accentColor;
+                    widget.glowColor ?? Theme.of(context).colorScheme.secondary;
                 return DecoratedBox(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
