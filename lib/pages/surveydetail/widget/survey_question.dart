@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/models/question.dart';
@@ -9,11 +10,13 @@ class SurveyQuestion extends StatelessWidget {
   final Question question;
   final int index;
   final int total;
+  final Function() onNext;
 
   SurveyQuestion({
     required this.question,
     required this.index,
     required this.total,
+    required this.onNext,
   });
 
   @override
@@ -32,9 +35,7 @@ class SurveyQuestion extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: Dimens.defaultMarginPadding),
               child: GestureDetector(
-                onTap: () {
-                  // TODO https://github.com/luongvo/flutter-survey/issues/19
-                },
+                onTap: () => context.navigateBack(),
                 child: SizedBox(
                   width: 56,
                   height: 56,
@@ -84,9 +85,7 @@ class SurveyQuestion extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: Dimens.defaultMarginPadding),
               child: GestureDetector(
-                onTap: () {
-                  // TODO https://github.com/luongvo/flutter-survey/issues/19
-                },
+                onTap: () => onNext(),
                 child: ClipOval(
                   child: Material(
                     color: Colors.white,

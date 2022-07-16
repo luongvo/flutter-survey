@@ -10,6 +10,8 @@ import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/pages/widgets/dimmed_image_background.dart';
 import 'package:flutter_survey/usecase/get_survey_detail_use_case.dart';
 
+const Duration _pageScrollDuration = Duration(milliseconds: 200);
+
 final surveyDetailViewModelProvider =
     StateNotifierProvider.autoDispose<SurveyDetailViewModel, SurveyDetailState>(
         (ref) {
@@ -27,7 +29,7 @@ class SurveyDetailPage extends ConsumerStatefulWidget {
 }
 
 class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
-  final PageController pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController();
 
   @override
   void initState() {
@@ -40,7 +42,7 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
 
   @override
   void dispose() {
-    pageController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -80,21 +82,31 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
   Widget _buildSurveyQuestionPager(SurveyUiModel survey) {
     final pages = List.empty(growable: true);
     pages.add(
-      SurveyStart(survey: survey),
+      SurveyStart(
+        survey: survey,
+        onNext: () => _gotoNextPage(),
+      ),
     );
     pages.addAll(survey.questions
         .map((question) => SurveyQuestion(
-              question: question,
+      question: question,
               index: survey.questions.indexOf(question) + 1,
               total: survey.questions.length,
+              onNext: () => _gotoNextPage(),
             ))
         .toList());
     return PageView.builder(
-      // TODO disable swiping https://github.com/luongvo/flutter-survey/issues/19
-      // physics: NeverScrollableScrollPhysics(),
-      controller: pageController,
+      physics: NeverScrollableScrollPhysics(),
+      controller: _pageController,
       itemCount: pages.length,
       itemBuilder: (context, i) => pages[i],
+    );
+  }
+
+  _gotoNextPage() {
+    _pageController.nextPage(
+      duration: _pageScrollDuration,
+      curve: Curves.ease,
     );
   }
 }

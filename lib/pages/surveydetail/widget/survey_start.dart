@@ -7,8 +7,12 @@ import 'package:flutter_survey/resources/dimens.dart';
 
 class SurveyStart extends StatelessWidget {
   final SurveyUiModel survey;
+  final Function() onNext;
 
-  SurveyStart({required this.survey});
+  SurveyStart({
+    required this.survey,
+    required this.onNext,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +88,7 @@ class SurveyStart extends StatelessWidget {
                     horizontal: Dimens.defaultMarginPadding),
                 child: Text(context.localization.surveyStart),
               ),
-              onPressed: () {
-                // TODO start
-              },
+              onPressed: () => onNext(),
             ),
           ],
         ),
