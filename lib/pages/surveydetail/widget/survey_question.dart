@@ -6,9 +6,15 @@ import 'package:flutter_survey/pages/surveydetail/widget/survey_answer.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 
 class SurveyQuestion extends StatelessWidget {
-  final DisplayType displayType;
+  final Question question;
+  final int index;
+  final int total;
 
-  SurveyQuestion({required this.displayType});
+  SurveyQuestion({
+    required this.question,
+    required this.index,
+    required this.total,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +61,7 @@ class SurveyQuestion extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          // TODO bind index https://github.com/luongvo/flutter-survey/issues/19
-          "1/5",
+          "$index/$total",
           style: Theme.of(context)
               .textTheme
               .bodyText1!
@@ -64,14 +69,13 @@ class SurveyQuestion extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         Text(
-          // TODO bind data https://github.com/luongvo/flutter-survey/issues/19
-          "How fulfilled did you feel during this WFH period?",
+          question.text,
           style: Theme.of(context).textTheme.headline5,
         ),
         Expanded(child: SizedBox.shrink()),
         Align(
           alignment: Alignment.center,
-          child: SurveyAnswer(displayType: displayType),
+          child: SurveyAnswer(question: question),
         ),
         Expanded(child: SizedBox.shrink()),
         Row(

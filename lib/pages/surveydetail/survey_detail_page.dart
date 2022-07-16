@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/di/di.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
-import 'package:flutter_survey/models/question.dart';
 import 'package:flutter_survey/pages/surveydetail/survey_detail_state.dart';
 import 'package:flutter_survey/pages/surveydetail/survey_detail_view_model.dart';
 import 'package:flutter_survey/pages/surveydetail/widget/survey_question.dart';
@@ -79,16 +78,17 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
   }
 
   Widget _buildSurveyQuestionPager(SurveyUiModel survey) {
-    // TODO bind question list https://github.com/luongvo/flutter-survey/issues/19
-    final pages = [
+    final pages = List.empty(growable: true);
+    pages.add(
       SurveyStart(survey: survey),
-      SurveyQuestion(displayType: DisplayType.dropdown),
-      SurveyQuestion(displayType: DisplayType.star),
-      SurveyQuestion(displayType: DisplayType.nps),
-      SurveyQuestion(displayType: DisplayType.choice),
-      SurveyQuestion(displayType: DisplayType.textfield),
-      SurveyQuestion(displayType: DisplayType.textarea),
-    ];
+    );
+    pages.addAll(survey.questions
+        .map((question) => SurveyQuestion(
+              question: question,
+              index: survey.questions.indexOf(question) + 1,
+              total: survey.questions.length,
+            ))
+        .toList());
     return PageView.builder(
       // TODO disable swiping https://github.com/luongvo/flutter-survey/issues/19
       // physics: NeverScrollableScrollPhysics(),

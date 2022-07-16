@@ -10,13 +10,13 @@ import 'package:flutter_survey/pages/common/number_rating.dart';
 import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
 
 class SurveyAnswer extends StatelessWidget {
-  final DisplayType displayType;
+  final Question question;
 
-  SurveyAnswer({required this.displayType});
+  SurveyAnswer({required this.question});
 
   @override
   Widget build(BuildContext context) {
-    switch (displayType) {
+    switch (question.displayType) {
       case DisplayType.dropdown:
         return _buildPicker(context);
       case DisplayType.star:
