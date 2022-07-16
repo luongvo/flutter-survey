@@ -1,3 +1,4 @@
+import 'package:flutter_survey/api/response/answer_response.dart';
 import 'package:flutter_survey/api/response/base/base_response_converter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -12,6 +13,7 @@ class QuestionResponse {
   final String? imageUrl;
   final String? coverImageUrl;
   final double? coverImageOpacity;
+  final List<AnswerResponse> answers;
 
   QuestionResponse({
     required this.id,
@@ -21,6 +23,7 @@ class QuestionResponse {
     required this.imageUrl,
     required this.coverImageUrl,
     required this.coverImageOpacity,
+    required this.answers,
   });
 
   factory QuestionResponse.fromJson(Map<String, dynamic> json) =>

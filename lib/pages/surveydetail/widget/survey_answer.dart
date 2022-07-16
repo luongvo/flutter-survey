@@ -23,8 +23,7 @@ class SurveyAnswer extends StatelessWidget {
         return _buildRating(
           activeIcon: Assets.icons.icStarActive,
           inactiveIcon: Assets.icons.icStarInactive,
-          // TODO bind data https://github.com/luongvo/flutter-survey/issues/19
-          itemCount: 5,
+          itemCount: question.answers.length,
           onRate: (rating) {
             // TODO https://github.com/luongvo/flutter-survey/issues/21
           },
