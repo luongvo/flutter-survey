@@ -28,6 +28,15 @@ class SurveyAnswer extends StatelessWidget {
             // TODO https://github.com/luongvo/flutter-survey/issues/21
           },
         );
+      case DisplayType.heart:
+        return _buildRating(
+          activeIcon: Assets.icons.icHeartActive,
+          inactiveIcon: Assets.icons.icHeartInactive,
+          itemCount: question.answers.length,
+          onRate: (rating) {
+            // TODO https://github.com/luongvo/flutter-survey/issues/21
+          },
+        );
       case DisplayType.nps:
         return _buildNumberRating(
           // TODO bind data https://github.com/luongvo/flutter-survey/issues/19
