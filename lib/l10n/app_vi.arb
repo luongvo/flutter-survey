@@ -7,6 +7,7 @@
   "loginError": "Đăng nhập thất bại! Vui lòng kiểm tra lại email hoặc mật khẩu",
   "homeToday": "Hôm nay",
   "surveyStart": "Bắt đầu khảo sát",
+  "surveySubmit": "Gửi",
   "surveyAnswerNpsExtremelyLikely": "Rất có thể",
   "surveyAnswerNpsNotAtAllLikely": "Hoàn toàn không thể",
   "surveyAnswerTextAreaHint": "Ý kiến của bạn",

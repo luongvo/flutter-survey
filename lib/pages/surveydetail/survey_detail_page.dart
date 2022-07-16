@@ -89,12 +89,17 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
     );
     pages.addAll(survey.questions
         .map((question) => SurveyQuestion(
-      question: question,
+              question: question,
               index: survey.questions.indexOf(question) + 1,
               total: survey.questions.length,
               onNext: () => _gotoNextPage(),
+              onSubmit: () {
+                // TODO: submit survey https://github.com/luongvo/flutter-survey/issues/21
+                context.navigateBack();
+              },
             ))
         .toList());
+
     return PageView.builder(
       physics: NeverScrollableScrollPhysics(),
       controller: _pageController,

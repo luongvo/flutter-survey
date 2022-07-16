@@ -11,12 +11,14 @@ class SurveyQuestion extends StatelessWidget {
   final int index;
   final int total;
   final Function() onNext;
+  final Function() onSubmit;
 
   SurveyQuestion({
     required this.question,
     required this.index,
     required this.total,
     required this.onNext,
+    required this.onSubmit,
   });
 
   @override
@@ -82,27 +84,58 @@ class SurveyQuestion extends StatelessWidget {
         Row(
           children: [
             Expanded(child: SizedBox.shrink()),
-            Padding(
-              padding: const EdgeInsets.only(left: Dimens.defaultMarginPadding),
-              child: GestureDetector(
-                onTap: () => onNext(),
-                child: ClipOval(
-                  child: Material(
-                    color: Colors.white,
-                    child: SizedBox(
-                      width: 56,
-                      height: 56,
-                      child: Assets.icons.icArrowRight.svg(
-                        fit: BoxFit.none,
-                      ),
+            _buildActionButton(context),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildActionButton(BuildContext context) {
+    return index < total
+        ? Padding(
+            padding: const EdgeInsets.only(left: Dimens.defaultMarginPadding),
+            child: GestureDetector(
+              onTap: () => onNext(),
+              child: ClipOval(
+                child: Material(
+                  color: Colors.white,
+                  child: SizedBox(
+                    width: 56,
+                    height: 56,
+                    child: Assets.icons.icArrowRight.svg(
+                      fit: BoxFit.none,
                     ),
                   ),
                 ),
               ),
             ),
-          ],
-        ),
-      ],
-    );
+          )
+        : TextButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.white),
+              foregroundColor: MaterialStateProperty.all(Colors.black),
+              overlayColor: MaterialStateProperty.all(Colors.black12),
+              padding: MaterialStateProperty.all(
+                const EdgeInsets.symmetric(
+                  vertical: Dimens.inputVerticalPadding,
+                ),
+              ),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(Dimens.inputBorderRadius)),
+              ),
+              textStyle: MaterialStateProperty.all(
+                Theme.of(context).textTheme.button,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Dimens.defaultMarginPadding),
+              child: Text(context.localization.surveySubmit),
+            ),
+            onPressed: () => onSubmit(),
+          );
   }
 }
