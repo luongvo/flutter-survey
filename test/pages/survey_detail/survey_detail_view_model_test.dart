@@ -17,16 +17,37 @@ import '../../utils/file_util.dart';
 void main() {
   group('SurveyDetailViewModelTest', () {
     late MockGetSurveyDetailUseCase mockGetSurveyDetailUseCase;
+    late MockSubmitSurveyUseCase mockSubmitSurveyUseCase;
     late ProviderContainer container;
 
-    setUp(() {
+    late SurveyDetail surveyDetail;
+    late SurveyUiModel surveyUiModel;
+
+    setUp(() async {
       mockGetSurveyDetailUseCase = MockGetSurveyDetailUseCase();
+      mockSubmitSurveyUseCase = MockSubmitSurveyUseCase();
       container = ProviderContainer(
         overrides: [
-          surveyDetailViewModelProvider.overrideWithValue(
-              SurveyDetailViewModel(mockGetSurveyDetailUseCase)),
+          surveyDetailViewModelProvider.overrideWithValue(SurveyDetailViewModel(
+            mockGetSurveyDetailUseCase,
+            mockSubmitSurveyUseCase,
+          )),
         ],
       );
+
+      final surveyDetailJson =
+          await FileUtil.loadFile('test_resources/survey_detail.json');
+      final surveyDetailResponse =
+          SurveyDetailResponse.fromJson(surveyDetailJson);
+      surveyDetail =
+          SurveyDetail.fromSurveyDetailResponse(surveyDetailResponse);
+      surveyUiModel = SurveyUiModelMocks.mock();
+
+      when(mockGetSurveyDetailUseCase.call(any))
+          .thenAnswer((_) async => Success(surveyDetail));
+      when(mockSubmitSurveyUseCase.call(any))
+          .thenAnswer((_) async => Success(Null));
+
       addTearDown(container.dispose);
     });
 
@@ -38,16 +59,7 @@ void main() {
     test(
         'When loading Survey data from arguments, it initializes with initial Survey data and load the latest Survey detail',
         () async {
-      final surveyDetailJson =
-          await FileUtil.loadFile('test_resources/survey_detail.json');
-      final surveyDetailResponse =
-          SurveyDetailResponse.fromJson(surveyDetailJson);
-      final surveyDetail =
-          SurveyDetail.fromSurveyDetailResponse(surveyDetailResponse);
       final surveyUiModel = SurveyUiModelMocks.mock();
-
-      when(mockGetSurveyDetailUseCase.call(any))
-          .thenAnswer((_) async => Success(surveyDetail));
       final stateStream =
           container.read(surveyDetailViewModelProvider.notifier).stream;
       final surveyStream =
@@ -79,7 +91,6 @@ void main() {
     test(
         'When calling load survey detail with negative result, it returns Failed state accordingly',
         () {
-      final surveyUiModel = SurveyUiModelMocks.mock();
       final mockException = MockUseCaseException();
       when(mockException.actualException)
           .thenReturn(NetworkExceptions.internalServerError());
@@ -110,6 +121,64 @@ void main() {
       container
           .read(surveyDetailViewModelProvider.notifier)
           .loadSurveyDetail(surveyUiModel);
+    });
+
+    test(
+        'When calling submitSurvey with positive result, it submits survey correctly',
+        () async {
+      final stateStream =
+          container.read(surveyDetailViewModelProvider.notifier).stream;
+
+      expect(
+          stateStream,
+          emitsInOrder([
+            SurveyDetailState.loading(),
+            SurveyDetailState.success(),
+            SurveyDetailState.loading(),
+            SurveyDetailState.success(),
+            SurveyDetailState.loading(),
+            SurveyDetailState.submitted(),
+          ]));
+
+      await container
+          .read(surveyDetailViewModelProvider.notifier)
+          .loadSurveyDetail(surveyUiModel);
+      await container
+          .read(surveyDetailViewModelProvider.notifier)
+          .submitSurvey();
+    });
+
+    test(
+        'When calling submitSurvey with negative result, it returns Failed state accordingly',
+        () async {
+      final mockException = MockUseCaseException();
+      when(mockException.actualException)
+          .thenReturn(NetworkExceptions.internalServerError());
+      when(mockSubmitSurveyUseCase.call(any))
+          .thenAnswer((_) async => Failed(mockException));
+      final stateStream =
+          container.read(surveyDetailViewModelProvider.notifier).stream;
+
+      expect(
+          stateStream,
+          emitsInOrder([
+            SurveyDetailState.loading(),
+            SurveyDetailState.success(),
+            SurveyDetailState.loading(),
+            SurveyDetailState.success(),
+            SurveyDetailState.loading(),
+            SurveyDetailState.error(
+              NetworkExceptions.getErrorMessage(
+                  NetworkExceptions.internalServerError()),
+            )
+          ]));
+
+      await container
+          .read(surveyDetailViewModelProvider.notifier)
+          .loadSurveyDetail(surveyUiModel);
+      await container
+          .read(surveyDetailViewModelProvider.notifier)
+          .submitSurvey();
     });
   });
 }

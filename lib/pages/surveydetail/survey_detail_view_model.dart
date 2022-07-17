@@ -107,7 +107,7 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
         questions: _submitQuestions,
       ),
     );
-    if (result is Success<Null>) {
+    if (result is Success<void>) {
       state = const SurveyDetailState.submitted();
     } else {
       _handleError(result as Failed);

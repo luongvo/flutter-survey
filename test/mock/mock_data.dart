@@ -10,6 +10,7 @@ import 'package:flutter_survey/usecase/base/base_use_case.dart';
 import 'package:flutter_survey/usecase/get_survey_detail_use_case.dart';
 import 'package:flutter_survey/usecase/get_surveys_use_case.dart';
 import 'package:flutter_survey/usecase/login_use_case.dart';
+import 'package:flutter_survey/usecase/submit_survey_use_case.dart';
 import 'package:mockito/annotations.dart';
 
 @GenerateMocks([
@@ -20,6 +21,7 @@ import 'package:mockito/annotations.dart';
   LoginUseCase,
   GetSurveysUseCase,
   GetSurveyDetailUseCase,
+  SubmitSurveyUseCase,
   Survey,
   SurveyDetail,
   Question,
