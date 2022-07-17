@@ -46,16 +46,12 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
       case DisplayType.smiley:
         return _buildSmileyRating(
           itemCount: widget.question.answers.length,
-          onRate: (rating) {
-            // TODO https://github.com/luongvo/flutter-survey/issues/21
-          },
+          onRate: (rating) => _saveRatingAnswers(rating),
         );
       case DisplayType.nps:
         return _buildNumberRating(
           itemCount: widget.question.answers.length,
-          onRate: (rating) {
-            // TODO https://github.com/luongvo/flutter-survey/issues/21
-          },
+          onRate: (rating) => _saveRatingAnswers(rating),
         );
       case DisplayType.choice:
         return _buildMultiChoice(
