@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter_survey/api/exception/network_exceptions.dart';
 import 'package:flutter_survey/api/repository/survey_repository.dart';
 import 'package:flutter_survey/api/response/survey_detail_response.dart';
@@ -65,6 +67,21 @@ void main() {
         () async {
       when(mockSurveyService.getSurveyDetail(any)).thenThrow(MockDioError());
       final result = () => surveyRepository.getSurveyDetail("1");
+
+      expect(result, throwsA(isA<NetworkExceptions>()));
+    });
+
+    test(
+        'When calling submitSurvey successfully, it returns corresponding response',
+        () async {
+      when(mockSurveyService.submitSurvey(any)).thenAnswer((_) async => Void);
+      await surveyRepository.submitSurvey("1", []);
+    });
+
+    test('When calling submitSurvey failed, it returns NetworkExceptions error',
+        () async {
+      when(mockSurveyService.submitSurvey(any)).thenThrow(MockDioError());
+      final result = () => surveyRepository.submitSurvey("1", []);
 
       expect(result, throwsA(isA<NetworkExceptions>()));
     });
