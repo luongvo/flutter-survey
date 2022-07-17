@@ -29,7 +29,11 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
   Widget build(BuildContext context) {
     switch (widget.question.displayType) {
       case DisplayType.dropdown:
-        return _buildPicker(context, widget.question.answers);
+        return _buildPicker(
+          context: context,
+          answers: widget.question.answers,
+          onSelect: (answer) => saveDropdownAnswers(answer),
+        );
       case DisplayType.star:
         return _buildRating(
           activeIcon: Assets.icons.icStarActive,
@@ -78,7 +82,12 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
     }
   }
 
-  Widget _buildPicker(BuildContext context, List<Answer> answers) {
+  Widget _buildPicker({
+    required BuildContext context,
+    required List<Answer> answers,
+    required Function(Answer) onSelect,
+  }) {
+    onSelect(answers[0]); // default
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 80.0),
       child: Picker(
@@ -103,6 +112,9 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
         containerColor: Colors.transparent,
         itemExtent: 50,
         hideHeader: true,
+        onSelect: (_, __, selected) {
+          onSelect(answers[selected.first]);
+        },
       ).makePicker(),
     );
   }
@@ -209,6 +221,12 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
       textInputAction: TextInputAction.done,
       maxLines: 5,
     );
+  }
+
+  void saveDropdownAnswers(Answer answer) {
+    ref
+        .read(surveyDetailViewModelProvider.notifier)
+        .saveDropdownAnswers(widget.question.id, answer);
   }
 
   void _saveRatingAnswers(int rating) {

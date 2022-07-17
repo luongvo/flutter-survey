@@ -41,6 +41,10 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
     }
   }
 
+  void saveDropdownAnswers(String questionId, Answer answer) {
+    _saveAnswersToQuestions(questionId, [answer.toSubmitAnswer()]);
+  }
+
   void saveRatingAnswers(String questionId, int rating) {
     final answers = _getAnswersByQuestionId(questionId);
     final selectedAnswer = answers
