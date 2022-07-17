@@ -49,8 +49,7 @@ class SurveyAnswer extends ConsumerWidget {
         );
       case DisplayType.nps:
         return _buildNumberRating(
-          // TODO bind data https://github.com/luongvo/flutter-survey/issues/19
-          itemCount: 10,
+          itemCount: question.answers.length,
           onRate: (rating) {
             // TODO https://github.com/luongvo/flutter-survey/issues/21
           },
