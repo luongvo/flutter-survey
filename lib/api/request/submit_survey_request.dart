@@ -31,7 +31,7 @@ class SubmitQuestion {
 @JsonSerializable()
 class SubmitAnswer {
   final String id;
-  final String answer;
+  String answer;
 
   SubmitAnswer({required this.id, required this.answer});
 

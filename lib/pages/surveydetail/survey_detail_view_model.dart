@@ -70,6 +70,27 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
     _saveAnswersToQuestions(questionId, submitAnswers);
   }
 
+  void saveTextFieldAnswers(String questionId, String answerId, String text) {
+    final submitQuestion = _submitQuestions
+        .firstWhereOrNull((element) => element.id == questionId);
+    final submitAnswer = submitQuestion?.answers
+        .firstWhereOrNull((element) => element.id == answerId);
+
+    if (text.isNotEmpty) {
+      final newSubmitAnswer = SubmitAnswer(id: answerId, answer: text);
+      if (submitQuestion == null) {
+        _submitQuestions
+            .add(SubmitQuestion(id: questionId, answers: [newSubmitAnswer]));
+      } else if (submitAnswer == null) {
+        submitQuestion.answers.add(newSubmitAnswer);
+      } else {
+        submitAnswer.answer = text;
+      }
+    } else if (submitQuestion != null && submitAnswer != null) {
+      submitQuestion.answers.removeWhere((element) => element.id == answerId);
+    }
+  }
+
   _handleError(Failed result) {
     state = SurveyDetailState.error(result.getErrorMessage());
   }

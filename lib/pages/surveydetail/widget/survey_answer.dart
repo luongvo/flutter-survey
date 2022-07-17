@@ -63,11 +63,11 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
         );
       case DisplayType.textfield:
         return _buildTextFields(
-            context: context,
-            answers: widget.question.answers,
-            onItemChanged: (answerId, text) {
-              // TODO https://github.com/luongvo/flutter-survey/issues/21
-            });
+          context: context,
+          answers: widget.question.answers,
+          onItemChanged: (answerId, text) =>
+              _saveTextFieldAnswers(answerId, text),
+        );
       case DisplayType.textarea:
         return _buildTextArea(
           context: context,
@@ -173,18 +173,18 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
   }) {
     return Column(
       children: answers
-          .map((value) => Padding(
+          .map((answer) => Padding(
                 padding: const EdgeInsets.only(top: 15.0),
                 child: TextFormField(
                   autofocus: true,
-                  onChanged: (text) => onItemChanged(value.id, text),
+                  onChanged: (text) => onItemChanged(answer.id, text),
                   decoration: CustomInputDecoration(
                     context: context,
-                    hint: value.text,
+                    hint: answer.text,
                   ),
                   keyboardType: TextInputType.emailAddress,
                   style: Theme.of(context).textTheme.bodyText1,
-                  textInputAction: (answers.last.id != value.id)
+                  textInputAction: (answers.last.id != answer.id)
                       ? TextInputAction.next
                       : TextInputAction.done,
                 ),
@@ -227,5 +227,11 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
     ref
         .read(surveyDetailViewModelProvider.notifier)
         .saveTextAreaAnswers(widget.question.id, text);
+  }
+
+  void _saveTextFieldAnswers(String answerId, String text) {
+    ref
+        .read(surveyDetailViewModelProvider.notifier)
+        .saveTextFieldAnswers(widget.question.id, answerId, text);
   }
 }
