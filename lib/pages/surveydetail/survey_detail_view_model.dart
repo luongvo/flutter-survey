@@ -7,13 +7,17 @@ import 'package:flutter_survey/pages/surveydetail/survey_detail_state.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/usecase/base/base_use_case.dart';
 import 'package:flutter_survey/usecase/get_survey_detail_use_case.dart';
+import 'package:flutter_survey/usecase/submit_survey_use_case.dart';
 import 'package:rxdart/subjects.dart';
 
 class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
   final GetSurveyDetailUseCase _getSurveyDetailUseCase;
+  final SubmitSurveyUseCase _submitSurveyUseCase;
 
-  SurveyDetailViewModel(this._getSurveyDetailUseCase)
-      : super(const SurveyDetailState.init());
+  SurveyDetailViewModel(
+    this._getSurveyDetailUseCase,
+    this._submitSurveyUseCase,
+  ) : super(const SurveyDetailState.init());
 
   final BehaviorSubject<SurveyUiModel> _surveySubject = BehaviorSubject();
 
@@ -92,6 +96,21 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
       }
     } else if (submitQuestion != null && submitAnswer != null) {
       submitQuestion.answers.removeWhere((element) => element.id == answerId);
+    }
+  }
+
+  Future<void> submitSurvey() async {
+    state = const SurveyDetailState.loading();
+    final result = await _submitSurveyUseCase.call(
+      SubmitSurveyInput(
+        surveyId: _surveySubject.value.id,
+        questions: _submitQuestions,
+      ),
+    );
+    if (result is Success<Null>) {
+      state = const SurveyDetailState.submitted();
+    } else {
+      _handleError(result as Failed);
     }
   }
 

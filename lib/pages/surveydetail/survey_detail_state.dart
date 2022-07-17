@@ -11,4 +11,6 @@ class SurveyDetailState with _$SurveyDetailState {
   const factory SurveyDetailState.error(String? error) = _Error;
 
   const factory SurveyDetailState.success() = _Success;
+
+  const factory SurveyDetailState.submitted() = _Submitted;
 }
