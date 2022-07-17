@@ -27,27 +27,25 @@ class MultiSelection extends StatefulWidget {
 class _MultiSelectionState extends State<MultiSelection> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 65 * widget.items.length.toDouble(),
-      child: ListView.builder(
-          itemCount: widget.items.length,
-          itemBuilder: (context, index) {
-            return Container(
-              child: _buildSelection(index, context),
-              decoration:
-                  (widget.items.isNotEmpty && index != widget.items.length - 1)
-                      ? BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              width: 0.5,
-                              color: Colors.white,
-                            ),
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: widget.items.length,
+        itemBuilder: (context, index) {
+          return Container(
+            child: _buildSelection(index, context),
+            decoration:
+                (widget.items.isNotEmpty && index != widget.items.length - 1)
+                    ? BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            width: 0.5,
+                            color: Colors.white,
                           ),
-                        )
-                      : null,
-            );
-          }),
-    );
+                        ),
+                      )
+                    : null,
+          );
+        });
   }
 
   Widget _buildSelection(int index, BuildContext context) {
