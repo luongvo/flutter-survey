@@ -64,20 +64,7 @@ class SurveyAnswer extends ConsumerWidget {
       case DisplayType.textfield:
         return _buildTextFields(
             context: context,
-            answers: [
-              Answer(
-                id: "1",
-                text: "Answer 1",
-                displayOrder: 0,
-                displayType: "textfield",
-              ),
-              Answer(
-                id: "2",
-                text: "Answer 2",
-                displayOrder: 1,
-                displayType: "textfield",
-              ),
-            ],
+            answers: question.answers,
             onItemChanged: (answerId, text) {
               // TODO https://github.com/luongvo/flutter-survey/issues/21
             });
