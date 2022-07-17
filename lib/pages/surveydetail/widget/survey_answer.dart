@@ -57,7 +57,7 @@ class SurveyAnswer extends ConsumerWidget {
         );
       case DisplayType.choice:
         return _buildMultiChoice(
-          answers: ["Choice 1", "Choice 2", "Choice 3"],
+          answers: question.answers,
           onItemsChanged: (items) {
             // TODO https://github.com/luongvo/flutter-survey/issues/21
           },
@@ -174,14 +174,15 @@ class SurveyAnswer extends ConsumerWidget {
   }
 
   Widget _buildMultiChoice({
-    required List<String> answers,
+    required List<Answer> answers,
     required Function onItemsChanged,
   }) {
     return Padding(
       padding: const EdgeInsets.all(80.0),
       child: MultiSelection(
-        // TODO bind id https://github.com/luongvo/flutter-survey/issues/19
-        items: answers.map((answer) => SelectionModel("id", answer)).toList(),
+        items: answers
+            .map((answer) => SelectionModel(answer.id, answer.text))
+            .toList(),
         onChanged: (items) => onItemsChanged(items),
       ),
     );
