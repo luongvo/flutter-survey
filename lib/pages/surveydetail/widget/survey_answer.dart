@@ -71,9 +71,7 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
       case DisplayType.textarea:
         return _buildTextArea(
           context: context,
-          onItemChanged: (text) {
-            // TODO https://github.com/luongvo/flutter-survey/issues/21
-          },
+          onItemChanged: (text) => _saveTextAreaAnswers(text),
         );
       default:
         return SizedBox.shrink();
@@ -223,5 +221,11 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
     ref
         .read(surveyDetailViewModelProvider.notifier)
         .saveMultiSelectionAnswers(widget.question.id, answers);
+  }
+
+  void _saveTextAreaAnswers(String text) {
+    ref
+        .read(surveyDetailViewModelProvider.notifier)
+        .saveTextAreaAnswers(widget.question.id, text);
   }
 }

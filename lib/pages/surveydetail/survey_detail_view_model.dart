@@ -42,22 +42,32 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
   }
 
   void saveRatingAnswers(String questionId, int rating) {
-    final answer = _getAnswersByQuestionId(questionId);
-    final selectedAnswer = answer
+    final answers = _getAnswersByQuestionId(questionId);
+    final selectedAnswer = answers
         ?.firstWhereOrNull((element) => element.displayOrder == rating - 1);
 
-    final answers = selectedAnswer != null
+    final submitAnswers = selectedAnswer != null
         ? [selectedAnswer.toSubmitAnswer()]
         : <SubmitAnswer>[];
 
-    _saveAnswersToQuestions(questionId, answers);
+    _saveAnswersToQuestions(questionId, submitAnswers);
   }
 
   void saveMultiSelectionAnswers(
     String questionId,
-    List<SubmitAnswer> answers,
+    List<SubmitAnswer> submitAnswers,
   ) {
-    _saveAnswersToQuestions(questionId, answers);
+    _saveAnswersToQuestions(questionId, submitAnswers);
+  }
+
+  void saveTextAreaAnswers(String questionId, String text) {
+    final answers = _getAnswersByQuestionId(questionId);
+    if (answers == null || answers.isEmpty) return;
+
+    final submitAnswers = text.isNotEmpty
+        ? [SubmitAnswer(id: answers.first.id, answer: text)]
+        : <SubmitAnswer>[];
+    _saveAnswersToQuestions(questionId, submitAnswers);
   }
 
   _handleError(Failed result) {
