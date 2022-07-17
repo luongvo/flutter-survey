@@ -39,7 +39,6 @@ class SmileyRating extends ConsumerWidget {
                 child: Consumer(
                   builder: (context, widgetRef, _) {
                     final selectedIndex = ref.watch(selectedEmojiIndexProvider);
-                    print(selectedIndex);
                     return _buildSmileyRating(context, index, selectedIndex);
                   },
                 ),
@@ -67,7 +66,6 @@ class SmileyRating extends ConsumerWidget {
     final previousIndex = selectedIndexState.state;
     if (previousIndex == selectedIndex) return;
     selectedIndexState.state = selectedIndex;
-    print(selectedIndex);
     onRate(selectedIndex + 1);
   }
 }
