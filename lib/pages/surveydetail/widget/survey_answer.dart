@@ -9,54 +9,59 @@ import 'package:flutter_survey/models/question.dart';
 import 'package:flutter_survey/pages/common/multi_selection.dart';
 import 'package:flutter_survey/pages/common/number_rating.dart';
 import 'package:flutter_survey/pages/common/smiley_rating.dart';
+import 'package:flutter_survey/pages/surveydetail/survey_detail_page.dart';
 import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
 
-class SurveyAnswer extends ConsumerWidget {
+class SurveyAnswer extends ConsumerStatefulWidget {
   final Question question;
 
-  SurveyAnswer({required this.question});
+  SurveyAnswer({required this.question}) : super();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    switch (question.displayType) {
+  _SurveyAnswerState createState() {
+    return new _SurveyAnswerState();
+  }
+}
+
+class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
+  @override
+  Widget build(BuildContext context) {
+    switch (widget.question.displayType) {
       case DisplayType.dropdown:
         return _buildPicker(context, question.answers);
       case DisplayType.star:
         return _buildRating(
           activeIcon: Assets.icons.icStarActive,
           inactiveIcon: Assets.icons.icStarInactive,
-          itemCount: question.answers.length,
-          onRate: (rating) {
-            // TODO https://github.com/luongvo/flutter-survey/issues/21
-          },
+          itemCount: widget.question.answers.length,
+          onRate: (rating) => _saveRatingAnswers(rating),
         );
       case DisplayType.heart:
         return _buildRating(
           activeIcon: Assets.icons.icHeartActive,
           inactiveIcon: Assets.icons.icHeartInactive,
-          itemCount: question.answers.length,
+          itemCount: widget.question.answers.length,
           onRate: (rating) {
             // TODO https://github.com/luongvo/flutter-survey/issues/21
           },
         );
       case DisplayType.smiley:
         return _buildSmileyRating(
-          ref: ref,
-          itemCount: question.answers.length,
+          itemCount: widget.question.answers.length,
           onRate: (rating) {
             // TODO https://github.com/luongvo/flutter-survey/issues/21
           },
         );
       case DisplayType.nps:
         return _buildNumberRating(
-          itemCount: question.answers.length,
+          itemCount: widget.question.answers.length,
           onRate: (rating) {
             // TODO https://github.com/luongvo/flutter-survey/issues/21
           },
         );
       case DisplayType.choice:
         return _buildMultiChoice(
-          answers: question.answers,
+          answers: widget.question.answers,
           onItemsChanged: (items) {
             // TODO https://github.com/luongvo/flutter-survey/issues/21
           },
@@ -64,7 +69,7 @@ class SurveyAnswer extends ConsumerWidget {
       case DisplayType.textfield:
         return _buildTextFields(
             context: context,
-            answers: question.answers,
+            answers: widget.question.answers,
             onItemChanged: (answerId, text) {
               // TODO https://github.com/luongvo/flutter-survey/issues/21
             });
@@ -89,9 +94,9 @@ class SurveyAnswer extends ConsumerWidget {
         ),
         textAlign: TextAlign.center,
         textStyle:
-            Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20.0),
+        Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20.0),
         selectedTextStyle:
-            Theme.of(context).textTheme.headline4!.copyWith(fontSize: 20.0),
+        Theme.of(context).textTheme.headline4!.copyWith(fontSize: 20.0),
         selectionOverlay: DecoratedBox(
           decoration: BoxDecoration(
             border: Border(
@@ -141,7 +146,6 @@ class SurveyAnswer extends ConsumerWidget {
   }
 
   Widget _buildSmileyRating({
-    required WidgetRef ref,
     required int itemCount,
     required Function onRate,
   }) {
@@ -177,21 +181,21 @@ class SurveyAnswer extends ConsumerWidget {
     return Column(
       children: answers
           .map((value) => Padding(
-                padding: const EdgeInsets.only(top: 15.0),
-                child: TextFormField(
-                  autofocus: true,
-                  onChanged: (text) => onItemChanged(value.id, text),
-                  decoration: CustomInputDecoration(
-                    context: context,
-                    hint: value.text,
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  style: Theme.of(context).textTheme.bodyText1,
-                  textInputAction: (answers.last.id != value.id)
-                      ? TextInputAction.next
-                      : TextInputAction.done,
-                ),
-              ))
+        padding: const EdgeInsets.only(top: 15.0),
+        child: TextFormField(
+          autofocus: true,
+          onChanged: (text) => onItemChanged(value.id, text),
+          decoration: CustomInputDecoration(
+            context: context,
+            hint: value.text,
+          ),
+          keyboardType: TextInputType.emailAddress,
+          style: Theme.of(context).textTheme.bodyText1,
+          textInputAction: (answers.last.id != value.id)
+              ? TextInputAction.next
+              : TextInputAction.done,
+        ),
+      ))
           .toList(),
     );
   }
@@ -212,5 +216,11 @@ class SurveyAnswer extends ConsumerWidget {
       textInputAction: TextInputAction.done,
       maxLines: 5,
     );
+  }
+
+  void _saveRatingAnswers(int rating) {
+    ref
+        .read(surveyDetailViewModelProvider.notifier)
+        .saveRatingAnswers(widget.question.id, rating);
   }
 }

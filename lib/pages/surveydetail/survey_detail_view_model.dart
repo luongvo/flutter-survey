@@ -1,4 +1,7 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_survey/api/request/submit_survey_request.dart';
+import 'package:flutter_survey/models/answer.dart';
 import 'package:flutter_survey/models/survey_detail.dart';
 import 'package:flutter_survey/pages/surveydetail/survey_detail_state.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
@@ -15,6 +18,8 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
   final BehaviorSubject<SurveyUiModel> _surveySubject = BehaviorSubject();
 
   Stream<SurveyUiModel> get surveyStream => _surveySubject.stream;
+
+  final List<SubmitQuestion> _submitQuestions = [];
 
   Future<void> loadSurveyDetail(SurveyUiModel survey) async {
     // Load initial survey
@@ -36,6 +41,18 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
     }
   }
 
+  void saveRatingAnswers(String questionId, int rating) {
+    final answers = _getAnswersByQuestionId(questionId);
+    final selectedAnswer = answers
+        ?.firstWhereOrNull((element) => element.displayOrder == rating - 1);
+
+    final answerForms = selectedAnswer != null
+        ? [selectedAnswer.toSubmitAnswer()]
+        : <SubmitAnswer>[];
+
+    _saveAnswersToQuestions(questionId, answerForms);
+  }
+
   _handleError(Failed result) {
     state = SurveyDetailState.error(result.getErrorMessage());
   }
@@ -44,5 +61,26 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
   void dispose() async {
     await _surveySubject.close();
     super.dispose();
+  }
+
+  void _saveAnswersToQuestions(String questionId, List<SubmitAnswer> answers) {
+    final question = _submitQuestions
+        .firstWhereOrNull((element) => element.id == questionId);
+
+    if (question == null) {
+      _submitQuestions.add(SubmitQuestion(
+        id: questionId,
+        answers: answers,
+      ));
+    } else {
+      question.answers.clear();
+      question.answers.addAll(answers);
+    }
+  }
+
+  List<Answer>? _getAnswersByQuestionId(String questionId) {
+    return _surveySubject.value.questions
+        .firstWhereOrNull((element) => element.id == questionId)
+        ?.answers;
   }
 }
