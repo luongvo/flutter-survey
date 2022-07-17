@@ -42,15 +42,15 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
   }
 
   void saveRatingAnswers(String questionId, int rating) {
-    final answers = _getAnswersByQuestionId(questionId);
-    final selectedAnswer = answers
+    final answer = _getAnswersByQuestionId(questionId);
+    final selectedAnswer = answer
         ?.firstWhereOrNull((element) => element.displayOrder == rating - 1);
 
-    final answerForms = selectedAnswer != null
+    final answers = selectedAnswer != null
         ? [selectedAnswer.toSubmitAnswer()]
         : <SubmitAnswer>[];
 
-    _saveAnswersToQuestions(questionId, answerForms);
+    _saveAnswersToQuestions(questionId, answers);
   }
 
   _handleError(Failed result) {

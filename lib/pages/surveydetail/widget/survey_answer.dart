@@ -28,7 +28,7 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
   Widget build(BuildContext context) {
     switch (widget.question.displayType) {
       case DisplayType.dropdown:
-        return _buildPicker(context, question.answers);
+        return _buildPicker(context, widget.question.answers);
       case DisplayType.star:
         return _buildRating(
           activeIcon: Assets.icons.icStarActive,
@@ -41,9 +41,7 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
           activeIcon: Assets.icons.icHeartActive,
           inactiveIcon: Assets.icons.icHeartInactive,
           itemCount: widget.question.answers.length,
-          onRate: (rating) {
-            // TODO https://github.com/luongvo/flutter-survey/issues/21
-          },
+          onRate: (rating) => _saveRatingAnswers(rating),
         );
       case DisplayType.smiley:
         return _buildSmileyRating(
@@ -94,9 +92,9 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
         ),
         textAlign: TextAlign.center,
         textStyle:
-        Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20.0),
+            Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20.0),
         selectedTextStyle:
-        Theme.of(context).textTheme.headline4!.copyWith(fontSize: 20.0),
+            Theme.of(context).textTheme.headline4!.copyWith(fontSize: 20.0),
         selectionOverlay: DecoratedBox(
           decoration: BoxDecoration(
             border: Border(
@@ -181,21 +179,21 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
     return Column(
       children: answers
           .map((value) => Padding(
-        padding: const EdgeInsets.only(top: 15.0),
-        child: TextFormField(
-          autofocus: true,
-          onChanged: (text) => onItemChanged(value.id, text),
-          decoration: CustomInputDecoration(
-            context: context,
-            hint: value.text,
-          ),
-          keyboardType: TextInputType.emailAddress,
-          style: Theme.of(context).textTheme.bodyText1,
-          textInputAction: (answers.last.id != value.id)
-              ? TextInputAction.next
-              : TextInputAction.done,
-        ),
-      ))
+                padding: const EdgeInsets.only(top: 15.0),
+                child: TextFormField(
+                  autofocus: true,
+                  onChanged: (text) => onItemChanged(value.id, text),
+                  decoration: CustomInputDecoration(
+                    context: context,
+                    hint: value.text,
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  style: Theme.of(context).textTheme.bodyText1,
+                  textInputAction: (answers.last.id != value.id)
+                      ? TextInputAction.next
+                      : TextInputAction.done,
+                ),
+              ))
           .toList(),
     );
   }
