@@ -20,7 +20,7 @@ class SurveyAnswer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     switch (question.displayType) {
       case DisplayType.dropdown:
-        return _buildPicker(context);
+        return _buildPicker(context, question.answers);
       case DisplayType.star:
         return _buildRating(
           activeIcon: Assets.icons.icStarActive,
@@ -80,17 +80,12 @@ class SurveyAnswer extends ConsumerWidget {
     }
   }
 
-  Widget _buildPicker(BuildContext context) {
+  Widget _buildPicker(BuildContext context, List<Answer> answers) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 80.0),
       child: Picker(
-        // TODO bind data https://github.com/luongvo/flutter-survey/issues/19
         adapter: PickerDataAdapter<String>(
-          pickerdata: [
-            "Very fulfilled",
-            "Somewhat fullfilled",
-            "Somewhat unfulfilled"
-          ],
+          pickerdata: answers.map((e) => e.text).toList(),
         ),
         textAlign: TextAlign.center,
         textStyle:
