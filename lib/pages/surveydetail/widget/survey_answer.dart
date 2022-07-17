@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_survey/api/request/submit_survey_request.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/models/answer.dart';
@@ -56,9 +57,9 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
       case DisplayType.choice:
         return _buildMultiChoice(
           answers: widget.question.answers,
-          onItemsChanged: (items) {
-            // TODO https://github.com/luongvo/flutter-survey/issues/21
-          },
+          onItemsChanged: (items) => _saveMultiSelectionAnswers(
+            items.map((e) => SubmitAnswer(id: e.id, answer: e.label)).toList(),
+          ),
         );
       case DisplayType.textfield:
         return _buildTextFields(
@@ -154,7 +155,7 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
 
   Widget _buildMultiChoice({
     required List<Answer> answers,
-    required Function onItemsChanged,
+    required Function(List<SelectionModel>) onItemsChanged,
   }) {
     return Padding(
       padding: const EdgeInsets.all(80.0),
@@ -216,5 +217,11 @@ class _SurveyAnswerState extends ConsumerState<SurveyAnswer> {
     ref
         .read(surveyDetailViewModelProvider.notifier)
         .saveRatingAnswers(widget.question.id, rating);
+  }
+
+  void _saveMultiSelectionAnswers(List<SubmitAnswer> answers) {
+    ref
+        .read(surveyDetailViewModelProvider.notifier)
+        .saveMultiSelectionAnswers(widget.question.id, answers);
   }
 }

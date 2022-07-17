@@ -53,6 +53,13 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
     _saveAnswersToQuestions(questionId, answers);
   }
 
+  void saveMultiSelectionAnswers(
+    String questionId,
+    List<SubmitAnswer> answers,
+  ) {
+    _saveAnswersToQuestions(questionId, answers);
+  }
+
   _handleError(Failed result) {
     state = SurveyDetailState.error(result.getErrorMessage());
   }
