@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/models/answer.dart';
 import 'package:flutter_survey/models/question.dart';
 import 'package:flutter_survey/pages/common/multi_selection.dart';
 import 'package:flutter_survey/pages/common/number_rating.dart';
+import 'package:flutter_survey/pages/common/smiley_rating.dart';
 import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
 
-class SurveyAnswer extends StatelessWidget {
+class SurveyAnswer extends ConsumerWidget {
   final Question question;
 
   SurveyAnswer({required this.question});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     switch (question.displayType) {
       case DisplayType.dropdown:
         return _buildPicker(context);
@@ -32,6 +34,14 @@ class SurveyAnswer extends StatelessWidget {
         return _buildRating(
           activeIcon: Assets.icons.icHeartActive,
           inactiveIcon: Assets.icons.icHeartInactive,
+          itemCount: question.answers.length,
+          onRate: (rating) {
+            // TODO https://github.com/luongvo/flutter-survey/issues/21
+          },
+        );
+      case DisplayType.smiley:
+        return _buildSmileyRating(
+          ref: ref,
           itemCount: question.answers.length,
           onRate: (rating) {
             // TODO https://github.com/luongvo/flutter-survey/issues/21
@@ -146,6 +156,20 @@ class SurveyAnswer extends StatelessWidget {
         onRatingUpdate: (value) => onRate(value.toInt()),
         wrapAlignment: WrapAlignment.center,
       ),
+    );
+  }
+
+  Widget _buildSmileyRating({
+    required WidgetRef ref,
+    required int itemCount,
+    required Function onRate,
+  }) {
+    // select default value
+    onRate(ref.read(selectedEmojiIndexProvider.notifier).state + 1);
+
+    return SmileyRating(
+      itemCount: itemCount,
+      onRate: (rating) => onRate(rating.toInt()),
     );
   }
 
