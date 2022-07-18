@@ -5,13 +5,13 @@ import 'package:flutter_survey/usecase/base/base_use_case.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable()
-class GetUserProfileUseCase extends UseCase<User, void> {
+class GetUserProfileUseCase extends NoParamsUseCase<User> {
   final UserRepository _userRepository;
 
   const GetUserProfileUseCase(this._userRepository);
 
   @override
-  Future<Result<User>> call(void params) {
+  Future<Result<User>> call() {
     return _userRepository
         .getUserProfile()
         .then((value) =>
