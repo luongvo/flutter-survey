@@ -8,7 +8,7 @@ import 'package:flutter_survey/pages/surveydetail/survey_detail_view_model.dart'
 import 'package:flutter_survey/pages/surveydetail/widget/survey_question.dart';
 import 'package:flutter_survey/pages/surveydetail/widget/survey_start.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
-import 'package:flutter_survey/pages/widgets/dimmed_background.dart';
+import 'package:flutter_survey/pages/widgets/dimmed_image_background.dart';
 import 'package:flutter_survey/usecase/get_survey_detail_use_case.dart';
 
 final surveyDetailViewModelProvider =
@@ -68,20 +68,8 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
       body: survey != null
           ? Stack(
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: Image.network(survey.coverImageUrl).image,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                DimmedBackground(
-                  colors: [
-                    Colors.black.withOpacity(0.2),
-                    Colors.black.withOpacity(0.7),
-                  ],
-                  stops: const [0.0, 1.0],
+                DimmedImageBackground(
+                  image: Image.network(survey.coverImageUrl).image,
                 ),
                 _buildSurveyQuestionPager(survey)
               ],

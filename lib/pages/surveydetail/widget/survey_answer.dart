@@ -163,7 +163,7 @@ class SurveyAnswer extends StatelessWidget {
     return Column(
       children: answers
           .map((value) => Padding(
-        padding: const EdgeInsets.only(top: 15.0),
+                padding: const EdgeInsets.only(top: 15.0),
                 child: TextFormField(
                   autofocus: true,
                   onChanged: (text) => onItemChanged(value.id, text),
