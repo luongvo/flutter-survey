@@ -18,7 +18,7 @@ class CircularCheckBox extends StatelessWidget {
         margin: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(width: 2, color: Colors.white),
+          border: Border.all(width: 2.0, color: Colors.white),
         ),
         child: isChecked
             ? Icon(

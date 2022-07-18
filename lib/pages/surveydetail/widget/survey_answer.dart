@@ -78,7 +78,7 @@ class SurveyAnswer extends StatelessWidget {
 
   Widget _buildPicker(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 80),
+      padding: const EdgeInsets.symmetric(horizontal: 80.0),
       child: Picker(
         // TODO bind data https://github.com/luongvo/flutter-survey/issues/19
         adapter: PickerDataAdapter<String>(
@@ -90,9 +90,9 @@ class SurveyAnswer extends StatelessWidget {
         ),
         textAlign: TextAlign.center,
         textStyle:
-            Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20),
+            Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20.0),
         selectedTextStyle:
-            Theme.of(context).textTheme.headline4!.copyWith(fontSize: 20),
+            Theme.of(context).textTheme.headline4!.copyWith(fontSize: 20.0),
         selectionOverlay: DecoratedBox(
           decoration: BoxDecoration(
             border: Border(
@@ -119,9 +119,9 @@ class SurveyAnswer extends StatelessWidget {
     return RatingBar(
       itemCount: itemCount,
       ratingWidget: RatingWidget(
-        full: activeIcon.image(width: 30, height: 30),
+        full: activeIcon.image(width: 30.0, height: 30.0),
         half: SizedBox.shrink(),
-        empty: inactiveIcon.image(width: 30, height: 30),
+        empty: inactiveIcon.image(width: 30.0, height: 30.0),
       ),
       onRatingUpdate: (rating) => onRate(rating.toInt()),
     );
@@ -132,7 +132,7 @@ class SurveyAnswer extends StatelessWidget {
     required Function onRate,
   }) {
     return Container(
-      height: 120,
+      height: 120.0,
       child: NumberRating(
         itemCount: itemCount,
         onRatingUpdate: (value) => onRate(value.toInt()),
@@ -146,7 +146,7 @@ class SurveyAnswer extends StatelessWidget {
     required Function onItemsChanged,
   }) {
     return Padding(
-      padding: const EdgeInsets.all(80),
+      padding: const EdgeInsets.all(80.0),
       child: MultiSelection(
         // TODO bind id https://github.com/luongvo/flutter-survey/issues/19
         items: answers.map((answer) => SelectionModel("id", answer)).toList(),
@@ -163,7 +163,7 @@ class SurveyAnswer extends StatelessWidget {
     return Column(
       children: answers
           .map((value) => Padding(
-                padding: const EdgeInsets.only(top: 15),
+        padding: const EdgeInsets.only(top: 15.0),
                 child: TextFormField(
                   autofocus: true,
                   onChanged: (text) => onItemChanged(value.id, text),
