@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_survey/api/response/question_response.dart';
 import 'package:flutter_survey/models/answer.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 class Question extends Equatable {
   final String id;
@@ -41,8 +40,7 @@ class Question extends Equatable {
       id: response.id,
       text: response.text ?? '',
       displayOrder: response.displayOrder ?? 0,
-      displayType: enumFromString(DisplayType.values, response.displayType) ??
-          DisplayType.unknown,
+      displayType: response.displayType ?? DisplayType.unknown,
       imageUrl: response.imageUrl ?? "",
       coverImageOpacity: response.coverImageOpacity ?? 0,
       coverImageUrl: response.coverImageUrl ?? "",
@@ -50,11 +48,6 @@ class Question extends Equatable {
           .map((answer) => Answer.fromAnswerResponse(answer))
           .toList(),
     );
-  }
-
-  static T? enumFromString<T>(Iterable<T> values, String? value) {
-    return values
-        .firstWhereOrNull((type) => type.toString().split(".").last == value);
   }
 }
 
