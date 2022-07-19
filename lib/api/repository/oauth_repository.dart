@@ -1,5 +1,6 @@
 import 'package:flutter_survey/api/exception/network_exceptions.dart';
 import 'package:flutter_survey/api/oauth_service.dart';
+import 'package:flutter_survey/api/request/oauth_logout_request.dart';
 import 'package:flutter_survey/api/request/oauth_token_request.dart';
 import 'package:flutter_survey/env.dart';
 import 'package:flutter_survey/models/oauth_token.dart';
@@ -9,6 +10,10 @@ abstract class OAuthRepository {
   Future<OAuthToken> login({
     required String email,
     required String password,
+  });
+
+  Future<void> logout({
+    required String token,
   });
 }
 
@@ -36,6 +41,21 @@ class OAuthRepositoryImpl extends OAuthRepository {
         tokenType: response.tokenType,
         expiresIn: response.expiresIn,
       );
+    } catch (exception) {
+      throw NetworkExceptions.fromDioException(exception);
+    }
+  }
+
+  @override
+  Future<void> logout({
+    required String token,
+  }) async {
+    try {
+      return await _oauthService.logout(OAuthLogoutRequest(
+        token: token,
+        clientId: Env.basicAuthClientId,
+        clientSecret: Env.basicAuthClientSecret,
+      ));
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);
     }
