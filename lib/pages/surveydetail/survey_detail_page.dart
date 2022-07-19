@@ -56,8 +56,9 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
   Widget build(BuildContext context) {
     ref.listen<SurveyDetailState>(surveyDetailViewModelProvider, (_, state) {
       state.maybeWhen(
-          submitted: () => Navigator.of(context).pushNamed(Routes.COMPLETION),
-          orElse: () {});
+        submitted: () => Navigator.of(context).pushNamed(Routes.completion),
+        orElse: () {},
+      );
     });
 
     final uiModel = ref.watch(_surveyStreamProvider).value;

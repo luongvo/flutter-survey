@@ -9,9 +9,12 @@ import 'package:flutter_survey/pages/home/home_state.dart';
 import 'package:flutter_survey/pages/home/home_view_model.dart';
 import 'package:flutter_survey/pages/home/survey_page_viewer.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
+import 'package:flutter_survey/pages/widgets/loading_indicator.dart';
 import 'package:flutter_survey/resources/dimens.dart';
+import 'package:flutter_survey/routes.dart';
 import 'package:flutter_survey/usecase/get_surveys_use_case.dart';
 import 'package:flutter_survey/usecase/get_user_profile_use_case.dart';
+import 'package:flutter_survey/usecase/logout_use_case.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
 
 final homeViewModelProvider =
@@ -19,6 +22,7 @@ final homeViewModelProvider =
   return HomeViewModel(
     getIt.get<GetUserProfileUseCase>(),
     getIt.get<GetSurveysUseCase>(),
+    getIt.get<LogoutUseCase>(),
   );
 });
 
@@ -50,13 +54,18 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<HomeState>(homeViewModelProvider, (_, state) {
+      state.maybeWhen(
+        loggedOut: () =>
+            Navigator.of(context).pushReplacementNamed(Routes.startup),
+        orElse: () {},
+      );
+    });
+
     final uiModels = ref.watch(_surveysStreamProvider).value;
     return ref.watch(homeViewModelProvider).when(
           init: () => const SizedBox.shrink(),
-          loading: () {
-            // TODO https://github.com/luongvo/flutter-survey/issues/12
-            return SizedBox.shrink();
-          },
+          loading: () => LoadingIndicator(),
           success: () => _buildHomePage(uiModels ?? []),
           error: (message) {
             WidgetsBinding.instance?.addPostFrameCallback((_) {
@@ -65,6 +74,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             });
             return _buildHomePage(uiModels ?? []);
           },
+          loggedOut: () => const SizedBox.shrink(),
         );
   }
 
