@@ -18,7 +18,7 @@ class LogoutUseCase extends NoParamsUseCase<void> {
     final token = await _sharedPreferencesHelper.getAccessToken();
     return _repository
         .logout(token: token)
-        .then((value) => _persistTokenData()) // ignore: unnecessary_cast
+        .then((value) => _persistTokenData())
         .onError<NetworkExceptions>(
             (err, stackTrace) => Failed(UseCaseException(err)));
   }

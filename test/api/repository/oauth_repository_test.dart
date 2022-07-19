@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_survey/api/exception/network_exceptions.dart';
 import 'package:flutter_survey/api/repository/oauth_repository.dart';
@@ -57,6 +59,21 @@ void main() {
             email: "email",
             password: "password",
           );
+      expect(result, throwsA(isA<NetworkExceptions>()));
+    });
+
+    test('When calling logout successfully, it returns empty result', () async {
+      when(mockOAuthService.logout(any)).thenAnswer((_) async => Void);
+
+      await oauthRepository.logout(token: 'token');
+    });
+
+    test('When calling logout failed, it returns NetworkExceptions error',
+        () async {
+      when(mockOAuthService.logout(any)).thenThrow(MockDioError());
+
+      final result = () => oauthRepository.logout(token: 'token');
+
       expect(result, throwsA(isA<NetworkExceptions>()));
     });
   });
