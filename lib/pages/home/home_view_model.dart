@@ -57,7 +57,6 @@ class HomeViewModel extends StateNotifier<HomeState> {
     final result = await _getUserProfileUseCase.call();
     if (result is Success<User>) {
       _userSubject.add(result.value);
-      state = const HomeState.success();
     } else {
       _handleError(result as Failed);
     }
