@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/di/di.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/models/user.dart';
+import 'package:flutter_survey/pages/home/home_drawer.dart';
 import 'package:flutter_survey/pages/home/home_header.dart';
 import 'package:flutter_survey/pages/home/home_state.dart';
 import 'package:flutter_survey/pages/home/home_view_model.dart';
@@ -66,6 +67,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   Widget _buildHomePage(List<SurveyUiModel> surveys) {
     return Scaffold(
+      endDrawer: HomeDrawer(),
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[

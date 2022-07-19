@@ -6,6 +6,7 @@ import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/extensions/date_time_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/pages/home/home_page.dart';
+import 'package:flutter_survey/resources/dimens.dart';
 
 class HomeHeader extends StatelessWidget {
   @override
@@ -26,24 +27,27 @@ class HomeHeader extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline5,
               ),
             ),
-            Consumer(
-              builder: (BuildContext _, WidgetRef widgetRef, __) {
-                final user = widgetRef.watch(userStreamProvider).value;
-                return CachedNetworkImage(
-                  imageUrl: user?.avatarUrl ?? "",
-                  imageBuilder: (_, imageProvider) => Container(
-                    width: 36.0,
-                    height: 36.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: imageProvider, fit: BoxFit.cover),
+            GestureDetector(
+              onTap: () => Scaffold.of(context).openEndDrawer(),
+              child: Consumer(
+                builder: (BuildContext _, WidgetRef widgetRef, __) {
+                  final user = widgetRef.watch(userStreamProvider).value;
+                  return CachedNetworkImage(
+                    imageUrl: user?.avatarUrl ?? "",
+                    imageBuilder: (_, imageProvider) => Container(
+                      width: Dimens.homeAvatarSize,
+                      height: Dimens.homeAvatarSize,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: imageProvider, fit: BoxFit.cover),
+                      ),
                     ),
-                  ),
-                  errorWidget: (_, url, error) =>
-                      Assets.images.bgHomeAvatarSample.image(),
-                );
-              },
+                    errorWidget: (_, url, error) =>
+                        Assets.images.bgHomeAvatarSample.image(),
+                  );
+                },
+              ),
             ),
           ],
         )
