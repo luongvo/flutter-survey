@@ -6,6 +6,7 @@ import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/usecase/base/base_use_case.dart';
 import 'package:flutter_survey/usecase/get_surveys_use_case.dart';
 import 'package:flutter_survey/usecase/get_user_profile_use_case.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rxdart/subjects.dart';
 
 const _pageSize = 10;
@@ -29,6 +30,8 @@ class HomeViewModel extends StateNotifier<HomeState> {
       BehaviorSubject();
 
   Stream<List<SurveyUiModel>> get surveysStream => _surveysSubject.stream;
+
+  Stream<String> get versionInfoStream => _fetchAppVersion().asStream();
 
   Future<void> loadSurveys({bool isRefresh = false}) async {
     _page = 1;
@@ -68,5 +71,15 @@ class HomeViewModel extends StateNotifier<HomeState> {
   void dispose() async {
     await _surveysSubject.close();
     super.dispose();
+  }
+
+  Future<String> _fetchAppVersion() async {
+    try {
+      final packageInfo = await PackageInfo.fromPlatform();
+      // non-translated, example: v1.1.1 (11)
+      return "v${packageInfo.version} (${packageInfo.buildNumber})";
+    } catch (exception) {
+      return '';
+    }
   }
 }

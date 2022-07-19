@@ -28,6 +28,9 @@ final _surveysStreamProvider = StreamProvider.autoDispose<List<SurveyUiModel>>(
 final userStreamProvider = StreamProvider.autoDispose<User>(
     (ref) => ref.watch(homeViewModelProvider.notifier).userStream);
 
+final versionInfoProvider = StreamProvider.autoDispose<String>(
+    (ref) => ref.watch(homeViewModelProvider.notifier).versionInfoStream);
+
 class HomePage extends ConsumerStatefulWidget {
   @override
   _HomePageState createState() {

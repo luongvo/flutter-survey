@@ -47,14 +47,7 @@ class HomeDrawer extends StatelessWidget {
                   ),
                   _bindMenu(context),
                   Expanded(child: SizedBox.shrink()),
-                  Text(
-                    // TODO bind app version
-                    "v1.0.0",
-                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                          color: Colors.white.withOpacity(0.5),
-                          fontSize: 11.0,
-                        ),
-                  ),
+                  _buildVersionInfo(context),
                 ],
               ),
             ),
@@ -108,6 +101,21 @@ class HomeDrawer extends StatelessWidget {
               fontSize: 20.0,
             ),
       ),
+    );
+  }
+
+  Widget _buildVersionInfo(BuildContext context) {
+    return Consumer(
+      builder: (BuildContext _, WidgetRef widgetRef, __) {
+        final versionInfo = widgetRef.watch(versionInfoProvider).value;
+        return Text(
+          versionInfo ?? '',
+          style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                color: Colors.white.withOpacity(0.5),
+                fontSize: 11.0,
+              ),
+        );
+      },
     );
   }
 }
