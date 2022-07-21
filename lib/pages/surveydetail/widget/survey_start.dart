@@ -53,8 +53,8 @@ class SurveyStart extends StatelessWidget {
           survey.description,
           style: Theme.of(context)
               .textTheme
-              .bodyText1!
-              .copyWith(color: ColorName.whiteAlpha70),
+              .bodyText1
+              ?.copyWith(color: ColorName.whiteAlpha70),
         ),
         Expanded(child: SizedBox.shrink()),
         Row(

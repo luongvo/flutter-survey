@@ -59,8 +59,8 @@ class SurveyQuestion extends StatelessWidget {
           "1/5",
           style: Theme.of(context)
               .textTheme
-              .bodyText1!
-              .copyWith(color: ColorName.whiteAlpha70),
+              .bodyText1
+              ?.copyWith(color: ColorName.whiteAlpha70),
         ),
         const SizedBox(height: 10.0),
         Text(

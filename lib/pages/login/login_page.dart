@@ -141,7 +141,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 child: TextButton(
                   child: Text(
                     context.localization.loginForgot,
-                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
                           color: ColorName.whiteAlpha50,
                         ),
                   ),

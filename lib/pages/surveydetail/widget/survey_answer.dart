@@ -90,9 +90,9 @@ class SurveyAnswer extends StatelessWidget {
         ),
         textAlign: TextAlign.center,
         textStyle:
-            Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20.0),
+            Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 20.0),
         selectedTextStyle:
-            Theme.of(context).textTheme.headline4!.copyWith(fontSize: 20.0),
+            Theme.of(context).textTheme.headline4?.copyWith(fontSize: 20.0),
         selectionOverlay: DecoratedBox(
           decoration: BoxDecoration(
             border: Border(
