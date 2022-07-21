@@ -66,19 +66,16 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
   }
 
   Widget _buildSurveyPage(SurveyUiModel? survey) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: survey != null
-          ? Stack(
-              children: [
-                DimmedImageBackground(
-                  image: Image.network(survey.coverImageUrl).image,
-                ),
-                _buildSurveyQuestionPager(survey)
-              ],
-            )
-          : const SizedBox.shrink(),
-    );
+    return survey != null
+        ? Stack(
+            children: [
+              DimmedImageBackground(
+                image: Image.network(survey.coverImageUrl).image,
+              ),
+              SafeArea(child: _buildSurveyQuestionPager(survey)),
+            ],
+          )
+        : const SizedBox.shrink();
   }
 
   Widget _buildSurveyQuestionPager(SurveyUiModel survey) {

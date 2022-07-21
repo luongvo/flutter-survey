@@ -19,7 +19,6 @@ class SurveyQuestion extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: Dimens.defaultMarginPaddingLarge),
         Row(
           children: [
             Expanded(child: SizedBox.shrink()),

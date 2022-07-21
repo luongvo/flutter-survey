@@ -19,7 +19,6 @@ class SurveyStart extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: Dimens.defaultMarginPaddingLarge),
         GestureDetector(
           onTap: () => context.navigateBack(),
           child: SizedBox(
