@@ -20,17 +20,11 @@ class CircularCheckBox extends StatelessWidget {
           shape: BoxShape.circle,
           border: Border.all(width: 2.0, color: Colors.white),
         ),
-        child: isChecked
-            ? Icon(
-                Icons.check,
-                size: 20.0,
-                color: Colors.white,
-              )
-            : Icon(
-                Icons.check,
-                size: 20.0,
-                color: Colors.white24,
-              ),
+        child: Icon(
+          Icons.check,
+          size: 20.0,
+          color: isChecked ? Colors.white : Colors.white24,
+        ),
       ),
     );
   }

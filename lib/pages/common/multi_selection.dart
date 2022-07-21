@@ -1,19 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_survey/pages/common/circular_checkbox.dart';
 
-class SelectionModel {
-  final String id;
-  final String label;
-  bool isChecked = false;
-
-  SelectionModel(this.id, this.label);
-
-  @override
-  String toString() {
-    return label;
-  }
-}
-
 class MultiSelection extends StatefulWidget {
   final List<SelectionModel> items;
   final ValueChanged<List<SelectionModel>> onChanged;
@@ -73,5 +60,18 @@ class _MultiSelectionState extends State<MultiSelection> {
             }),
       ],
     );
+  }
+}
+
+class SelectionModel {
+  final String id;
+  final String label;
+  bool isChecked = false;
+
+  SelectionModel(this.id, this.label);
+
+  @override
+  String toString() {
+    return label;
   }
 }
