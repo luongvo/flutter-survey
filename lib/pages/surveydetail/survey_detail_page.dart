@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/di/di.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
+import 'package:flutter_survey/models/question.dart';
 import 'package:flutter_survey/pages/surveydetail/survey_detail_state.dart';
 import 'package:flutter_survey/pages/surveydetail/survey_detail_view_model.dart';
-import 'package:flutter_survey/pages/surveydetail/widget/start_survey.dart';
+import 'package:flutter_survey/pages/surveydetail/widget/survey_question.dart';
+import 'package:flutter_survey/pages/surveydetail/widget/survey_start.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
+import 'package:flutter_survey/pages/widgets/dimmed_image_background.dart';
 import 'package:flutter_survey/usecase/get_survey_detail_use_case.dart';
 
 final surveyDetailViewModelProvider =
@@ -25,6 +28,8 @@ class SurveyDetailPage extends ConsumerStatefulWidget {
 }
 
 class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
+  final PageController pageController = PageController(initialPage: 0);
+
   @override
   void initState() {
     super.initState();
@@ -32,6 +37,12 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
       final survey = context.arguments as SurveyUiModel;
       ref.read(surveyDetailViewModelProvider.notifier).loadSurveyDetail(survey);
     });
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -55,11 +66,35 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
   }
 
   Widget _buildSurveyPage(SurveyUiModel? survey) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: survey != null
-          ? StartSurvey(survey: survey)
-          : const SizedBox.shrink(),
+    return survey != null
+        ? Stack(
+            children: [
+              DimmedImageBackground(
+                image: Image.network(survey.coverImageUrl).image,
+              ),
+              SafeArea(child: _buildSurveyQuestionPager(survey)),
+            ],
+          )
+        : const SizedBox.shrink();
+  }
+
+  Widget _buildSurveyQuestionPager(SurveyUiModel survey) {
+    // TODO bind question list https://github.com/luongvo/flutter-survey/issues/19
+    final pages = [
+      SurveyStart(survey: survey),
+      SurveyQuestion(displayType: DisplayType.dropdown),
+      SurveyQuestion(displayType: DisplayType.star),
+      SurveyQuestion(displayType: DisplayType.nps),
+      SurveyQuestion(displayType: DisplayType.choice),
+      SurveyQuestion(displayType: DisplayType.textfield),
+      SurveyQuestion(displayType: DisplayType.textarea),
+    ];
+    return PageView.builder(
+      // TODO disable swiping https://github.com/luongvo/flutter-survey/issues/19
+      // physics: NeverScrollableScrollPhysics(),
+      controller: pageController,
+      itemCount: pages.length,
+      itemBuilder: (context, i) => pages[i],
     );
   }
 }

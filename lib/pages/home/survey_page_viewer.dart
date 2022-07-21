@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_survey/pages/home/home_footer.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
-import 'package:flutter_survey/pages/widgets/dimmed_background.dart';
+import 'package:flutter_survey/pages/widgets/dimmed_image_background.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 
 class SurveyPageViewer extends StatelessWidget {
@@ -28,20 +28,8 @@ class SurveyPageViewer extends StatelessWidget {
   Widget _buildSurveyPageView(BuildContext context, SurveyUiModel survey) {
     return Stack(
       children: [
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: Image.network(survey.coverImageUrl).image,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        DimmedBackground(
-          colors: [
-            Colors.black.withOpacity(0.2),
-            Colors.black.withOpacity(0.7),
-          ],
-          stops: const [0.0, 1.0],
+        DimmedImageBackground(
+          image: Image.network(survey.coverImageUrl).image,
         ),
         Padding(
           padding: const EdgeInsets.all(Dimens.defaultMarginPadding),

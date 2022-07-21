@@ -22,8 +22,8 @@ class CustomInputDecoration extends InputDecoration {
           filled: true,
           hintStyle: Theme.of(context)
               .textTheme
-              .bodyText1!
-              .copyWith(color: ColorName.whiteAlpha18),
+              .bodyText1
+              ?.copyWith(color: ColorName.whiteAlpha18),
           hintText: hint,
         );
 }

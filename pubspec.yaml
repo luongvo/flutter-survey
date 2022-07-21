@@ -34,6 +34,8 @@ dependencies:
   email_validator: ^2.0.1
   equatable: ^2.0.3
   flutter_config: ^2.0.0
+  flutter_picker: ^2.0.4
+  flutter_rating_bar: ^4.0.1
   flutter_riverpod: ^1.0.3
   flutter_svg: ^1.0.3
   freezed: ^1.1.1

@@ -8,14 +8,12 @@ import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/pages/login/login_state.dart';
 import 'package:flutter_survey/pages/login/login_view_model.dart';
 import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
+import 'package:flutter_survey/pages/widgets/dimmed_image_background.dart';
 import 'package:flutter_survey/pages/widgets/loading_indicator.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 import 'package:flutter_survey/routes.dart';
 import 'package:flutter_survey/usecase/login_use_case.dart';
 import 'package:flutter_survey/utils/keyboard_util.dart';
-
-import '../widgets/blur_background.dart';
-import '../widgets/dimmed_background.dart';
 
 const PASSWORD_LENGTH_MIN = 6;
 
@@ -63,22 +61,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: Assets.images.bgLogin,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          BlurBackground(),
-          DimmedBackground(
-            colors: [
-              Colors.black.withOpacity(0.2),
-              Colors.black.withOpacity(0.8),
-              Colors.black,
-            ],
-            stops: const [0.0, 0.6, 1.0],
+          DimmedImageBackground(
+            image: Assets.images.bgLogin,
+            shouldBlur: true,
           ),
           Padding(
             padding: const EdgeInsets.all(Dimens.defaultMarginPaddingLarge),
@@ -156,7 +141,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 child: TextButton(
                   child: Text(
                     context.localization.loginForgot,
-                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
                           color: ColorName.whiteAlpha50,
                         ),
                   ),
