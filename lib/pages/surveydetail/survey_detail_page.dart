@@ -37,18 +37,21 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
   @override
   Widget build(BuildContext context) {
     final uiModel = ref.watch(_surveyStreamProvider).value;
-    return ref.watch(surveyDetailViewModelProvider).when(
-          init: () => const SizedBox.shrink(),
-          loading: () => const SizedBox.shrink(),
-          success: () => _buildSurveyPage(uiModel),
-          error: (message) {
-            WidgetsBinding.instance?.addPostFrameCallback((_) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(message ?? context.localization.errorGeneric)));
-            });
-            return _buildSurveyPage(uiModel);
-          },
-        );
+    return Scaffold(
+      body: ref.watch(surveyDetailViewModelProvider).when(
+            init: () => const SizedBox.shrink(),
+            loading: () => const SizedBox.shrink(),
+            success: () => _buildSurveyPage(uiModel),
+            error: (message) {
+              WidgetsBinding.instance?.addPostFrameCallback((_) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content:
+                        Text(message ?? context.localization.errorGeneric)));
+              });
+              return _buildSurveyPage(uiModel);
+            },
+          ),
+    );
   }
 
   Widget _buildSurveyPage(SurveyUiModel? survey) {
