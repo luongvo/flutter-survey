@@ -50,6 +50,7 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
   Widget build(BuildContext context) {
     final uiModel = ref.watch(_surveyStreamProvider).value;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: ref.watch(surveyDetailViewModelProvider).when(
             init: () => const SizedBox.shrink(),
             loading: () => const SizedBox.shrink(),
