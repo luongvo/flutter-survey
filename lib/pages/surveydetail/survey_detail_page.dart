@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/di/di.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
-import 'package:flutter_survey/models/question.dart';
 import 'package:flutter_survey/pages/surveydetail/survey_detail_state.dart';
 import 'package:flutter_survey/pages/surveydetail/survey_detail_view_model.dart';
 import 'package:flutter_survey/pages/surveydetail/widget/survey_question.dart';
@@ -10,6 +9,8 @@ import 'package:flutter_survey/pages/surveydetail/widget/survey_start.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/pages/widgets/dimmed_image_background.dart';
 import 'package:flutter_survey/usecase/get_survey_detail_use_case.dart';
+
+const Duration _pageScrollDuration = Duration(milliseconds: 200);
 
 final surveyDetailViewModelProvider =
     StateNotifierProvider.autoDispose<SurveyDetailViewModel, SurveyDetailState>(
@@ -28,7 +29,7 @@ class SurveyDetailPage extends ConsumerStatefulWidget {
 }
 
 class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
-  final PageController pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController();
 
   @override
   void initState() {
@@ -41,7 +42,7 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
 
   @override
   void dispose() {
-    pageController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -49,6 +50,7 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
   Widget build(BuildContext context) {
     final uiModel = ref.watch(_surveyStreamProvider).value;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: ref.watch(surveyDetailViewModelProvider).when(
             init: () => const SizedBox.shrink(),
             loading: () => const SizedBox.shrink(),
@@ -79,22 +81,38 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
   }
 
   Widget _buildSurveyQuestionPager(SurveyUiModel survey) {
-    // TODO bind question list https://github.com/luongvo/flutter-survey/issues/19
-    final pages = [
-      SurveyStart(survey: survey),
-      SurveyQuestion(displayType: DisplayType.dropdown),
-      SurveyQuestion(displayType: DisplayType.star),
-      SurveyQuestion(displayType: DisplayType.nps),
-      SurveyQuestion(displayType: DisplayType.choice),
-      SurveyQuestion(displayType: DisplayType.textfield),
-      SurveyQuestion(displayType: DisplayType.textarea),
-    ];
+    final pages = List.empty(growable: true);
+    pages.add(
+      SurveyStart(
+        survey: survey,
+        onNext: () => _gotoNextPage(),
+      ),
+    );
+    pages.addAll(survey.questions
+        .map((question) => SurveyQuestion(
+              question: question,
+              index: survey.questions.indexOf(question) + 1,
+              total: survey.questions.length,
+              onNext: () => _gotoNextPage(),
+              onSubmit: () {
+                // TODO: submit survey https://github.com/luongvo/flutter-survey/issues/21
+                context.navigateBack();
+              },
+            ))
+        .toList());
+
     return PageView.builder(
-      // TODO disable swiping https://github.com/luongvo/flutter-survey/issues/19
-      // physics: NeverScrollableScrollPhysics(),
-      controller: pageController,
+      physics: NeverScrollableScrollPhysics(),
+      controller: _pageController,
       itemCount: pages.length,
       itemBuilder: (context, i) => pages[i],
+    );
+  }
+
+  _gotoNextPage() {
+    _pageController.nextPage(
+      duration: _pageScrollDuration,
+      curve: Curves.ease,
     );
   }
 }

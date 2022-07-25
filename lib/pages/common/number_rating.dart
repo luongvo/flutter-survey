@@ -218,6 +218,7 @@ class _NumberRatingState extends State<NumberRating> {
 
     Widget _ratingWidget;
 
+    final text = "$index";
     if (index >= _rating) {
       _ratingWidget = Container(
         width: 30,
@@ -233,7 +234,7 @@ class _NumberRatingState extends State<NumberRating> {
             : null,
         child: Center(
           child: Text(
-            "${index + 1}",
+            text,
             style: TextStyle(color: Colors.white54),
           ),
         ),
@@ -253,7 +254,7 @@ class _NumberRatingState extends State<NumberRating> {
             : null,
         child: Center(
           child: Text(
-            "${index + 1}",
+            text,
             style: TextStyle(color: Colors.white),
           ),
         ),
@@ -274,7 +275,7 @@ class _NumberRatingState extends State<NumberRating> {
             : null,
         child: Center(
           child: Text(
-            "${index + 1}",
+            text,
             style: TextStyle(color: Colors.white),
           ),
         ),

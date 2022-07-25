@@ -1,45 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/models/answer.dart';
 import 'package:flutter_survey/models/question.dart';
 import 'package:flutter_survey/pages/common/multi_selection.dart';
 import 'package:flutter_survey/pages/common/number_rating.dart';
+import 'package:flutter_survey/pages/common/smiley_rating.dart';
 import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
 
-class SurveyAnswer extends StatelessWidget {
-  final DisplayType displayType;
+class SurveyAnswer extends ConsumerWidget {
+  final Question question;
 
-  SurveyAnswer({required this.displayType});
+  SurveyAnswer({required this.question});
 
   @override
-  Widget build(BuildContext context) {
-    switch (displayType) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    switch (question.displayType) {
       case DisplayType.dropdown:
-        return _buildPicker(context);
+        return _buildPicker(context, question.answers);
       case DisplayType.star:
         return _buildRating(
           activeIcon: Assets.icons.icStarActive,
           inactiveIcon: Assets.icons.icStarInactive,
-          // TODO bind data https://github.com/luongvo/flutter-survey/issues/19
-          itemCount: 5,
+          itemCount: question.answers.length,
+          onRate: (rating) {
+            // TODO https://github.com/luongvo/flutter-survey/issues/21
+          },
+        );
+      case DisplayType.heart:
+        return _buildRating(
+          activeIcon: Assets.icons.icHeartActive,
+          inactiveIcon: Assets.icons.icHeartInactive,
+          itemCount: question.answers.length,
+          onRate: (rating) {
+            // TODO https://github.com/luongvo/flutter-survey/issues/21
+          },
+        );
+      case DisplayType.smiley:
+        return _buildSmileyRating(
+          ref: ref,
+          itemCount: question.answers.length,
           onRate: (rating) {
             // TODO https://github.com/luongvo/flutter-survey/issues/21
           },
         );
       case DisplayType.nps:
         return _buildNumberRating(
-          // TODO bind data https://github.com/luongvo/flutter-survey/issues/19
-          itemCount: 10,
+          itemCount: question.answers.length,
           onRate: (rating) {
             // TODO https://github.com/luongvo/flutter-survey/issues/21
           },
         );
       case DisplayType.choice:
         return _buildMultiChoice(
-          answers: ["Choice 1", "Choice 2", "Choice 3"],
+          answers: question.answers,
           onItemsChanged: (items) {
             // TODO https://github.com/luongvo/flutter-survey/issues/21
           },
@@ -47,20 +64,7 @@ class SurveyAnswer extends StatelessWidget {
       case DisplayType.textfield:
         return _buildTextFields(
             context: context,
-            answers: [
-              Answer(
-                id: "1",
-                text: "Answer 1",
-                displayOrder: 0,
-                displayType: "textfield",
-              ),
-              Answer(
-                id: "2",
-                text: "Answer 2",
-                displayOrder: 1,
-                displayType: "textfield",
-              ),
-            ],
+            answers: question.answers,
             onItemChanged: (answerId, text) {
               // TODO https://github.com/luongvo/flutter-survey/issues/21
             });
@@ -76,17 +80,12 @@ class SurveyAnswer extends StatelessWidget {
     }
   }
 
-  Widget _buildPicker(BuildContext context) {
+  Widget _buildPicker(BuildContext context, List<Answer> answers) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 80.0),
       child: Picker(
-        // TODO bind data https://github.com/luongvo/flutter-survey/issues/19
         adapter: PickerDataAdapter<String>(
-          pickerdata: [
-            "Very fulfilled",
-            "Somewhat fullfilled",
-            "Somewhat unfulfilled"
-          ],
+          pickerdata: answers.map((e) => e.text).toList(),
         ),
         textAlign: TextAlign.center,
         textStyle:
@@ -141,15 +140,30 @@ class SurveyAnswer extends StatelessWidget {
     );
   }
 
+  Widget _buildSmileyRating({
+    required WidgetRef ref,
+    required int itemCount,
+    required Function onRate,
+  }) {
+    // select default value
+    onRate(ref.read(selectedEmojiIndexProvider.notifier).state + 1);
+
+    return SmileyRating(
+      itemCount: itemCount,
+      onRate: (rating) => onRate(rating.toInt()),
+    );
+  }
+
   Widget _buildMultiChoice({
-    required List<String> answers,
+    required List<Answer> answers,
     required Function onItemsChanged,
   }) {
     return Padding(
       padding: const EdgeInsets.all(80.0),
       child: MultiSelection(
-        // TODO bind id https://github.com/luongvo/flutter-survey/issues/19
-        items: answers.map((answer) => SelectionModel("id", answer)).toList(),
+        items: answers
+            .map((answer) => SelectionModel(answer.id, answer.text))
+            .toList(),
         onChanged: (items) => onItemsChanged(items),
       ),
     );

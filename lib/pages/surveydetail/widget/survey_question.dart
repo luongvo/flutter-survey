@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/models/question.dart';
@@ -6,9 +7,19 @@ import 'package:flutter_survey/pages/surveydetail/widget/survey_answer.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 
 class SurveyQuestion extends StatelessWidget {
-  final DisplayType displayType;
+  final Question question;
+  final int index;
+  final int total;
+  final Function() onNext;
+  final Function() onSubmit;
 
-  SurveyQuestion({required this.displayType});
+  SurveyQuestion({
+    required this.question,
+    required this.index,
+    required this.total,
+    required this.onNext,
+    required this.onSubmit,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +36,7 @@ class SurveyQuestion extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: Dimens.defaultMarginPadding),
               child: GestureDetector(
-                onTap: () {
-                  // TODO https://github.com/luongvo/flutter-survey/issues/19
-                },
+                onTap: () => context.navigateBack(),
                 child: SizedBox(
                   width: 56,
                   height: 56,
@@ -54,8 +63,7 @@ class SurveyQuestion extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          // TODO bind index https://github.com/luongvo/flutter-survey/issues/19
-          "1/5",
+          "$index/$total",
           style: Theme.of(context)
               .textTheme
               .bodyText1
@@ -63,42 +71,70 @@ class SurveyQuestion extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         Text(
-          // TODO bind data https://github.com/luongvo/flutter-survey/issues/19
-          "How fulfilled did you feel during this WFH period?",
+          question.text,
           style: Theme.of(context).textTheme.headline5,
         ),
         Expanded(child: SizedBox.shrink()),
         Align(
           alignment: Alignment.center,
-          child: SurveyAnswer(displayType: displayType),
+          child: SurveyAnswer(question: question),
         ),
         Expanded(child: SizedBox.shrink()),
         Row(
           children: [
             Expanded(child: SizedBox.shrink()),
-            Padding(
-              padding: const EdgeInsets.only(left: Dimens.defaultMarginPadding),
-              child: GestureDetector(
-                onTap: () {
-                  // TODO https://github.com/luongvo/flutter-survey/issues/19
-                },
-                child: ClipOval(
-                  child: Material(
-                    color: Colors.white,
-                    child: SizedBox(
-                      width: 56,
-                      height: 56,
-                      child: Assets.icons.icArrowRight.svg(
-                        fit: BoxFit.none,
-                      ),
+            _buildActionButton(context),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildActionButton(BuildContext context) {
+    return index < total
+        ? Padding(
+            padding: const EdgeInsets.only(left: Dimens.defaultMarginPadding),
+            child: GestureDetector(
+              onTap: () => onNext(),
+              child: ClipOval(
+                child: Material(
+                  color: Colors.white,
+                  child: SizedBox(
+                    width: 56,
+                    height: 56,
+                    child: Assets.icons.icArrowRight.svg(
+                      fit: BoxFit.none,
                     ),
                   ),
                 ),
               ),
             ),
-          ],
-        ),
-      ],
-    );
+          )
+        : TextButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.white),
+              foregroundColor: MaterialStateProperty.all(Colors.black),
+              overlayColor: MaterialStateProperty.all(Colors.black12),
+              padding: MaterialStateProperty.all(
+                const EdgeInsets.symmetric(
+                  vertical: Dimens.inputVerticalPadding,
+                ),
+              ),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(Dimens.inputBorderRadius)),
+              ),
+              textStyle: MaterialStateProperty.all(
+                Theme.of(context).textTheme.button,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Dimens.defaultMarginPadding),
+              child: Text(context.localization.surveySubmit),
+            ),
+            onPressed: () => onSubmit(),
+          );
   }
 }

@@ -7,8 +7,12 @@ import 'package:flutter_survey/resources/dimens.dart';
 
 class SurveyStart extends StatelessWidget {
   final SurveyUiModel survey;
+  final Function() onNext;
 
-  SurveyStart({required this.survey});
+  SurveyStart({
+    required this.survey,
+    required this.onNext,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -59,37 +63,38 @@ class SurveyStart extends StatelessWidget {
         Row(
           children: [
             Expanded(child: SizedBox.shrink()),
-            TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.white),
-                foregroundColor: MaterialStateProperty.all(Colors.black),
-                overlayColor: MaterialStateProperty.all(Colors.black12),
-                padding: MaterialStateProperty.all(
-                  const EdgeInsets.symmetric(
-                    vertical: Dimens.inputVerticalPadding,
-                  ),
-                ),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(Dimens.inputBorderRadius)),
-                ),
-                textStyle: MaterialStateProperty.all(
-                  Theme.of(context).textTheme.button,
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: Dimens.defaultMarginPadding),
-                child: Text(context.localization.surveyStart),
-              ),
-              onPressed: () {
-                // TODO start
-              },
-            ),
+            _buildActionButton(context),
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildActionButton(BuildContext context) {
+    return TextButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.white),
+        foregroundColor: MaterialStateProperty.all(Colors.black),
+        overlayColor: MaterialStateProperty.all(Colors.black12),
+        padding: MaterialStateProperty.all(
+          const EdgeInsets.symmetric(
+            vertical: Dimens.inputVerticalPadding,
+          ),
+        ),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(Dimens.inputBorderRadius)),
+        ),
+        textStyle: MaterialStateProperty.all(
+          Theme.of(context).textTheme.button,
+        ),
+      ),
+      child: Padding(
+        padding:
+            const EdgeInsets.symmetric(horizontal: Dimens.defaultMarginPadding),
+        child: Text(context.localization.surveyStart),
+      ),
+      onPressed: () => onNext(),
     );
   }
 }

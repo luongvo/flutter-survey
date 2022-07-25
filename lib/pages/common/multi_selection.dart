@@ -14,19 +14,17 @@ class MultiSelection extends StatefulWidget {
 class _MultiSelectionState extends State<MultiSelection> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 65 * widget.items.length.toDouble(),
-      child: ListView.separated(
-        itemCount: widget.items.length,
-        itemBuilder: (context, index) {
-          return Container(
-            child: _buildSelection(index, context),
-          );
-        },
-        separatorBuilder: (_, __) => const Divider(
-          color: Colors.white,
-          height: 0.5,
-        ),
+    return ListView.separated(
+      shrinkWrap: true,
+      itemCount: widget.items.length,
+      itemBuilder: (context, index) {
+        return Container(
+          child: _buildSelection(index, context),
+        );
+      },
+      separatorBuilder: (_, __) => const Divider(
+        color: Colors.white,
+        height: 0.5,
       ),
     );
   }

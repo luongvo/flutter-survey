@@ -1,14 +1,16 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_survey/api/response/question_response.dart';
+import 'package:flutter_survey/models/answer.dart';
 
 class Question extends Equatable {
   final String id;
   final String text;
   final int displayOrder;
-  final String displayType;
+  final DisplayType displayType;
   final String imageUrl;
   final String coverImageUrl;
   final double coverImageOpacity;
+  final List<Answer> answers;
 
   Question({
     required this.id,
@@ -18,6 +20,7 @@ class Question extends Equatable {
     required this.imageUrl,
     required this.coverImageOpacity,
     required this.coverImageUrl,
+    required this.answers,
   });
 
   @override
@@ -28,7 +31,8 @@ class Question extends Equatable {
         displayType,
         imageUrl,
         coverImageOpacity,
-        coverImageUrl
+        coverImageUrl,
+        answers,
       ];
 
   factory Question.fromQuestionResponse(QuestionResponse response) {
@@ -36,20 +40,29 @@ class Question extends Equatable {
       id: response.id,
       text: response.text ?? '',
       displayOrder: response.displayOrder ?? 0,
-      displayType: response.displayType ?? '',
+      displayType: response.displayType ?? DisplayType.unknown,
       imageUrl: response.imageUrl ?? "",
       coverImageOpacity: response.coverImageOpacity ?? 0,
       coverImageUrl: response.coverImageUrl ?? "",
+      answers: response.answers
+          .map((answer) => Answer.fromAnswerResponse(answer))
+          .toList(),
     );
   }
 }
 
 enum DisplayType {
   star,
+  heart,
+  smiley,
   choice,
   nps,
   textarea,
   textfield,
   dropdown,
+  money,
+  slider,
+  intro,
+  outro,
   unknown,
 }

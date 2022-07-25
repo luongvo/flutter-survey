@@ -7,6 +7,7 @@
   "loginError": "Login failed! Please recheck your email or password",
   "homeToday": "Today",
   "surveyStart": "Start Survey",
+  "surveySubmit": "Submit",
   "surveyAnswerNpsExtremelyLikely": "Extremely Likely",
   "surveyAnswerNpsNotAtAllLikely": "Not at all Likely",
   "surveyAnswerTextAreaHint": "Your thoughts",
