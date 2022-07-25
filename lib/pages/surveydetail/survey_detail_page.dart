@@ -59,11 +59,11 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
       body: ref.watch(surveyDetailViewModelProvider).when(
             init: () => const SizedBox.shrink(),
             loading: () => LoadingIndicator(),
-          success: () => _buildSurveyPage(uiModel),
-          submitted: () {
-            // TODO navigate to Completion screen https://github.com/luongvo/flutter-survey/issues/22
-            context.navigateBack();
-            return const SizedBox.shrink();
+            success: () => _buildSurveyPage(uiModel),
+            submitted: () {
+              // TODO navigate to Completion screen https://github.com/luongvo/flutter-survey/issues/22
+              context.navigateBack();
+              return const SizedBox.shrink();
             },
             error: (message) {
               WidgetsBinding.instance?.addPostFrameCallback((_) {
