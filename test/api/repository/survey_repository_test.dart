@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter_survey/api/exception/network_exceptions.dart';
 import 'package:flutter_survey/api/repository/survey_repository.dart';
 import 'package:flutter_survey/api/response/survey_detail_response.dart';
@@ -74,7 +72,7 @@ void main() {
     test(
         'When calling submitSurvey successfully, it returns corresponding response',
         () async {
-      when(mockSurveyService.submitSurvey(any)).thenAnswer((_) async => Void);
+      when(mockSurveyService.submitSurvey(any)).thenAnswer((_) async => null);
       await surveyRepository.submitSurvey("1", []);
     });
 
