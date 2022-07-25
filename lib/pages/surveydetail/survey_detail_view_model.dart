@@ -45,7 +45,7 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
   }
 
   void saveDropdownAnswers(String questionId, Answer answer) {
-    _saveAnswersToQuestions(questionId, [answer.toSubmitAnswer()]);
+    _saveAnswersToQuestions(questionId, [SubmitAnswer.fromAnswer(answer)]);
   }
 
   void saveRatingAnswers(String questionId, int rating) {
@@ -54,7 +54,7 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
         ?.firstWhereOrNull((element) => element.displayOrder == rating - 1);
 
     final submitAnswers = selectedAnswer != null
-        ? [selectedAnswer.toSubmitAnswer()]
+        ? [SubmitAnswer.fromAnswer(selectedAnswer)]
         : <SubmitAnswer>[];
 
     _saveAnswersToQuestions(questionId, submitAnswers);
