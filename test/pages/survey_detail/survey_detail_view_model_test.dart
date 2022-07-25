@@ -68,7 +68,6 @@ void main() {
       expect(
           stateStream,
           emitsInOrder([
-            SurveyDetailState.loading(),
             SurveyDetailState.success(),
             SurveyDetailState.loading(),
             SurveyDetailState.success(),
@@ -104,7 +103,6 @@ void main() {
       expect(
           stateStream,
           emitsInOrder([
-            SurveyDetailState.loading(),
             SurveyDetailState.success(),
             SurveyDetailState.loading(),
             SurveyDetailState.error(

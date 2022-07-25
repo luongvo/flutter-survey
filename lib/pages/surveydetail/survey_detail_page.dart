@@ -54,39 +54,40 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
   @override
   Widget build(BuildContext context) {
     final uiModel = ref.watch(_surveyStreamProvider).value;
-    return ref.watch(surveyDetailViewModelProvider).when(
-          init: () => const SizedBox.shrink(),
-          loading: () => LoadingIndicator(),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: ref.watch(surveyDetailViewModelProvider).when(
+            init: () => const SizedBox.shrink(),
+            loading: () => LoadingIndicator(),
           success: () => _buildSurveyPage(uiModel),
           submitted: () {
             // TODO navigate to Completion screen https://github.com/luongvo/flutter-survey/issues/22
             context.navigateBack();
             return const SizedBox.shrink();
-          },
-          error: (message) {
-            WidgetsBinding.instance?.addPostFrameCallback((_) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(message ?? context.localization.errorGeneric)));
-            });
-            return _buildSurveyPage(uiModel);
-          },
-        );
+            },
+            error: (message) {
+              WidgetsBinding.instance?.addPostFrameCallback((_) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content:
+                        Text(message ?? context.localization.errorGeneric)));
+              });
+              return _buildSurveyPage(uiModel);
+            },
+          ),
+    );
   }
 
   Widget _buildSurveyPage(SurveyUiModel? survey) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: survey != null
-          ? Stack(
-              children: [
-                DimmedImageBackground(
-                  image: Image.network(survey.coverImageUrl).image,
-                ),
-                _buildSurveyQuestionPager(survey)
-              ],
-            )
-          : const SizedBox.shrink(),
-    );
+    return survey != null
+        ? Stack(
+            children: [
+              DimmedImageBackground(
+                image: Image.network(survey.coverImageUrl).image,
+              ),
+              SafeArea(child: _buildSurveyQuestionPager(survey)),
+            ],
+          )
+        : const SizedBox.shrink();
   }
 
   Widget _buildSurveyQuestionPager(SurveyUiModel survey) {

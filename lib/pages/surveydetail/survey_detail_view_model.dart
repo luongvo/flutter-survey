@@ -27,7 +27,6 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
 
   Future<void> loadSurveyDetail(SurveyUiModel survey) async {
     // Load initial survey
-    state = const SurveyDetailState.loading();
     _surveySubject.add(survey);
     state = const SurveyDetailState.success();
 
