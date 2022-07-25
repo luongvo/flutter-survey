@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_survey/api/exception/network_exceptions.dart';
 import 'package:flutter_survey/api/repository/oauth_repository.dart';
@@ -63,7 +61,7 @@ void main() {
     });
 
     test('When calling logout successfully, it returns empty result', () async {
-      when(mockOAuthService.logout(any)).thenAnswer((_) async => Void);
+      when(mockOAuthService.logout(any)).thenAnswer((_) async => null);
 
       await oauthRepository.logout(token: 'token');
     });
