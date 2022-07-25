@@ -1,9 +1,16 @@
 {
+  "errorGeneric": "Đã có lỗi xảy ra. Vui lòng thử lại.",
   "loginEmail": "Email",
   "loginPassword": "Mật khẩu",
   "loginForgot": "Quên?",
   "loginText": "Đăng nhập",
   "loginError": "Đăng nhập thất bại! Vui lòng kiểm tra lại email hoặc mật khẩu",
+  "homeToday": "Hôm nay",
+  "surveyStart": "Bắt đầu khảo sát",
+  "surveySubmit": "Gửi",
+  "surveyAnswerNpsExtremelyLikely": "Rất có thể",
+  "surveyAnswerNpsNotAtAllLikely": "Hoàn toàn không thể",
+  "surveyAnswerTextAreaHint": "Ý kiến của bạn",
   "validationErrorEmailInvalid": "Vui lòng nhập đúng email",
   "validationErrorPasswordInvalid": "Vui lòng nhập đúng mật khẩu"
 }

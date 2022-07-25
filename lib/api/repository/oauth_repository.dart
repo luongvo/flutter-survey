@@ -14,7 +14,7 @@ abstract class OAuthRepository {
 
 @Singleton(as: OAuthRepository)
 class OAuthRepositoryImpl extends OAuthRepository {
-  late OAuthService _oauthService;
+  OAuthService _oauthService;
 
   OAuthRepositoryImpl(this._oauthService);
 
@@ -24,14 +24,12 @@ class OAuthRepositoryImpl extends OAuthRepository {
     required String password,
   }) async {
     try {
-      final response = await _oauthService
-          .login(OAuthTokenRequest(
-            email: email,
-            password: password,
-            clientId: Env.basicAuthClientId,
-            clientSecret: Env.basicAuthClientSecret,
-          ))
-          .then((response) => response.data.attributes);
+      final response = await _oauthService.login(OAuthTokenRequest(
+        email: email,
+        password: password,
+        clientId: Env.basicAuthClientId,
+        clientSecret: Env.basicAuthClientSecret,
+      ));
       return OAuthToken(
         accessToken: response.accessToken,
         refreshToken: response.refreshToken,

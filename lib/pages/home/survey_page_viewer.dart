@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_survey/gen/assets.gen.dart';
-import 'package:flutter_survey/pages/widgets/dimmed_background.dart';
+import 'package:flutter_survey/pages/home/home_footer.dart';
+import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
+import 'package:flutter_survey/pages/widgets/dimmed_image_background.dart';
+import 'package:flutter_survey/resources/dimens.dart';
 
 class SurveyPageViewer extends StatelessWidget {
-  final List<int> surveys;
+  final List<SurveyUiModel> surveys;
   final ValueNotifier<int> currentPageNotifier;
   final _pageController = PageController();
 
@@ -15,7 +17,7 @@ class SurveyPageViewer extends StatelessWidget {
       itemCount: surveys.length,
       controller: _pageController,
       itemBuilder: (BuildContext context, int index) {
-        return _buildSurveyPageView(context);
+        return _buildSurveyPageView(context, surveys[index]);
       },
       onPageChanged: (int index) {
         currentPageNotifier.value = index;
@@ -23,23 +25,24 @@ class SurveyPageViewer extends StatelessWidget {
     );
   }
 
-  Widget _buildSurveyPageView(BuildContext context) {
+  Widget _buildSurveyPageView(BuildContext context, SurveyUiModel survey) {
     return Stack(
       children: [
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: Assets.images.bgHomeSample,
-              fit: BoxFit.cover,
-            ),
-          ),
+        DimmedImageBackground(
+          image: Image.network(survey.coverImageUrl).image,
         ),
-        DimmedBackground(
-          colors: [
-            Colors.black.withOpacity(0.2),
-            Colors.black.withOpacity(0.7),
-          ],
-          stops: const [0.0, 1.0],
+        Padding(
+          padding: const EdgeInsets.all(Dimens.defaultMarginPadding),
+          child: Column(
+            children: [
+              Expanded(
+                child: const SizedBox.shrink(),
+              ),
+              HomeFooter(
+                survey: survey,
+              ),
+            ],
+          ),
         ),
       ],
     );

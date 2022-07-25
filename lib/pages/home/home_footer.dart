@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
+import 'package:flutter_survey/gen/colors.gen.dart';
+import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/resources/dimens.dart';
-import 'package:page_view_indicators/circle_page_indicator.dart';
+import 'package:flutter_survey/routes.dart';
 
 class HomeFooter extends StatelessWidget {
-  final List<int> surveys;
-  final ValueNotifier<int> currentPageNotifier;
+  final SurveyUiModel survey;
 
-  HomeFooter({required this.surveys, required this.currentPageNotifier});
+  HomeFooter({required this.survey});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _buildCircleIndicator(),
         const SizedBox(height: Dimens.defaultMarginPaddingLarge),
         Text(
-          // TODO data binding https://github.com/luongvo/flutter-survey/issues/14
-          'Working from home Check-In',
+          survey.title,
           style: Theme.of(context).textTheme.headline4,
         ),
         const SizedBox(height: 10.0),
@@ -26,21 +25,26 @@ class HomeFooter extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                // TODO data binding https://github.com/luongvo/flutter-survey/issues/14
-                'We would like to know how you feel about our work from home...',
-                style: Theme.of(context).textTheme.bodyText1,
+                survey.description,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1
+                    ?.copyWith(color: ColorName.whiteAlpha70),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: Dimens.defaultMarginPadding),
-              child: ClipOval(
-                child: Material(
-                  color: Colors.white,
-                  child: SizedBox(
-                    width: 56,
-                    height: 56,
-                    child: Assets.icons.icArrowRight.svg(
-                      fit: BoxFit.none,
+              child: GestureDetector(
+                onTap: () => _navigateToSurvey(context),
+                child: ClipOval(
+                  child: Material(
+                    color: Colors.white,
+                    child: SizedBox(
+                      width: 56,
+                      height: 56,
+                      child: Assets.icons.icArrowRight.svg(
+                        fit: BoxFit.none,
+                      ),
                     ),
                   ),
                 ),
@@ -52,18 +56,7 @@ class HomeFooter extends StatelessWidget {
     );
   }
 
-  Widget _buildCircleIndicator() {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: CirclePageIndicator(
-        size: 8,
-        selectedSize: 8,
-        dotSpacing: 10,
-        dotColor: Colors.white.withOpacity(0.2),
-        selectedDotColor: Colors.white,
-        itemCount: surveys.length,
-        currentPageNotifier: currentPageNotifier,
-      ),
-    );
+  void _navigateToSurvey(BuildContext context) {
+    Navigator.pushNamed(context, Routes.SURVEY, arguments: survey);
   }
 }

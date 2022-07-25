@@ -1,21 +1,19 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/di/di.dart';
+import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/pages/login/login_state.dart';
 import 'package:flutter_survey/pages/login/login_view_model.dart';
 import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
+import 'package:flutter_survey/pages/widgets/dimmed_image_background.dart';
 import 'package:flutter_survey/pages/widgets/loading_indicator.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 import 'package:flutter_survey/routes.dart';
 import 'package:flutter_survey/usecase/login_use_case.dart';
 import 'package:flutter_survey/utils/keyboard_util.dart';
-
-import '../widgets/blur_background.dart';
-import '../widgets/dimmed_background.dart';
 
 const PASSWORD_LENGTH_MIN = 6;
 
@@ -24,33 +22,31 @@ final loginViewModelProvider =
   return LoginViewModel(getIt.get<LoginUseCase>());
 });
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return ProviderListener(
-        provider: loginViewModelProvider,
-        onChange: (BuildContext ctx, LoginState loginState) {
-          loginState.maybeWhen(
-            error: (error) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(AppLocalizations.of(context)!.loginError)));
-            },
-            success: () async {
-              await Navigator.of(context).popAndPushNamed(Routes.HOME_PAGE);
-            },
-            orElse: () {},
-          );
+    ref.listen<LoginState>(loginViewModelProvider, (_, loginState) {
+      loginState.maybeWhen(
+        error: (error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(context.localization.loginError)));
         },
-        child: _buildLoginPage());
+        success: () async {
+          await Navigator.of(context).popAndPushNamed(Routes.HOME_PAGE);
+        },
+        orElse: () {},
+      );
+    });
+    return _buildLoginPage();
   }
 
   @override
@@ -65,22 +61,9 @@ class _LoginPageState extends State<LoginPage> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: Assets.images.bgLogin,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          BlurBackground(),
-          DimmedBackground(
-            colors: [
-              Colors.black.withOpacity(0.2),
-              Colors.black.withOpacity(0.8),
-              Colors.black,
-            ],
-            stops: const [0.0, 0.6, 1.0],
+          DimmedImageBackground(
+            image: Assets.images.bgLogin,
+            shouldBlur: true,
           ),
           Padding(
             padding: const EdgeInsets.all(Dimens.defaultMarginPaddingLarge),
@@ -98,8 +81,8 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           ),
-          Consumer(builder: (_, ScopedReader watch, __) {
-            final loginViewModel = watch(loginViewModelProvider);
+          Consumer(builder: (_, WidgetRef ref, __) {
+            final loginViewModel = ref.watch(loginViewModelProvider);
             return loginViewModel.maybeWhen(
               loading: () => LoadingIndicator(),
               orElse: () => SizedBox.shrink(),
@@ -121,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
           controller: _emailController,
           decoration: CustomInputDecoration(
             context: context,
-            hint: AppLocalizations.of(context)!.loginEmail,
+            hint: context.localization.loginEmail,
           ),
           keyboardType: TextInputType.emailAddress,
           style: Theme.of(context).textTheme.bodyText1,
@@ -135,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
               controller: _passwordController,
               decoration: CustomInputDecoration(
                 context: context,
-                hint: AppLocalizations.of(context)!.loginPassword,
+                hint: context.localization.loginPassword,
               ).copyWith(
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: Dimens.inputHorizontalPadding,
@@ -157,8 +140,8 @@ class _LoginPageState extends State<LoginPage> {
                 height: 56,
                 child: TextButton(
                   child: Text(
-                    AppLocalizations.of(context)!.loginForgot,
-                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    context.localization.loginForgot,
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
                           color: ColorName.whiteAlpha50,
                         ),
                   ),
@@ -192,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                 Theme.of(context).textTheme.button,
               ),
             ),
-            child: Text(AppLocalizations.of(context)!.loginText),
+            child: Text(context.localization.loginText),
             onPressed: () => _attemptLogin(),
           ),
         ),
@@ -202,13 +185,17 @@ class _LoginPageState extends State<LoginPage> {
 
   String? _emailValidator(String? value) {
     if (value == null || !EmailValidator.validate(value)) {
-      return AppLocalizations.of(context)!.validationErrorEmailInvalid;
+      return context.localization.validationErrorEmailInvalid;
+    } else {
+      return null;
     }
   }
 
   String? _passwordValidator(String? value) {
     if (value == null || value.length < PASSWORD_LENGTH_MIN) {
-      return AppLocalizations.of(context)!.validationErrorEmailInvalid;
+      return context.localization.validationErrorEmailInvalid;
+    } else {
+      return null;
     }
   }
 
@@ -216,9 +203,9 @@ class _LoginPageState extends State<LoginPage> {
     if (_formKey.currentState!.validate()) {
       KeyboardUtil.hideKeyboard(context);
 
-      final LoginViewModel loginViewModel =
-          context.read<LoginViewModel>(loginViewModelProvider.notifier);
-      loginViewModel.login(_emailController.text, _passwordController.text);
+      ref
+          .read(loginViewModelProvider.notifier)
+          .login(_emailController.text, _passwordController.text);
     }
   }
 }
