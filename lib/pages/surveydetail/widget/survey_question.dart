@@ -30,7 +30,6 @@ class SurveyQuestion extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: Dimens.defaultMarginPaddingLarge),
         Row(
           children: [
             Expanded(child: SizedBox.shrink()),
@@ -67,8 +66,8 @@ class SurveyQuestion extends StatelessWidget {
           "$index/$total",
           style: Theme.of(context)
               .textTheme
-              .bodyText1!
-              .copyWith(color: ColorName.whiteAlpha70),
+              .bodyText1
+              ?.copyWith(color: ColorName.whiteAlpha70),
         ),
         const SizedBox(height: 10.0),
         Text(

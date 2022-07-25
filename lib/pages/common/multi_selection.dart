@@ -1,19 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_survey/pages/common/circular_checkbox.dart';
 
-class SelectionModel {
-  final String id;
-  final String label;
-  bool isChecked = false;
-
-  SelectionModel(this.id, this.label);
-
-  @override
-  String toString() {
-    return label;
-  }
-}
-
 class MultiSelection extends StatefulWidget {
   final List<SelectionModel> items;
   final ValueChanged<List<SelectionModel>> onChanged;
@@ -27,25 +14,19 @@ class MultiSelection extends StatefulWidget {
 class _MultiSelectionState extends State<MultiSelection> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount: widget.items.length,
-        itemBuilder: (context, index) {
-          return Container(
-            child: _buildSelection(index, context),
-            decoration:
-                (widget.items.isNotEmpty && index != widget.items.length - 1)
-                    ? BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            width: 0.5,
-                            color: Colors.white,
-                          ),
-                        ),
-                      )
-                    : null,
-          );
-        });
+    return ListView.separated(
+      shrinkWrap: true,
+      itemCount: widget.items.length,
+      itemBuilder: (context, index) {
+        return Container(
+          child: _buildSelection(index, context),
+        );
+      },
+      separatorBuilder: (_, __) => const Divider(
+        color: Colors.white,
+        height: 0.5,
+      ),
+    );
   }
 
   Widget _buildSelection(int index, BuildContext context) {
@@ -71,5 +52,18 @@ class _MultiSelectionState extends State<MultiSelection> {
             }),
       ],
     );
+  }
+}
+
+class SelectionModel {
+  final String id;
+  final String label;
+  bool isChecked = false;
+
+  SelectionModel(this.id, this.label);
+
+  @override
+  String toString() {
+    return label;
   }
 }
