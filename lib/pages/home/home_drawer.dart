@@ -90,17 +90,19 @@ class HomeDrawer extends StatelessWidget {
   }
 
   Widget _bindMenu(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        // TODO https://github.com/luongvo/flutter-survey/issues/29
+    return Consumer(
+      builder: (BuildContext _, WidgetRef widgetRef, __) {
+        return GestureDetector(
+          onTap: () => widgetRef.read(homeViewModelProvider.notifier).logout(),
+          child: Text(
+            context.localization.logout,
+            style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                  color: Colors.white.withOpacity(0.5),
+                  fontSize: 20.0,
+                ),
+          ),
+        );
       },
-      child: Text(
-        context.localization.logout,
-        style: Theme.of(context).textTheme.bodyText2?.copyWith(
-              color: Colors.white.withOpacity(0.5),
-              fontSize: 20.0,
-            ),
-      ),
     );
   }
 

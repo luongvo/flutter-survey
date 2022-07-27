@@ -41,7 +41,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               SnackBar(content: Text(context.localization.loginError)));
         },
         success: () async {
-          await Navigator.of(context).popAndPushNamed(Routes.HOME_PAGE);
+          await Navigator.of(context).popAndPushNamed(Routes.home);
         },
         orElse: () {},
       );

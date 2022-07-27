@@ -6,6 +6,7 @@ import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/usecase/base/base_use_case.dart';
 import 'package:flutter_survey/usecase/get_surveys_use_case.dart';
 import 'package:flutter_survey/usecase/get_user_profile_use_case.dart';
+import 'package:flutter_survey/usecase/logout_use_case.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rxdart/subjects.dart';
 
@@ -14,10 +15,12 @@ const _pageSize = 10;
 class HomeViewModel extends StateNotifier<HomeState> {
   final GetUserProfileUseCase _getUserProfileUseCase;
   final GetSurveysUseCase _getSurveysUseCase;
+  final LogoutUseCase _logoutUseCase;
 
   HomeViewModel(
     this._getUserProfileUseCase,
     this._getSurveysUseCase,
+    this._logoutUseCase,
   ) : super(const HomeState.init());
 
   int _page = 1;
@@ -57,6 +60,17 @@ class HomeViewModel extends StateNotifier<HomeState> {
     final result = await _getUserProfileUseCase.call();
     if (result is Success<User>) {
       _userSubject.add(result.value);
+    } else {
+      _handleError(result as Failed);
+    }
+  }
+
+  Future<void> logout() async {
+    state = const HomeState.loading();
+
+    final result = await _logoutUseCase.call();
+    if (result is Success<void>) {
+      state = const HomeState.loggedOut();
     } else {
       _handleError(result as Failed);
     }
