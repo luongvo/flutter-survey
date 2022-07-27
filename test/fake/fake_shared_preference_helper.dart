@@ -14,6 +14,11 @@ class FakeSharedPreferencesHelper extends Fake
   }
 
   @override
+  Future<String> getAccessToken() async {
+    return 'token';
+  }
+
+  @override
   Future<bool> saveAccessToken(String token) async {
     _fakeSharePrefHelper[PREF_KEY_ACCESS_TOKEN] = token;
     return true;
@@ -29,5 +34,10 @@ class FakeSharedPreferencesHelper extends Fake
   Future<bool> saveTokenExpiration(int expiration) async {
     _fakeSharePrefHelper[PREF_KEY_TOKEN_EXPIRATION] = expiration;
     return true;
+  }
+
+  @override
+  Future<void> clear() async {
+    _fakeSharePrefHelper.clear();
   }
 }
