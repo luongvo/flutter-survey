@@ -74,5 +74,39 @@ void main() {
 
       expect(result, throwsA(isA<NetworkExceptions>()));
     });
+
+    test(
+        'When calling refresh token successfully, it returns corresponding mapped result',
+        () async {
+      final oauthTokenResponse = OAuthTokenResponse(
+        accessToken: 'accessToken',
+        tokenType: 'tokenType',
+        expiresIn: 0,
+        refreshToken: 'refreshToken',
+        createdAt: 0,
+      );
+      final expectedValue = OAuthToken(
+        accessToken: 'accessToken',
+        refreshToken: 'refreshToken',
+        tokenType: 'tokenType',
+        expiresIn: 0,
+      );
+      when(mockOAuthService.refreshToken(any))
+          .thenAnswer((_) async => oauthTokenResponse);
+
+      final result =
+          await oauthRepository.refreshToken(refreshToken: 'refreshToken');
+      expect(result, expectedValue);
+    });
+
+    test(
+        'When calling refresh token failed, it returns NetworkExceptions error',
+        () async {
+      when(mockOAuthService.refreshToken(any)).thenThrow(MockDioError());
+
+      final result =
+          () => oauthRepository.refreshToken(refreshToken: 'refreshToken');
+      expect(result, throwsA(isA<NetworkExceptions>()));
+    });
   });
 }

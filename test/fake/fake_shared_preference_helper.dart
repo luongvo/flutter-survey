@@ -25,6 +25,11 @@ class FakeSharedPreferencesHelper extends Fake
   }
 
   @override
+  Future<String> getRefreshToken() async {
+    return 'refreshToken';
+  }
+
+  @override
   Future<bool> saveRefreshToken(String refreshToken) async {
     _fakeSharePrefHelper[PREF_KEY_REFRESH_TOKEN] = refreshToken;
     return true;
