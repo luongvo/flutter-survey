@@ -1,4 +1,5 @@
 import 'package:flutter_survey/api/exception/network_exceptions.dart';
+import 'package:flutter_survey/api/request/submit_survey_request.dart';
 import 'package:flutter_survey/api/survey_service.dart';
 import 'package:flutter_survey/models/survey.dart';
 import 'package:flutter_survey/models/survey_detail.dart';
@@ -8,6 +9,11 @@ abstract class SurveyRepository {
   Future<List<Survey>> getSurveys(int pageNumber, int pageSize);
 
   Future<SurveyDetail> getSurveyDetail(String surveyId);
+
+  Future<void> submitSurvey(
+    String surveyId,
+    List<SubmitQuestion> questions,
+  );
 }
 
 @Singleton(as: SurveyRepository)
@@ -34,6 +40,21 @@ class SurveyRepositoryImpl extends SurveyRepository {
     try {
       final response = await _surveyService.getSurveyDetail(surveyId);
       return SurveyDetail.fromSurveyDetailResponse(response);
+    } catch (exception) {
+      throw NetworkExceptions.fromDioException(exception);
+    }
+  }
+
+  @override
+  Future<void> submitSurvey(
+    String surveyId,
+    List<SubmitQuestion> questions,
+  ) async {
+    try {
+      return await _surveyService.submitSurvey(SubmitSurveyRequest(
+        surveyId: surveyId,
+        questions: questions,
+      ));
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);
     }
