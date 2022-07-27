@@ -6,7 +6,11 @@ import 'package:flutter_survey/usecase/login_use_case.dart';
 class LoginViewModel extends StateNotifier<LoginState> {
   final LoginUseCase _loginUseCase;
 
-  LoginViewModel(this._loginUseCase) : super(const LoginState.init());
+  LoginViewModel(this._loginUseCase) : super(const LoginState.init()) {
+    Future.delayed(Duration(seconds: 2), () async {
+      state = LoginState.login();
+    });
+  }
 
   Future<void> login(String email, String password) async {
     state = LoginState.loading();

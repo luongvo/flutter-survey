@@ -46,7 +46,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         orElse: () {},
       );
     });
-    return _buildLoginPage();
+    return ref.watch(loginViewModelProvider).maybeWhen(
+          init: () => _buildSplashPage(),
+          orElse: () => _buildLoginPage(),
+        );
   }
 
   @override
@@ -54,6 +57,23 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  Widget _buildSplashPage() {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          DimmedImageBackground(
+            image: Assets.images.bgLogin,
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Assets.icons.icNimbleLogo.svg(),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildLoginPage() {
