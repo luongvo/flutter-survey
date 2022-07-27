@@ -6,6 +6,7 @@
   "loginForgot": "Forgot?",
   "loginText": "Log In",
   "loginError": "Login failed! Please recheck your email or password",
+  "logout": "Logout",
   "homeToday": "Today",
   "surveyStart": "Start Survey",
   "surveySubmit": "Submit",

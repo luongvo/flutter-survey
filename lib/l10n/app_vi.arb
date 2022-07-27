@@ -6,6 +6,7 @@
   "loginForgot": "Quên?",
   "loginText": "Đăng nhập",
   "loginError": "Đăng nhập thất bại! Vui lòng kiểm tra lại email hoặc mật khẩu",
+  "logout": "Đăng xuất",
   "homeToday": "Hôm nay",
   "surveyStart": "Bắt đầu khảo sát",
   "surveySubmit": "Gửi",

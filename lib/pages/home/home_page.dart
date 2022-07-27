@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/di/di.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
+import 'package:flutter_survey/models/user.dart';
+import 'package:flutter_survey/pages/home/home_drawer.dart';
 import 'package:flutter_survey/pages/home/home_header.dart';
 import 'package:flutter_survey/pages/home/home_state.dart';
 import 'package:flutter_survey/pages/home/home_view_model.dart';
@@ -9,15 +11,25 @@ import 'package:flutter_survey/pages/home/survey_page_viewer.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 import 'package:flutter_survey/usecase/get_surveys_use_case.dart';
+import 'package:flutter_survey/usecase/get_user_profile_use_case.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
 
 final homeViewModelProvider =
     StateNotifierProvider.autoDispose<HomeViewModel, HomeState>((ref) {
-  return HomeViewModel(getIt.get<GetSurveysUseCase>());
+  return HomeViewModel(
+    getIt.get<GetUserProfileUseCase>(),
+    getIt.get<GetSurveysUseCase>(),
+  );
 });
 
 final _surveysStreamProvider = StreamProvider.autoDispose<List<SurveyUiModel>>(
     (ref) => ref.watch(homeViewModelProvider.notifier).surveysStream);
+
+final userStreamProvider = StreamProvider.autoDispose<User>(
+    (ref) => ref.watch(homeViewModelProvider.notifier).userStream);
+
+final versionInfoProvider = StreamProvider.autoDispose<String>(
+    (ref) => ref.watch(homeViewModelProvider.notifier).versionInfoStream);
 
 class HomePage extends ConsumerStatefulWidget {
   @override
@@ -32,6 +44,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
+    ref.read(homeViewModelProvider.notifier).getUserProfile();
     ref.read(homeViewModelProvider.notifier).loadSurveys();
   }
 
@@ -57,6 +70,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   Widget _buildHomePage(List<SurveyUiModel> surveys) {
     return Scaffold(
+      endDrawer: HomeDrawer(),
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
