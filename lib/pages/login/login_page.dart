@@ -46,7 +46,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         orElse: () {},
       );
     });
-    return _buildLoginPage();
+    return ref.watch(loginViewModelProvider).maybeWhen(
+          init: () => _buildSplashPage(),
+          orElse: () => _buildLoginPage(),
+        );
   }
 
   @override
