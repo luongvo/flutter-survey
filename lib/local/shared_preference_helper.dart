@@ -81,6 +81,7 @@ class SharedPreferencesHelperImpl implements SharedPreferencesHelper {
 
   @override
   bool get isLoggedIn {
-    return _prefs.containsKey(PREF_KEY_ACCESS_TOKEN);
+    return _prefs.containsKey(PREF_KEY_ACCESS_TOKEN) &&
+        _prefs.containsKey(PREF_KEY_TYPE);
   }
 }
