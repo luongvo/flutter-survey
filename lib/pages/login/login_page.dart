@@ -56,6 +56,23 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     super.dispose();
   }
 
+  Widget _buildSplashPage() {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          DimmedImageBackground(
+            image: Assets.images.bgLogin,
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Assets.icons.icNimbleLogo.svg(),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildLoginPage() {
     return Scaffold(
       resizeToAvoidBottomInset: false,
