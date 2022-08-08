@@ -11,11 +11,16 @@ import '../../utils/file_util.dart';
 void main() {
   group("SurveyRepositoryTest", () {
     late MockSurveyService mockSurveyService;
+    late MockSurveyBoxHelper mockSurveyBoxHelper;
     late SurveyRepository surveyRepository;
 
     setUp(() async {
       mockSurveyService = MockSurveyService();
-      surveyRepository = SurveyRepositoryImpl(mockSurveyService);
+      mockSurveyBoxHelper = MockSurveyBoxHelper();
+      surveyRepository = SurveyRepositoryImpl(
+        mockSurveyService,
+        mockSurveyBoxHelper,
+      );
     });
 
     test(
@@ -32,6 +37,9 @@ void main() {
       expect(result.length, 2);
       expect(result[0].title, "Scarlett Bangkok");
       expect(result[1].title, "ibis Bangkok Riverside");
+
+      verify(mockSurveyBoxHelper.clearSurveys()).called(1);
+      verify(mockSurveyBoxHelper.saveSurveys(result)).called(1);
     });
 
     test('When calling getSurveys failed, it returns NetworkExceptions error',
