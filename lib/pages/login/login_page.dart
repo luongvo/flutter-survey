@@ -65,7 +65,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       body: Stack(
         children: [
           DimmedImageBackground(
-            image: Assets.images.bgLogin,
+            image: Assets.images.bgLogin.image().image,
           ),
           Align(
             alignment: Alignment.center,
@@ -82,7 +82,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       body: Stack(
         children: [
           DimmedImageBackground(
-            image: Assets.images.bgLogin,
+            image: Assets.images.bgLogin.image().image,
             shouldBlur: true,
           ),
           Padding(
