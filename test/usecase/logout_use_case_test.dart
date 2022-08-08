@@ -10,16 +10,22 @@ void main() {
   group('LogoutUseCaseTest', () {
     late MockOAuthRepository mockRepository;
     late MockSharedPreferencesHelper mockSharePref;
+    late MockSurveyBoxHelper mockSurveyBoxHelper;
     late LogoutUseCase useCase;
 
     setUp(() async {
       mockRepository = MockOAuthRepository();
       mockSharePref = MockSharedPreferencesHelper();
+      mockSurveyBoxHelper = MockSurveyBoxHelper();
 
       when(mockSharePref.getAccessToken())
           .thenAnswer((_) async => "accessToken");
 
-      useCase = LogoutUseCase(mockRepository, mockSharePref);
+      useCase = LogoutUseCase(
+        mockRepository,
+        mockSharePref,
+        mockSurveyBoxHelper,
+      );
     });
 
     test('When calling API with valid data, it returns Success result',
@@ -29,7 +35,9 @@ void main() {
       final result = await useCase.call();
 
       expect(result, isA<Success>());
+
       verify(mockSharePref.clear()).called(1);
+      verify(mockSurveyBoxHelper.clear()).called(1);
     });
 
     test('When calling API with invalid data, it returns Failed result',

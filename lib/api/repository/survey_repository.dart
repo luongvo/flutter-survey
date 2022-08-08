@@ -72,7 +72,7 @@ class SurveyRepositoryImpl extends SurveyRepository {
 
   void _saveCacheSurveys(int pageNumber, List<Survey> surveys) {
     if (pageNumber == 1) {
-      _surveyBox.clearSurveys();
+      _surveyBox.clear();
     }
     _surveyBox.saveSurveys(surveys);
   }

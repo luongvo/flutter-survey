@@ -38,7 +38,7 @@ void main() {
       expect(result[0].title, "Scarlett Bangkok");
       expect(result[1].title, "ibis Bangkok Riverside");
 
-      verify(mockSurveyBoxHelper.clearSurveys()).called(1);
+      verify(mockSurveyBoxHelper.clear()).called(1);
       verify(mockSurveyBoxHelper.saveSurveys(result)).called(1);
     });
 

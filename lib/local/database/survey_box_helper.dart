@@ -7,9 +7,7 @@ abstract class SurveyBoxHelper {
 
   void saveSurveys(List<Survey> surveys);
 
-  void clearSurveys();
-
-  void dispose();
+  void clear();
 }
 
 @Singleton(as: SurveyBoxHelper)
@@ -32,12 +30,7 @@ class SurveyBoxHelperImpl extends SurveyBoxHelper {
   }
 
   @override
-  void clearSurveys() async {
+  void clear() async {
     await _surveyBox.delete(_surveyKey);
-  }
-
-  @override
-  void dispose() async {
-    await _surveyBox.close();
   }
 }
