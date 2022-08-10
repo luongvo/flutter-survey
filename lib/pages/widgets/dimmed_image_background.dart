@@ -31,13 +31,9 @@ class _DimmedImageBackgroundState extends State<DimmedImageBackground> {
           ),
         ),
         if (widget.shouldBlur)
-          if (widget.backgroundAnimation != null)
-            FadeTransition(
-              opacity: widget.backgroundAnimation!,
-              child: _buildBlurBackground(),
-            )
-          else
-            _buildBlurBackground(),
+          BlurBackground(
+            backgroundAnimation: widget.backgroundAnimation,
+          ),
         if (widget.backgroundAnimation != null)
           FadeTransition(
             opacity: widget.backgroundAnimation!,
@@ -48,8 +44,6 @@ class _DimmedImageBackgroundState extends State<DimmedImageBackground> {
       ],
     );
   }
-
-  Widget _buildBlurBackground() => BlurBackground();
 
   Widget _buildDimmedBackground() {
     return DimmedBackground(

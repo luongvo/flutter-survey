@@ -50,7 +50,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
 
   late final AnimationController _backgroundAnimationController =
       AnimationController(
-        duration: _lastPhaseAnimationDuration,
+    duration: _lastPhaseAnimationDuration,
     vsync: this,
   );
   late final Animation<double> _backgroundAnimation = CurvedAnimation(
