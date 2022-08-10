@@ -38,10 +38,21 @@ class _LoginPageState extends ConsumerState<LoginPage>
         Future.delayed(Duration(milliseconds: 500), () {
           setState(() {
             _isAnimatedPosition = !_isAnimatedPosition;
+            _backgroundAnimationController.forward();
           });
         });
       }
     });
+
+  late final AnimationController _backgroundAnimationController =
+      AnimationController(
+    duration: const Duration(milliseconds: 500),
+    vsync: this,
+  );
+  late final Animation<double> _backgroundAnimation = CurvedAnimation(
+    parent: _backgroundAnimationController,
+    curve: Curves.easeIn,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +77,18 @@ class _LoginPageState extends ConsumerState<LoginPage>
       body: Stack(
         children: [
           DimmedImageBackground(
-            image: Assets.images.bgLogin.image().image,
+            image: Assets.images.bgLogin
+                .image()
+                .image,
             shouldBlur: true,
+            backgroundAnimation: _backgroundAnimation,
           ),
           Padding(
             padding: const EdgeInsets.all(Dimens.defaultMarginPaddingLarge),
-            child: LoginForm(),
+            child: FadeTransition(
+              opacity: _backgroundAnimation,
+              child: LoginForm(),
+            ),
           ),
           AnimatedPositioned(
             duration: const Duration(milliseconds: 500),
@@ -107,6 +124,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
   @override
   void dispose() {
     _logoAnimationController.dispose();
+    _backgroundAnimationController.dispose();
     super.dispose();
   }
 }
