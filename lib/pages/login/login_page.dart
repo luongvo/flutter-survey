@@ -12,6 +12,10 @@ import 'package:flutter_survey/resources/dimens.dart';
 import 'package:flutter_survey/routes.dart';
 import 'package:flutter_survey/usecase/login_use_case.dart';
 
+const _firstPhaseAnimationDuration = Duration(milliseconds: 800);
+const _stayPhaseDuration = Duration(milliseconds: 500);
+const _lastPhaseAnimationDuration = Duration(milliseconds: 500);
+
 final loginViewModelProvider =
     StateNotifierProvider.autoDispose<LoginViewModel, LoginState>((ref) {
   return LoginViewModel(getIt.get<LoginUseCase>());
@@ -27,7 +31,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
   bool _isAnimatedPosition = false;
 
   late final AnimationController _logoAnimationController = AnimationController(
-    duration: const Duration(milliseconds: 800),
+    duration: _firstPhaseAnimationDuration,
     vsync: this,
   )..forward();
   late final Animation<double> _logoAnimation = CurvedAnimation(
@@ -35,7 +39,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
     curve: Curves.linear,
   )..addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        Future.delayed(Duration(milliseconds: 500), () {
+        Future.delayed(_stayPhaseDuration, () {
           setState(() {
             _isAnimatedPosition = !_isAnimatedPosition;
             _backgroundAnimationController.forward();
@@ -46,7 +50,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
 
   late final AnimationController _backgroundAnimationController =
       AnimationController(
-    duration: const Duration(milliseconds: 500),
+        duration: _lastPhaseAnimationDuration,
     vsync: this,
   );
   late final Animation<double> _backgroundAnimation = CurvedAnimation(
@@ -77,9 +81,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
       body: Stack(
         children: [
           DimmedImageBackground(
-            image: Assets.images.bgLogin
-                .image()
-                .image,
+            image: Assets.images.bgLogin.image().image,
             shouldBlur: true,
             backgroundAnimation: _backgroundAnimation,
           ),
@@ -91,11 +93,11 @@ class _LoginPageState extends ConsumerState<LoginPage>
             ),
           ),
           AnimatedPositioned(
-            duration: const Duration(milliseconds: 500),
+            duration: _lastPhaseAnimationDuration,
             curve: Curves.easeIn,
             child: Center(
               child: AnimatedScale(
-                duration: const Duration(milliseconds: 500),
+                duration: _lastPhaseAnimationDuration,
                 scale: _isAnimatedPosition ? 1.0 : 1.2,
                 curve: Curves.easeIn,
                 child: FadeTransition(
