@@ -77,9 +77,14 @@ class _LoginPageState extends ConsumerState<LoginPage>
             duration: const Duration(milliseconds: 500),
             curve: Curves.easeIn,
             child: Center(
-              child: FadeTransition(
-                opacity: _logoAnimation,
-                child: Assets.icons.icNimbleLogo.svg(),
+              child: AnimatedScale(
+                duration: const Duration(milliseconds: 500),
+                scale: _isAnimatedPosition ? 1.0 : 1.2,
+                curve: Curves.easeIn,
+                child: FadeTransition(
+                  opacity: _logoAnimation,
+                  child: Assets.icons.icNimbleLogo.svg(),
+                ),
               ),
             ),
             bottom: 0.0,
