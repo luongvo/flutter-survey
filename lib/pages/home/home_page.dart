@@ -87,10 +87,9 @@ class _HomePageState extends ConsumerState<HomePage> {
       resizeToAvoidBottomInset: false,
       body: RefreshIndicator(
         color: ColorName.blackRussian,
-        onRefresh: () => Future.delayed(
-          // TODO integration https://github.com/luongvo/flutter-survey/issues/36
-          Duration(seconds: 5),
-        ),
+        onRefresh: () => ref
+            .read(homeViewModelProvider.notifier)
+            .loadSurveys(isRefresh: true),
         child: Stack(
           children: <Widget>[
             SurveyPageViewer(
