@@ -6,10 +6,6 @@ import 'package:retrofit/retrofit.dart';
 
 part 'survey_service.g.dart';
 
-class SurveyApi {
-  SurveyApi._();
-}
-
 @RestApi()
 abstract class SurveyService {
   factory SurveyService(Dio dio, {String baseUrl}) = _SurveyService;
