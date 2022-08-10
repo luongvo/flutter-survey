@@ -22,7 +22,27 @@ class LoginPage extends ConsumerStatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends ConsumerState<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage>
+    with TickerProviderStateMixin {
+  bool _isAnimatedPosition = false;
+
+  late final AnimationController _logoAnimationController = AnimationController(
+    duration: const Duration(milliseconds: 800),
+    vsync: this,
+  )..forward();
+  late final Animation<double> _logoAnimation = CurvedAnimation(
+    parent: _logoAnimationController,
+    curve: Curves.linear,
+  )..addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Future.delayed(Duration(milliseconds: 500), () {
+          setState(() {
+            _isAnimatedPosition = !_isAnimatedPosition;
+          });
+        });
+      }
+    });
+
   @override
   Widget build(BuildContext context) {
     ref.listen<LoginState>(loginViewModelProvider, (_, loginState) {
@@ -37,27 +57,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         orElse: () {},
       );
     });
-    return ref.watch(loginViewModelProvider).maybeWhen(
-          init: () => _buildSplashPage(),
-          orElse: () => _buildLoginPage(),
-        );
-  }
-
-  Widget _buildSplashPage() {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: [
-          DimmedImageBackground(
-            image: Assets.images.bgLogin.image().image,
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Assets.icons.icNimbleLogo.svg(),
-          ),
-        ],
-      ),
-    );
+    return _buildLoginPage();
   }
 
   Widget _buildLoginPage() {
@@ -71,15 +71,21 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           ),
           Padding(
             padding: const EdgeInsets.all(Dimens.defaultMarginPaddingLarge),
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: Assets.icons.icNimbleLogo.svg(),
-                ),
-                LoginForm(),
-                const Expanded(child: SizedBox.shrink()),
-              ],
+            child: LoginForm(),
+          ),
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeIn,
+            child: Center(
+              child: FadeTransition(
+                opacity: _logoAnimation,
+                child: Assets.icons.icNimbleLogo.svg(),
+              ),
             ),
+            bottom: 0.0,
+            right: 0.0,
+            left: 0.0,
+            top: _isAnimatedPosition ? -500 : 0.0,
           ),
           Consumer(builder: (_, WidgetRef ref, __) {
             final loginViewModel = ref.watch(loginViewModelProvider);
@@ -91,5 +97,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _logoAnimationController.dispose();
+    super.dispose();
   }
 }

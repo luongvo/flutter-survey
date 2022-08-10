@@ -36,7 +36,6 @@ class _LoginFormState extends ConsumerState<LoginForm> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextFormField(
-          autofocus: true,
           controller: _emailController,
           decoration: CustomInputDecoration(
             context: context,
