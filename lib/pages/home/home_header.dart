@@ -1,8 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/extensions/date_time_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
+import 'package:flutter_survey/pages/home/home_page.dart';
+import 'package:flutter_survey/resources/dimens.dart';
 
 class HomeHeader extends StatelessWidget {
   @override
@@ -23,15 +27,26 @@ class HomeHeader extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline5,
               ),
             ),
-            Container(
-              width: 36,
-              height: 36,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: Assets.images.bgHomeAvatarSample,
-                  fit: BoxFit.cover,
-                ),
+            GestureDetector(
+              onTap: () => Scaffold.of(context).openEndDrawer(),
+              child: Consumer(
+                builder: (BuildContext _, WidgetRef widgetRef, __) {
+                  final user = widgetRef.watch(userStreamProvider).value;
+                  return CachedNetworkImage(
+                    imageUrl: user?.avatarUrl ?? "",
+                    imageBuilder: (_, imageProvider) => Container(
+                      width: Dimens.homeAvatarSize,
+                      height: Dimens.homeAvatarSize,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: imageProvider, fit: BoxFit.cover),
+                      ),
+                    ),
+                    errorWidget: (_, url, error) =>
+                        Assets.images.bgHomeAvatarSample.image(),
+                  );
+                },
               ),
             ),
           ],
