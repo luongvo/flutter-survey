@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/di/di.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
+import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/models/user.dart';
 import 'package:flutter_survey/pages/home/home_drawer.dart';
 import 'package:flutter_survey/pages/home/home_header.dart';
@@ -84,28 +85,40 @@ class _HomePageState extends ConsumerState<HomePage> {
     return Scaffold(
       endDrawer: HomeDrawer(),
       resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: <Widget>[
-          SurveyPageViewer(
-            surveys: surveys,
-            currentPageNotifier: _currentPageNotifier,
-          ),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(Dimens.defaultMarginPadding),
-              child: Column(
-                children: [
-                  HomeHeader(),
-                  Expanded(
-                    child: const SizedBox.shrink(),
-                  ),
-                  _buildCircleIndicator(surveys),
-                  SizedBox(height: Dimens.homeFooterHeight)
-                ],
+      body: RefreshIndicator(
+        color: ColorName.blackRussian,
+        onRefresh: () => Future.delayed(
+          // TODO integration https://github.com/luongvo/flutter-survey/issues/36
+          Duration(seconds: 5),
+        ),
+        child: Stack(
+          children: <Widget>[
+            SurveyPageViewer(
+              surveys: surveys,
+              currentPageNotifier: _currentPageNotifier,
+            ),
+            // Workaround to allow the page to be scrolled vertically to refresh on top
+            FractionallySizedBox(
+              heightFactor: 0.3,
+              child: ListView(),
+            ),
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(Dimens.defaultMarginPadding),
+                child: Column(
+                  children: [
+                    HomeHeader(),
+                    Expanded(
+                      child: const SizedBox.shrink(),
+                    ),
+                    _buildCircleIndicator(surveys),
+                    SizedBox(height: Dimens.homeFooterHeight)
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
