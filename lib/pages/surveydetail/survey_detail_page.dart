@@ -9,6 +9,7 @@ import 'package:flutter_survey/pages/surveydetail/widget/survey_start.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/pages/widgets/dimmed_image_background.dart';
 import 'package:flutter_survey/pages/widgets/loading_indicator.dart';
+import 'package:flutter_survey/routes.dart';
 import 'package:flutter_survey/usecase/get_survey_detail_use_case.dart';
 import 'package:flutter_survey/usecase/submit_survey_use_case.dart';
 
@@ -53,6 +54,12 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<SurveyDetailState>(surveyDetailViewModelProvider, (_, state) {
+      state.maybeWhen(
+          submitted: () => Navigator.of(context).pushNamed(Routes.COMPLETION),
+          orElse: () {});
+    });
+
     final uiModel = ref.watch(_surveyStreamProvider).value;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -60,11 +67,7 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
             init: () => const SizedBox.shrink(),
             loading: () => LoadingIndicator(),
             success: () => _buildSurveyPage(uiModel),
-            submitted: () {
-              // TODO navigate to Completion screen https://github.com/luongvo/flutter-survey/issues/22
-              context.navigateBack();
-              return const SizedBox.shrink();
-            },
+            submitted: () => const SizedBox.shrink(),
             error: (message) {
               WidgetsBinding.instance?.addPostFrameCallback((_) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
