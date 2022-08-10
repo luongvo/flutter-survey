@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/pages/home/home_footer.dart';
+import 'package:flutter_survey/pages/home/home_page.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/pages/widgets/dimmed_image_background.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 
-class SurveyPageViewer extends StatelessWidget {
+class SurveyPageViewer extends ConsumerWidget {
   final List<SurveyUiModel> surveys;
   final ValueNotifier<int> currentPageNotifier;
   final _pageController = PageController();
@@ -12,7 +14,11 @@ class SurveyPageViewer extends StatelessWidget {
   SurveyPageViewer({required this.surveys, required this.currentPageNotifier});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<AsyncValue<int>>(surveyPageIndexStreamProvider, (_, pageIndex) {
+      _pageController.jumpToPage(pageIndex.value ?? 0);
+    });
+
     return PageView.builder(
       itemCount: surveys.length,
       controller: _pageController,

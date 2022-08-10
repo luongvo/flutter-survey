@@ -32,6 +32,9 @@ final homeViewModelProvider =
 final _surveysStreamProvider = StreamProvider.autoDispose<List<SurveyUiModel>>(
     (ref) => ref.watch(homeViewModelProvider.notifier).surveysStream);
 
+final surveyPageIndexStreamProvider = StreamProvider.autoDispose<int>(
+    (ref) => ref.watch(homeViewModelProvider.notifier).surveyPageIndexStream);
+
 final userStreamProvider = StreamProvider.autoDispose<User>(
     (ref) => ref.watch(homeViewModelProvider.notifier).userStream);
 
@@ -135,5 +138,11 @@ class _HomePageState extends ConsumerState<HomePage> {
         currentPageNotifier: _currentPageNotifier,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _currentPageNotifier.dispose();
+    super.dispose();
   }
 }

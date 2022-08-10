@@ -39,6 +39,10 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   Stream<List<SurveyUiModel>> get surveysStream => _surveysSubject.stream;
 
+  final BehaviorSubject<int> _surveyPageIndexSubject = BehaviorSubject();
+
+  Stream<int> get surveyPageIndexStream => _surveyPageIndexSubject.stream;
+
   Stream<String> get versionInfoStream => _fetchAppVersion().asStream();
 
   Future<void> loadCacheSurveys() async {
@@ -64,6 +68,10 @@ class HomeViewModel extends StateNotifier<HomeState> {
           result.value.map((job) => SurveyUiModel.fromSurvey(job)).toList();
       _surveysSubject.add(uiModels);
       state = const HomeState.success();
+
+      if (isRefresh) {
+        _surveyPageIndexSubject.add(0);
+      }
     } else {
       _handleError(result as Failed);
     }
