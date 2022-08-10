@@ -6,6 +6,7 @@ import 'package:flutter_survey/models/survey.dart';
 import 'package:flutter_survey/pages/home/home_page.dart';
 import 'package:flutter_survey/pages/home/home_state.dart';
 import 'package:flutter_survey/pages/home/home_view_model.dart';
+import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/usecase/base/base_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -19,7 +20,10 @@ void main() {
     late MockLogoutUseCase mockLogoutUseCase;
     late MockGetCacheSurveysUseCase mockGetCacheSurveysUseCase;
     late ProviderContainer container;
+
+    late List<Survey> cacheSurveys;
     late List<Survey> surveys;
+    late List<Survey> newSurveys;
 
     setUp(() {
       mockGetUserProfileUseCase = MockGetUserProfileUseCase();
@@ -27,8 +31,38 @@ void main() {
       mockLogoutUseCase = MockLogoutUseCase();
       mockGetCacheSurveysUseCase = MockGetCacheSurveysUseCase();
 
-      surveys = <Survey>[];
-      when(mockGetCacheSurveysUseCase.call()).thenAnswer((_) => surveys);
+      cacheSurveys = <Survey>[
+        Survey(
+          id: "1",
+          title: 'Survey 1',
+          description: 'Survey 1 description',
+          coverImageUrl: "Survey 1 coverImageUrl",
+        )
+      ];
+      surveys = <Survey>[
+        Survey(
+          id: "2",
+          title: 'Survey 2',
+          description: 'Survey 2 description',
+          coverImageUrl: "Survey 2 coverImageUrl",
+        ),
+        Survey(
+          id: "3",
+          title: 'Survey 3',
+          description: 'Survey 3 description',
+          coverImageUrl: "Survey 3 coverImageUrl",
+        ),
+      ];
+      newSurveys = <Survey>[
+        Survey(
+          id: "4",
+          title: 'Survey 4',
+          description: 'Survey 4 description',
+          coverImageUrl: "Survey 4 coverImageUrl",
+        ),
+      ];
+
+      when(mockGetCacheSurveysUseCase.call()).thenAnswer((_) => cacheSurveys);
 
       container = ProviderContainer(
         overrides: [
@@ -46,7 +80,11 @@ void main() {
     test('When initializing, it loads cache surveys correctly', () {
       final surveysStream =
           container.read(homeViewModelProvider.notifier).surveysStream;
-      expect(surveysStream, emitsInOrder([surveys]));
+      expect(
+          surveysStream,
+          emitsInOrder([
+            cacheSurveys.map((e) => SurveyUiModel.fromSurvey(e)).toList(),
+          ]));
 
       expect(container.read(homeViewModelProvider), const HomeState.success());
     });
@@ -95,7 +133,12 @@ void main() {
           container.read(homeViewModelProvider.notifier).surveysStream;
       expect(stateStream,
           emitsInOrder([HomeState.loading(), HomeState.success()]));
-      expect(surveysStream, emitsInOrder([surveys]));
+      expect(
+          surveysStream,
+          emitsInOrder([
+            cacheSurveys.map((e) => SurveyUiModel.fromSurvey(e)).toList(),
+            surveys.map((e) => SurveyUiModel.fromSurvey(e)).toList(),
+          ]));
 
       container.read(homeViewModelProvider.notifier).loadSurveys();
     });
@@ -125,12 +168,17 @@ void main() {
         'When calling re-load survey list with positive result, it returns Success state and jump back to the first page',
         () {
       when(mockGetSurveysUseCase.call(any))
-          .thenAnswer((_) async => Success(surveys));
+          .thenAnswer((_) async => Success(newSurveys));
       final surveysStream =
           container.read(homeViewModelProvider.notifier).surveysStream;
       final surveyPageIndexStream =
           container.read(homeViewModelProvider.notifier).surveyPageIndexStream;
-      expect(surveysStream, emitsInOrder([surveys]));
+      expect(
+          surveysStream,
+          emitsInOrder([
+            cacheSurveys.map((e) => SurveyUiModel.fromSurvey(e)).toList(),
+            newSurveys.map((e) => SurveyUiModel.fromSurvey(e)).toList(),
+          ]));
       expect(surveyPageIndexStream, emitsInOrder([0]));
 
       container
