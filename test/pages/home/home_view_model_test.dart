@@ -121,6 +121,23 @@ void main() {
       container.read(homeViewModelProvider.notifier).loadSurveys();
     });
 
+    test(
+        'When calling re-load survey list with positive result, it returns Success state and jump back to the first page',
+        () {
+      when(mockGetSurveysUseCase.call(any))
+          .thenAnswer((_) async => Success(surveys));
+      final surveysStream =
+          container.read(homeViewModelProvider.notifier).surveysStream;
+      final surveyPageIndexStream =
+          container.read(homeViewModelProvider.notifier).surveyPageIndexStream;
+      expect(surveysStream, emitsInOrder([surveys]));
+      expect(surveyPageIndexStream, emitsInOrder([0]));
+
+      container
+          .read(homeViewModelProvider.notifier)
+          .loadSurveys(isRefresh: true);
+    });
+
     test('When calling logout with positive result, it returns LoggedOut state',
         () {
       when(mockLogoutUseCase.call()).thenAnswer((_) async => Success(Void));
