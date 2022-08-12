@@ -6,23 +6,26 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../test/mock/mock_data.mocks.dart';
-import '../fake/fake_shared_preference_helper.dart';
 
 void main() {
   group('RefreshTokenUseCaseTest', () {
     late MockOAuthRepository mockRepository;
-    late FakeSharedPreferencesHelper fakeSharePref;
+    late MockSharedPreferencesHelper mockSharePref;
     late RefreshTokenUseCase useCase;
 
     setUp(() {
       mockRepository = MockOAuthRepository();
-      fakeSharePref = FakeSharedPreferencesHelper();
-      useCase = RefreshTokenUseCase(mockRepository, fakeSharePref);
+      mockSharePref = MockSharedPreferencesHelper();
+
+      when(mockSharePref.getRefreshToken())
+          .thenAnswer((_) async => "refreshToken");
+
+      useCase = RefreshTokenUseCase(mockRepository, mockSharePref);
     });
 
     test('When calling refresh token successfully, it returns Success result',
         () async {
-      when(mockRepository.refreshToken(refreshToken: anyNamed('refreshToken')))
+          when(mockRepository.refreshToken(refreshToken: anyNamed('refreshToken')))
           .thenAnswer((_) async => OAuthToken(
                 accessToken: "accessToken",
                 tokenType: "tokenType",
@@ -32,6 +35,10 @@ void main() {
       final result = await useCase.call();
 
       expect(result, isA<Success>());
+      verify(mockSharePref.saveTokenType("tokenType")).called(1);
+      verify(mockSharePref.saveAccessToken("accessToken")).called(1);
+      verify(mockSharePref.saveRefreshToken("refreshToken")).called(1);
+      verify(mockSharePref.saveTokenExpiration(any)).called(1);
     });
 
     test('When calling refresh token failed, it returns Failed result',
