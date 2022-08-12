@@ -6,18 +6,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../test/mock/mock_data.mocks.dart';
-import '../fake/fake_shared_preference_helper.dart';
 
 void main() {
   group('LoginUseCaseTest', () {
     late MockOAuthRepository mockRepository;
-    late FakeSharedPreferencesHelper fakeSharePref;
+    late MockSharedPreferencesHelper mockSharePref;
     late LoginUseCase loginUseCase;
 
     setUp(() {
       mockRepository = MockOAuthRepository();
-      fakeSharePref = FakeSharedPreferencesHelper();
-      loginUseCase = LoginUseCase(mockRepository, fakeSharePref);
+      mockSharePref = MockSharedPreferencesHelper();
+      loginUseCase = LoginUseCase(mockRepository, mockSharePref);
     });
 
     test(
@@ -35,6 +34,10 @@ void main() {
           .call(LoginInput(email: 'email', password: 'password'));
 
       expect(result, isA<Success>());
+      verify(mockSharePref.saveTokenType("tokenType")).called(1);
+      verify(mockSharePref.saveAccessToken("accessToken")).called(1);
+      verify(mockSharePref.saveRefreshToken("refreshToken")).called(1);
+      verify(mockSharePref.saveTokenExpiration(any)).called(1);
     });
 
     test(

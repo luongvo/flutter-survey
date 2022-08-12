@@ -5,6 +5,7 @@ import 'package:flutter_survey/api/repository/survey_repository.dart';
 import 'package:flutter_survey/api/repository/user_repository.dart';
 import 'package:flutter_survey/api/survey_service.dart';
 import 'package:flutter_survey/api/user_service.dart';
+import 'package:flutter_survey/local/shared_preference_helper.dart';
 import 'package:flutter_survey/models/question.dart';
 import 'package:flutter_survey/models/survey.dart';
 import 'package:flutter_survey/models/survey_detail.dart';
@@ -29,6 +30,7 @@ import 'package:mockito/annotations.dart';
   GetSurveyDetailUseCase,
   SubmitSurveyUseCase,
   GetUserProfileUseCase,
+  SharedPreferencesHelper,
   Survey,
   SurveyDetail,
   Question,
