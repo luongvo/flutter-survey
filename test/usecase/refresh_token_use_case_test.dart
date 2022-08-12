@@ -25,7 +25,7 @@ void main() {
 
     test('When calling refresh token successfully, it returns Success result',
         () async {
-          when(mockRepository.refreshToken(refreshToken: anyNamed('refreshToken')))
+      when(mockRepository.refreshToken(refreshToken: anyNamed('refreshToken')))
           .thenAnswer((_) async => OAuthToken(
                 accessToken: "accessToken",
                 tokenType: "tokenType",
