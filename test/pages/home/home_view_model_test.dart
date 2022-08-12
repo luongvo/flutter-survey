@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/api/exception/network_exceptions.dart';
 import 'package:flutter_survey/models/survey.dart';
@@ -14,16 +16,19 @@ void main() {
   group('HomeViewModelTest', () {
     late MockGetUserProfileUseCase mockGetUserProfileUseCase;
     late MockGetSurveysUseCase mockGetSurveysUseCase;
+    late MockLogoutUseCase mockLogoutUseCase;
     late ProviderContainer container;
 
     setUp(() {
       mockGetUserProfileUseCase = MockGetUserProfileUseCase();
       mockGetSurveysUseCase = MockGetSurveysUseCase();
+      mockLogoutUseCase = MockLogoutUseCase();
       container = ProviderContainer(
         overrides: [
           homeViewModelProvider.overrideWithValue(HomeViewModel(
             mockGetUserProfileUseCase,
             mockGetSurveysUseCase,
+            mockLogoutUseCase,
           )),
         ],
       );
@@ -104,6 +109,41 @@ void main() {
             )
           ]));
       container.read(homeViewModelProvider.notifier).loadSurveys();
+    });
+
+    test('When calling logout with positive result, it returns LoggedOut state',
+        () {
+      when(mockLogoutUseCase.call()).thenAnswer((_) async => Success(Void));
+      final stateStream = container.read(homeViewModelProvider.notifier).stream;
+      expect(
+          stateStream,
+          emitsInOrder([
+            HomeState.loading(),
+            HomeState.loggedOut(),
+          ]));
+
+      container.read(homeViewModelProvider.notifier).logout();
+    });
+
+    test(
+        'When calling logout with negative result, it returns Failed state accordingly',
+        () {
+      final mockException = MockUseCaseException();
+      when(mockException.actualException)
+          .thenReturn(NetworkExceptions.internalServerError());
+      when(mockLogoutUseCase.call())
+          .thenAnswer((_) async => Failed(mockException));
+      final stateStream = container.read(homeViewModelProvider.notifier).stream;
+      expect(
+          stateStream,
+          emitsInOrder([
+            HomeState.loading(),
+            HomeState.error(
+              NetworkExceptions.getErrorMessage(
+                  NetworkExceptions.internalServerError()),
+            )
+          ]));
+      container.read(homeViewModelProvider.notifier).logout();
     });
   });
 }

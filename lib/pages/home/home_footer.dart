@@ -57,6 +57,6 @@ class HomeFooter extends StatelessWidget {
   }
 
   void _navigateToSurvey(BuildContext context) {
-    Navigator.pushNamed(context, Routes.SURVEY, arguments: survey);
+    Navigator.pushNamed(context, Routes.survey, arguments: survey);
   }
 }

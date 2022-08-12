@@ -15,6 +15,7 @@ import 'package:flutter_survey/usecase/get_survey_detail_use_case.dart';
 import 'package:flutter_survey/usecase/get_surveys_use_case.dart';
 import 'package:flutter_survey/usecase/get_user_profile_use_case.dart';
 import 'package:flutter_survey/usecase/login_use_case.dart';
+import 'package:flutter_survey/usecase/logout_use_case.dart';
 import 'package:flutter_survey/usecase/submit_survey_use_case.dart';
 import 'package:mockito/annotations.dart';
 
@@ -30,6 +31,7 @@ import 'package:mockito/annotations.dart';
   GetSurveyDetailUseCase,
   SubmitSurveyUseCase,
   GetUserProfileUseCase,
+  LogoutUseCase,
   SharedPreferencesHelper,
   Survey,
   SurveyDetail,
