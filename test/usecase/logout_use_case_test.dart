@@ -4,20 +4,22 @@ import 'package:flutter_survey/usecase/logout_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import '../fake/fake_shared_preference_helper.dart';
 import '../mock/mock_data.mocks.dart';
 
 void main() {
   group('LogoutUseCaseTest', () {
     late MockOAuthRepository mockRepository;
-    late FakeSharedPreferencesHelper fakeSharePref;
+    late MockSharedPreferencesHelper mockSharePref;
     late LogoutUseCase useCase;
 
     setUp(() async {
       mockRepository = MockOAuthRepository();
-      fakeSharePref = FakeSharedPreferencesHelper();
+      mockSharePref = MockSharedPreferencesHelper();
 
-      useCase = LogoutUseCase(mockRepository, fakeSharePref);
+      when(mockSharePref.getAccessToken())
+          .thenAnswer((_) async => "accessToken");
+
+      useCase = LogoutUseCase(mockRepository, mockSharePref);
     });
 
     test('When calling API with valid data, it returns Success result',
@@ -27,6 +29,7 @@ void main() {
       final result = await useCase.call();
 
       expect(result, isA<Success>());
+      verify(mockSharePref.clear()).called(1);
     });
 
     test('When calling API with invalid data, it returns Failed result',
@@ -40,6 +43,7 @@ void main() {
       expect(result, isA<Failed>());
       expect((result as Failed).exception.actualException,
           NetworkExceptions.unauthorisedRequest());
+      verify(mockSharePref.clear()).called(1);
     });
   });
 }
