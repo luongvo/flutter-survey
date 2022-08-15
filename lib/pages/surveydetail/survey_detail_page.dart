@@ -8,14 +8,20 @@ import 'package:flutter_survey/pages/surveydetail/widget/survey_question.dart';
 import 'package:flutter_survey/pages/surveydetail/widget/survey_start.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/pages/widgets/dimmed_image_background.dart';
+import 'package:flutter_survey/pages/widgets/loading_indicator.dart';
+import 'package:flutter_survey/routes.dart';
 import 'package:flutter_survey/usecase/get_survey_detail_use_case.dart';
+import 'package:flutter_survey/usecase/submit_survey_use_case.dart';
 
 const Duration _pageScrollDuration = Duration(milliseconds: 200);
 
 final surveyDetailViewModelProvider =
     StateNotifierProvider.autoDispose<SurveyDetailViewModel, SurveyDetailState>(
         (ref) {
-  return SurveyDetailViewModel(getIt.get<GetSurveyDetailUseCase>());
+  return SurveyDetailViewModel(
+    getIt.get<GetSurveyDetailUseCase>(),
+    getIt.get<SubmitSurveyUseCase>(),
+  );
 });
 
 final _surveyStreamProvider = StreamProvider.autoDispose<SurveyUiModel>(
@@ -48,13 +54,21 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<SurveyDetailState>(surveyDetailViewModelProvider, (_, state) {
+      state.maybeWhen(
+        submitted: () => Navigator.of(context).pushNamed(Routes.completion),
+        orElse: () {},
+      );
+    });
+
     final uiModel = ref.watch(_surveyStreamProvider).value;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: ref.watch(surveyDetailViewModelProvider).when(
             init: () => const SizedBox.shrink(),
-            loading: () => const SizedBox.shrink(),
+            loading: () => LoadingIndicator(),
             success: () => _buildSurveyPage(uiModel),
+            submitted: () => const SizedBox.shrink(),
             error: (message) {
               WidgetsBinding.instance?.addPostFrameCallback((_) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -94,10 +108,7 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
               index: survey.questions.indexOf(question) + 1,
               total: survey.questions.length,
               onNext: () => _gotoNextPage(),
-              onSubmit: () {
-                // TODO: submit survey https://github.com/luongvo/flutter-survey/issues/21
-                context.navigateBack();
-              },
+              onSubmit: () => _submitSurvey(),
             ))
         .toList());
 
@@ -109,10 +120,14 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
     );
   }
 
-  _gotoNextPage() {
+  void _gotoNextPage() {
     _pageController.nextPage(
       duration: _pageScrollDuration,
       curve: Curves.ease,
     );
+  }
+
+  void _submitSurvey() {
+    ref.read(surveyDetailViewModelProvider.notifier).submitSurvey();
   }
 }

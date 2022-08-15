@@ -59,5 +59,20 @@ void main() {
           );
       expect(result, throwsA(isA<NetworkExceptions>()));
     });
+
+    test('When calling logout successfully, it returns empty result', () async {
+      when(mockOAuthService.logout(any)).thenAnswer((_) async => null);
+
+      await oauthRepository.logout(token: 'token');
+    });
+
+    test('When calling logout failed, it returns NetworkExceptions error',
+        () async {
+      when(mockOAuthService.logout(any)).thenThrow(MockDioError());
+
+      final result = () => oauthRepository.logout(token: 'token');
+
+      expect(result, throwsA(isA<NetworkExceptions>()));
+    });
   });
 }

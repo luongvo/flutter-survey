@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_survey/api/request/oauth_logout_request.dart';
 import 'package:flutter_survey/api/request/oauth_token_request.dart';
 import 'package:flutter_survey/api/response/oauth_token_response.dart';
 import 'package:retrofit/retrofit.dart';
@@ -13,4 +14,7 @@ abstract class OAuthService {
   Future<OAuthTokenResponse> login(
     @Body() OAuthTokenRequest body,
   );
+
+  @POST('/v1/oauth/revoke')
+  Future<void> logout(@Body() OAuthLogoutRequest body);
 }

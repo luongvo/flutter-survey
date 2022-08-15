@@ -68,5 +68,20 @@ void main() {
 
       expect(result, throwsA(isA<NetworkExceptions>()));
     });
+
+    test(
+        'When calling submitSurvey successfully, it returns corresponding response',
+        () async {
+      when(mockSurveyService.submitSurvey(any)).thenAnswer((_) async => null);
+      await surveyRepository.submitSurvey("1", []);
+    });
+
+    test('When calling submitSurvey failed, it returns NetworkExceptions error',
+        () async {
+      when(mockSurveyService.submitSurvey(any)).thenThrow(MockDioError());
+      final result = () => surveyRepository.submitSurvey("1", []);
+
+      expect(result, throwsA(isA<NetworkExceptions>()));
+    });
   });
 }

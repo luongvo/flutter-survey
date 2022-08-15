@@ -76,7 +76,7 @@ class SharedPreferencesHelperImpl implements SharedPreferencesHelper {
 
   @override
   Future<void> clear() async {
-    _prefs.clear();
+    await _prefs.clear();
   }
 
   @override

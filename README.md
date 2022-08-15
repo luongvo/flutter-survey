@@ -1,4 +1,5 @@
 ![Lint & Test](https://github.com/luongvo/flutter-survey/actions/workflows/test.yml/badge.svg)
+[![codecov](https://codecov.io/gh/luongvo/flutter-survey/branch/develop/graph/badge.svg?token=Q16QDY3936)](https://codecov.io/gh/luongvo/flutter-survey)
 
 # flutter_survey
 
