@@ -12,6 +12,7 @@ import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/pages/widgets/loading_indicator.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 import 'package:flutter_survey/routes.dart';
+import 'package:flutter_survey/usecase/get_cache_surveys_use_case.dart';
 import 'package:flutter_survey/usecase/get_surveys_use_case.dart';
 import 'package:flutter_survey/usecase/get_user_profile_use_case.dart';
 import 'package:flutter_survey/usecase/logout_use_case.dart';
@@ -22,6 +23,7 @@ final homeViewModelProvider =
   return HomeViewModel(
     getIt.get<GetUserProfileUseCase>(),
     getIt.get<GetSurveysUseCase>(),
+    getIt.get<GetCacheSurveysUseCase>(),
     getIt.get<LogoutUseCase>(),
   );
 });

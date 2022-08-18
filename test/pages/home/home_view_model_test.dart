@@ -17,17 +17,25 @@ void main() {
     late MockGetUserProfileUseCase mockGetUserProfileUseCase;
     late MockGetSurveysUseCase mockGetSurveysUseCase;
     late MockLogoutUseCase mockLogoutUseCase;
+    late MockGetCacheSurveysUseCase mockGetCacheSurveysUseCase;
     late ProviderContainer container;
+    late List<Survey> surveys;
 
     setUp(() {
       mockGetUserProfileUseCase = MockGetUserProfileUseCase();
       mockGetSurveysUseCase = MockGetSurveysUseCase();
       mockLogoutUseCase = MockLogoutUseCase();
+      mockGetCacheSurveysUseCase = MockGetCacheSurveysUseCase();
+
+      surveys = <Survey>[];
+      when(mockGetCacheSurveysUseCase.call()).thenAnswer((_) => surveys);
+
       container = ProviderContainer(
         overrides: [
           homeViewModelProvider.overrideWithValue(HomeViewModel(
             mockGetUserProfileUseCase,
             mockGetSurveysUseCase,
+            mockGetCacheSurveysUseCase,
             mockLogoutUseCase,
           )),
         ],
@@ -35,8 +43,12 @@ void main() {
       addTearDown(container.dispose);
     });
 
-    test('When initializing, it initializes with Init state', () {
-      expect(container.read(homeViewModelProvider), HomeState.init());
+    test('When initializing, it loads cache surveys correctly', () {
+      final surveysStream =
+          container.read(homeViewModelProvider.notifier).surveysStream;
+      expect(surveysStream, emitsInOrder([surveys]));
+
+      expect(container.read(homeViewModelProvider), const HomeState.success());
     });
 
     test(
@@ -76,8 +88,6 @@ void main() {
     test(
         'When calling load survey list with positive result, it returns Success state',
         () {
-      final surveys = <Survey>[];
-
       when(mockGetSurveysUseCase.call(any))
           .thenAnswer((_) async => Success(surveys));
       final stateStream = container.read(homeViewModelProvider.notifier).stream;
