@@ -34,6 +34,7 @@ class DioProvider {
     final appInterceptor = AppInterceptor(
       requireAuthenticate,
       _sharedPreferencesHelper,
+      dio,
     );
     final interceptors = <Interceptor>[];
     interceptors.add(appInterceptor);
