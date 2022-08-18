@@ -32,6 +32,9 @@ final homeViewModelProvider =
 final _surveysStreamProvider = StreamProvider.autoDispose<List<SurveyUiModel>>(
     (ref) => ref.watch(homeViewModelProvider.notifier).surveysStream);
 
+final surveyPageIndexStreamProvider = StreamProvider.autoDispose<int>(
+    (ref) => ref.watch(homeViewModelProvider.notifier).surveyPageIndexStream);
+
 final userStreamProvider = StreamProvider.autoDispose<User>(
     (ref) => ref.watch(homeViewModelProvider.notifier).userStream);
 
@@ -87,10 +90,9 @@ class _HomePageState extends ConsumerState<HomePage> {
       resizeToAvoidBottomInset: false,
       body: RefreshIndicator(
         color: ColorName.blackRussian,
-        onRefresh: () => Future.delayed(
-          // TODO integration https://github.com/luongvo/flutter-survey/issues/36
-          Duration(seconds: 5),
-        ),
+        onRefresh: () => ref
+            .read(homeViewModelProvider.notifier)
+            .loadSurveys(isRefresh: true),
         child: Stack(
           children: <Widget>[
             SurveyPageViewer(
@@ -136,5 +138,11 @@ class _HomePageState extends ConsumerState<HomePage> {
         currentPageNotifier: _currentPageNotifier,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _currentPageNotifier.dispose();
+    super.dispose();
   }
 }
