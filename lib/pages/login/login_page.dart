@@ -21,6 +21,9 @@ final loginViewModelProvider =
   return LoginViewModel(getIt.get<LoginUseCase>());
 });
 
+final _isAnimatedPositionProvider =
+    StateProvider.autoDispose<bool>((_) => false);
+
 class LoginPage extends ConsumerStatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -28,8 +31,6 @@ class LoginPage extends ConsumerStatefulWidget {
 
 class _LoginPageState extends ConsumerState<LoginPage>
     with TickerProviderStateMixin {
-  bool _isAnimatedPosition = false;
-
   late final AnimationController _logoAnimationController = AnimationController(
     duration: _firstPhaseAnimationDuration,
     vsync: this,
@@ -40,10 +41,10 @@ class _LoginPageState extends ConsumerState<LoginPage>
   )..addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         Future.delayed(_stayPhaseDuration, () {
-          setState(() {
-            _isAnimatedPosition = !_isAnimatedPosition;
-            _backgroundAnimationController.forward();
-          });
+          final selectedIndexState =
+              ref.read(_isAnimatedPositionProvider.notifier);
+          selectedIndexState.state = !selectedIndexState.state;
+          _backgroundAnimationController.forward();
         });
       }
     });
@@ -92,24 +93,30 @@ class _LoginPageState extends ConsumerState<LoginPage>
               child: LoginForm(),
             ),
           ),
-          AnimatedPositioned(
-            duration: _lastPhaseAnimationDuration,
-            curve: Curves.easeIn,
-            child: Center(
-              child: AnimatedScale(
+          Consumer(
+            builder: (_, widgetRef, __) {
+              final isAnimatedPosition =
+                  widgetRef.watch(_isAnimatedPositionProvider);
+              return AnimatedPositioned(
                 duration: _lastPhaseAnimationDuration,
-                scale: _isAnimatedPosition ? 1.0 : 1.2,
                 curve: Curves.easeIn,
-                child: FadeTransition(
-                  opacity: _logoAnimation,
-                  child: Assets.icons.icNimbleLogo.svg(),
+                child: Center(
+                  child: AnimatedScale(
+                    duration: _lastPhaseAnimationDuration,
+                    scale: isAnimatedPosition ? 1.0 : 1.2,
+                    curve: Curves.easeIn,
+                    child: FadeTransition(
+                      opacity: _logoAnimation,
+                      child: Assets.icons.icNimbleLogo.svg(),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            bottom: 0.0,
-            right: 0.0,
-            left: 0.0,
-            top: _isAnimatedPosition ? -500 : 0.0,
+                bottom: 0.0,
+                right: 0.0,
+                left: 0.0,
+                top: isAnimatedPosition ? -500 : 0.0,
+              );
+            },
           ),
           Consumer(builder: (_, WidgetRef ref, __) {
             final loginViewModel = ref.watch(loginViewModelProvider);
