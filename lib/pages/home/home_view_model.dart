@@ -4,6 +4,7 @@ import 'package:flutter_survey/models/user.dart';
 import 'package:flutter_survey/pages/home/home_state.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/usecase/base/base_use_case.dart';
+import 'package:flutter_survey/usecase/get_cache_surveys_use_case.dart';
 import 'package:flutter_survey/usecase/get_surveys_use_case.dart';
 import 'package:flutter_survey/usecase/get_user_profile_use_case.dart';
 import 'package:flutter_survey/usecase/logout_use_case.dart';
@@ -15,13 +16,17 @@ const _pageSize = 10;
 class HomeViewModel extends StateNotifier<HomeState> {
   final GetUserProfileUseCase _getUserProfileUseCase;
   final GetSurveysUseCase _getSurveysUseCase;
+  final GetCacheSurveysUseCase _getCacheSurveysUseCase;
   final LogoutUseCase _logoutUseCase;
 
   HomeViewModel(
     this._getUserProfileUseCase,
     this._getSurveysUseCase,
+    this._getCacheSurveysUseCase,
     this._logoutUseCase,
-  ) : super(const HomeState.init());
+  ) : super(const HomeState.init()) {
+    loadCacheSurveys();
+  }
 
   int _page = 1;
 
@@ -34,7 +39,19 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   Stream<List<SurveyUiModel>> get surveysStream => _surveysSubject.stream;
 
+  final BehaviorSubject<int> _surveyPageIndexSubject = BehaviorSubject();
+
+  Stream<int> get surveyPageIndexStream => _surveyPageIndexSubject.stream;
+
   Stream<String> get versionInfoStream => _fetchAppVersion().asStream();
+
+  Future<void> loadCacheSurveys() async {
+    final surveys = _getCacheSurveysUseCase.call();
+    final uiModels =
+        surveys.map((job) => SurveyUiModel.fromSurvey(job)).toList();
+    _surveysSubject.add(uiModels);
+    state = const HomeState.success();
+  }
 
   Future<void> loadSurveys({bool isRefresh = false}) async {
     _page = 1;
@@ -51,6 +68,10 @@ class HomeViewModel extends StateNotifier<HomeState> {
           result.value.map((job) => SurveyUiModel.fromSurvey(job)).toList();
       _surveysSubject.add(uiModels);
       state = const HomeState.success();
+
+      if (isRefresh) {
+        _surveyPageIndexSubject.add(0);
+      }
     } else {
       _handleError(result as Failed);
     }
@@ -83,6 +104,8 @@ class HomeViewModel extends StateNotifier<HomeState> {
   @override
   void dispose() async {
     await _surveysSubject.close();
+    await _surveyPageIndexSubject.close();
+    await _userSubject.close();
     super.dispose();
   }
 

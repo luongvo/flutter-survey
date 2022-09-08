@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/di/di.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
+import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/models/user.dart';
 import 'package:flutter_survey/pages/home/home_drawer.dart';
 import 'package:flutter_survey/pages/home/home_header.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/pages/widgets/loading_indicator.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 import 'package:flutter_survey/routes.dart';
+import 'package:flutter_survey/usecase/get_cache_surveys_use_case.dart';
 import 'package:flutter_survey/usecase/get_surveys_use_case.dart';
 import 'package:flutter_survey/usecase/get_user_profile_use_case.dart';
 import 'package:flutter_survey/usecase/logout_use_case.dart';
@@ -22,12 +24,16 @@ final homeViewModelProvider =
   return HomeViewModel(
     getIt.get<GetUserProfileUseCase>(),
     getIt.get<GetSurveysUseCase>(),
+    getIt.get<GetCacheSurveysUseCase>(),
     getIt.get<LogoutUseCase>(),
   );
 });
 
 final _surveysStreamProvider = StreamProvider.autoDispose<List<SurveyUiModel>>(
     (ref) => ref.watch(homeViewModelProvider.notifier).surveysStream);
+
+final surveyPageIndexStreamProvider = StreamProvider.autoDispose<int>(
+    (ref) => ref.watch(homeViewModelProvider.notifier).surveyPageIndexStream);
 
 final userStreamProvider = StreamProvider.autoDispose<User>(
     (ref) => ref.watch(homeViewModelProvider.notifier).userStream);
@@ -82,28 +88,39 @@ class _HomePageState extends ConsumerState<HomePage> {
     return Scaffold(
       endDrawer: HomeDrawer(),
       resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: <Widget>[
-          SurveyPageViewer(
-            surveys: surveys,
-            currentPageNotifier: _currentPageNotifier,
-          ),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(Dimens.defaultMarginPadding),
-              child: Column(
-                children: [
-                  HomeHeader(),
-                  Expanded(
-                    child: const SizedBox.shrink(),
-                  ),
-                  _buildCircleIndicator(surveys),
-                  SizedBox(height: Dimens.homeFooterHeight)
-                ],
+      body: RefreshIndicator(
+        color: ColorName.blackRussian,
+        onRefresh: () => ref
+            .read(homeViewModelProvider.notifier)
+            .loadSurveys(isRefresh: true),
+        child: Stack(
+          children: <Widget>[
+            SurveyPageViewer(
+              surveys: surveys,
+              currentPageNotifier: _currentPageNotifier,
+            ),
+            // Workaround to allow the page to be scrolled vertically to refresh on top
+            FractionallySizedBox(
+              heightFactor: 0.3,
+              child: ListView(),
+            ),
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(Dimens.defaultMarginPadding),
+                child: Column(
+                  children: [
+                    HomeHeader(),
+                    Expanded(
+                      child: const SizedBox.shrink(),
+                    ),
+                    _buildCircleIndicator(surveys),
+                    SizedBox(height: Dimens.homeFooterHeight)
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -121,5 +138,11 @@ class _HomePageState extends ConsumerState<HomePage> {
         currentPageNotifier: _currentPageNotifier,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _currentPageNotifier.dispose();
+    super.dispose();
   }
 }

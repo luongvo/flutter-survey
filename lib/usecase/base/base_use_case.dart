@@ -17,3 +17,9 @@ abstract class NoParamsUseCase<T> extends BaseUseCase<Result<T>> {
 
   Future<Result<T>> call();
 }
+
+abstract class SimpleUseCase<T> {
+  const SimpleUseCase();
+
+  T call();
+}
