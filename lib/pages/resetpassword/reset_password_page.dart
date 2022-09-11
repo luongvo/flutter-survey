@@ -14,7 +14,7 @@ import 'package:flutter_survey/resources/dimens.dart';
 import 'package:flutter_survey/usecase/reset_password_use_case.dart';
 import 'package:flutter_survey/utils/keyboard_util.dart';
 
-final _resetPasswordViewModelProvider = StateNotifierProvider.autoDispose<
+final resetPasswordViewModelProvider = StateNotifierProvider.autoDispose<
     ResetPasswordViewModel, ResetPasswordState>((ref) {
   return ResetPasswordViewModel(getIt.get<ResetPasswordUseCase>());
 });
@@ -30,7 +30,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<ResetPasswordState>(_resetPasswordViewModelProvider, (_, state) {
+    ref.listen<ResetPasswordState>(resetPasswordViewModelProvider, (_, state) {
       state.maybeWhen(
         error: (error) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -98,7 +98,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
             ),
           ),
           Consumer(builder: (_, WidgetRef ref, __) {
-            final viewModel = ref.watch(_resetPasswordViewModelProvider);
+            final viewModel = ref.watch(resetPasswordViewModelProvider);
             return viewModel.maybeWhen(
               loading: () => LoadingIndicator(),
               orElse: () => SizedBox.shrink(),
@@ -167,7 +167,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
       KeyboardUtil.hideKeyboard(context);
 
       ref
-          .read(_resetPasswordViewModelProvider.notifier)
+          .read(resetPasswordViewModelProvider.notifier)
           .resetPassword(_emailController.text);
     }
   }
