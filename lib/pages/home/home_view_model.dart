@@ -49,16 +49,14 @@ class HomeViewModel extends StateNotifier<HomeState> {
     final surveys = _getCacheSurveysUseCase.call();
     final uiModels =
         surveys.map((job) => SurveyUiModel.fromSurvey(job)).toList();
-    _surveysSubject.add(uiModels);
-    state = const HomeState.success();
+    if (uiModels.isNotEmpty) {
+      _surveysSubject.add(uiModels);
+      state = const HomeState.success();
+    }
   }
 
   Future<void> loadSurveys({bool isRefresh = false}) async {
     _page = 1;
-    if (!isRefresh) {
-      state = const HomeState.loading();
-    }
-
     final result = await _getSurveysUseCase.call(GetSurveysInput(
       pageNumber: _page,
       pageSize: _pageSize,

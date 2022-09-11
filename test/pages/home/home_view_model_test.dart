@@ -155,7 +155,6 @@ void main() {
       expect(
           stateStream,
           emitsInOrder([
-            HomeState.loading(),
             HomeState.error(
               NetworkExceptions.getErrorMessage(
                   NetworkExceptions.internalServerError()),
