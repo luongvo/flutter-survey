@@ -1,13 +1,22 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_survey/di/di.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
+import 'package:flutter_survey/pages/resetpassword/reset_password_state.dart';
+import 'package:flutter_survey/pages/resetpassword/reset_password_view_model.dart';
 import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
 import 'package:flutter_survey/pages/widgets/dimmed_image_background.dart';
 import 'package:flutter_survey/resources/dimens.dart';
+import 'package:flutter_survey/usecase/reset_password_use_case.dart';
 import 'package:flutter_survey/utils/keyboard_util.dart';
+
+final _resetPasswordViewModelProvider = StateNotifierProvider.autoDispose<
+    ResetPasswordViewModel, ResetPasswordState>((ref) {
+  return ResetPasswordViewModel(getIt.get<ResetPasswordUseCase>());
+});
 
 class ResetPasswordPage extends ConsumerStatefulWidget {
   @override
@@ -20,6 +29,23 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<ResetPasswordState>(_resetPasswordViewModelProvider, (_, state) {
+      state.maybeWhen(
+        error: (error) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(error ?? context.localization.loginError)));
+        },
+        success: () async {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(context.localization.resetPasswordSuccess)));
+        },
+        orElse: () {},
+      );
+    });
+    return _buildPage();
+  }
+
+  Widget _buildPage() {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -39,7 +65,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
                       Assets.icons.icNimbleLogo.svg(),
                       const SizedBox(height: Dimens.defaultMarginPadding),
                       Text(
-                        context.localization.forgotResetDescription,
+                        context.localization.resetPasswordDescription,
                         style: Theme.of(context)
                             .textTheme
                             .bodyText1
@@ -112,7 +138,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
                 Theme.of(context).textTheme.button,
               ),
             ),
-            child: Text(context.localization.forgotResetText),
+            child: Text(context.localization.resetPasswordText),
             onPressed: () => _attemptResetPassword(),
           ),
         ),
@@ -132,7 +158,9 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
     if (_formKey.currentState!.validate()) {
       KeyboardUtil.hideKeyboard(context);
 
-      // TODO integration
+      ref
+          .read(_resetPasswordViewModelProvider.notifier)
+          .resetPassword(_emailController.text);
     }
   }
 
