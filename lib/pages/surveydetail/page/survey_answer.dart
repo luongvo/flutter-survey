@@ -7,10 +7,10 @@ import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/models/answer.dart';
 import 'package:flutter_survey/models/question.dart';
-import 'package:flutter_survey/pages/common/multi_selection.dart';
-import 'package:flutter_survey/pages/common/number_rating.dart';
-import 'package:flutter_survey/pages/common/smiley_rating.dart';
 import 'package:flutter_survey/pages/surveydetail/survey_detail_page.dart';
+import 'package:flutter_survey/pages/surveydetail/widget/multi_selection.dart';
+import 'package:flutter_survey/pages/surveydetail/widget/number_rating.dart';
+import 'package:flutter_survey/pages/surveydetail/widget/smiley_rating.dart';
 import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
 
 class SurveyAnswer extends ConsumerStatefulWidget {
