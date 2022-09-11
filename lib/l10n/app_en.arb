@@ -8,6 +8,7 @@
   "loginError": "Login failed! Please recheck your email or password",
   "logout": "Logout",
   "homeToday": "Today",
+  "forgotResetText": "Reset",
   "surveyStart": "Start Survey",
   "surveySubmit": "Submit",
   "surveyAnswerNpsExtremelyLikely": "Extremely Likely",
