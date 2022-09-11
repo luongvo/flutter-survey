@@ -10,6 +10,8 @@ class HomeState with _$HomeState {
 
   const factory HomeState.error(String? error) = _Error;
 
+  const factory HomeState.cacheLoaded() = _CacheLoaded;
+
   const factory HomeState.success() = _Success;
 
   const factory HomeState.loggedOut() = _LoggedOut;

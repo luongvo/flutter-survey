@@ -51,7 +51,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
         surveys.map((job) => SurveyUiModel.fromSurvey(job)).toList();
     if (uiModels.isNotEmpty) {
       _surveysSubject.add(uiModels);
-      state = const HomeState.success();
+      state = const HomeState.cacheLoaded();
     }
   }
 

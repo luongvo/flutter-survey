@@ -69,17 +69,18 @@ class _HomePageState extends ConsumerState<HomePage> {
       );
     });
 
-    final uiModels = ref.watch(_surveysStreamProvider).value;
+    final uiModels = ref.watch(_surveysStreamProvider).value ?? [];
     return ref.watch(homeViewModelProvider).when(
           init: () => HomeShimmerLoading(),
-          loading: () => _buildHomePage(uiModels ?? [], true),
-          success: () => _buildHomePage(uiModels ?? [], false),
+          loading: () => _buildHomePage(uiModels, true),
+          cacheLoaded: () => _buildHomePage(uiModels, false),
+          success: () => _buildHomePage(uiModels, false),
           error: (message) {
             WidgetsBinding.instance?.addPostFrameCallback((_) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(message ?? context.localization.errorGeneric)));
             });
-            return _buildHomePage(uiModels ?? [], false);
+            return _buildHomePage(uiModels, false);
           },
           loggedOut: () => const SizedBox.shrink(),
         );
