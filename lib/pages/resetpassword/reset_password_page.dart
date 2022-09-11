@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
+import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
 import 'package:flutter_survey/pages/widgets/dimmed_image_background.dart';
 import 'package:flutter_survey/resources/dimens.dart';
@@ -27,13 +28,35 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
             image: Assets.images.bgLogin.image().image,
             shouldBlur: true,
           ),
-          Assets.icons.icNimbleLogo.svg(),
           Padding(
             padding: const EdgeInsets.all(Dimens.defaultMarginPaddingLarge),
-            child: Form(
-              key: _formKey,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              child: _buildForm(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Assets.icons.icNimbleLogo.svg(),
+                      const SizedBox(height: Dimens.defaultMarginPadding),
+                      Text(
+                        context.localization.forgotResetDescription,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1
+                            ?.copyWith(color: ColorName.whiteAlpha70),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+                Form(
+                  key: _formKey,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  child: _buildForm(),
+                ),
+                Expanded(child: SizedBox.shrink()),
+              ],
             ),
           ),
         ],
