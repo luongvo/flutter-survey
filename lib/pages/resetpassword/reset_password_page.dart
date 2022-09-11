@@ -9,6 +9,7 @@ import 'package:flutter_survey/pages/resetpassword/reset_password_state.dart';
 import 'package:flutter_survey/pages/resetpassword/reset_password_view_model.dart';
 import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
 import 'package:flutter_survey/pages/widgets/dimmed_image_background.dart';
+import 'package:flutter_survey/pages/widgets/loading_indicator.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 import 'package:flutter_survey/usecase/reset_password_use_case.dart';
 import 'package:flutter_survey/utils/keyboard_util.dart';
@@ -96,6 +97,13 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
               ),
             ),
           ),
+          Consumer(builder: (_, WidgetRef ref, __) {
+            final viewModel = ref.watch(_resetPasswordViewModelProvider);
+            return viewModel.maybeWhen(
+              loading: () => LoadingIndicator(),
+              orElse: () => SizedBox.shrink(),
+            );
+          }),
         ],
       ),
     );
