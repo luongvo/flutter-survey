@@ -31,7 +31,6 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
           Padding(
             padding: const EdgeInsets.all(Dimens.defaultMarginPaddingLarge),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
                   child: Column(
@@ -57,6 +56,18 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
                 ),
                 Expanded(child: SizedBox.shrink()),
               ],
+            ),
+          ),
+          SafeArea(
+            child: GestureDetector(
+              onTap: () => context.navigateBack(),
+              child: SizedBox(
+                width: 56,
+                height: 56,
+                child: Assets.icons.icBack.svg(
+                  fit: BoxFit.none,
+                ),
+              ),
             ),
           ),
         ],
