@@ -8,6 +8,8 @@
   "loginError": "Đăng nhập thất bại! Vui lòng kiểm tra lại email hoặc mật khẩu",
   "logout": "Đăng xuất",
   "homeToday": "Hôm nay",
+  "forgotResetDescription": "Nhập email của bạn để nhận email hướng dẫn cài đặt lại mật khẩu của bạn.",
+  "forgotResetText": "Cài đặt lại",
   "surveyStart": "Bắt đầu khảo sát",
   "surveySubmit": "Gửi",
   "surveyAnswerNpsExtremelyLikely": "Rất có thể",

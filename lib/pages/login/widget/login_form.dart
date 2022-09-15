@@ -6,6 +6,7 @@ import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/pages/login/login_page.dart';
 import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
 import 'package:flutter_survey/resources/dimens.dart';
+import 'package:flutter_survey/routes.dart';
 import 'package:flutter_survey/utils/keyboard_util.dart';
 
 const _passwordLengthMin = 6;
@@ -81,7 +82,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                         ),
                   ),
                   onPressed: () {
-                    // TODO forgot https://github.com/luongvo/flutter-survey/issues/8
+                    Navigator.of(context).pushNamed(Routes.resetPassword);
                   },
                 ),
               ),
