@@ -39,6 +39,6 @@ A new Flutter project.
 
   - `$ fvm flutter test .`
 
-- Run integration testing:
+- Run integration testing with emulator:
 
-  - // TODO
+  - `$ fvm flutter drive --driver=test_driver/integration_test_driver.dart --flavor staging --target=integration_test/{test_file}.dart`
