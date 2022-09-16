@@ -5,8 +5,8 @@ import 'package:flutter_survey/api/repository/survey_repository.dart';
 import 'package:flutter_survey/api/repository/user_repository.dart';
 import 'package:flutter_survey/api/survey_service.dart';
 import 'package:flutter_survey/api/user_service.dart';
-import 'package:flutter_survey/local/shared_preference_helper.dart';
 import 'package:flutter_survey/local/database/survey_box_helper.dart';
+import 'package:flutter_survey/local/shared_preference_helper.dart';
 import 'package:flutter_survey/models/question.dart';
 import 'package:flutter_survey/models/survey.dart';
 import 'package:flutter_survey/models/survey_detail.dart';
@@ -18,6 +18,7 @@ import 'package:flutter_survey/usecase/get_surveys_use_case.dart';
 import 'package:flutter_survey/usecase/get_user_profile_use_case.dart';
 import 'package:flutter_survey/usecase/login_use_case.dart';
 import 'package:flutter_survey/usecase/logout_use_case.dart';
+import 'package:flutter_survey/usecase/reset_password_use_case.dart';
 import 'package:flutter_survey/usecase/submit_survey_use_case.dart';
 import 'package:mockito/annotations.dart';
 
@@ -36,6 +37,7 @@ import 'package:mockito/annotations.dart';
   LogoutUseCase,
   SharedPreferencesHelper,
   GetCacheSurveysUseCase,
+  ResetPasswordUseCase,
   SurveyBoxHelper,
   Survey,
   SurveyDetail,

@@ -118,8 +118,8 @@ class _LoginPageState extends ConsumerState<LoginPage>
               );
             },
           ),
-          Consumer(builder: (_, WidgetRef ref, __) {
-            final loginViewModel = ref.watch(loginViewModelProvider);
+          Consumer(builder: (_, WidgetRef widgetRef, __) {
+            final loginViewModel = widgetRef.watch(loginViewModelProvider);
             return loginViewModel.maybeWhen(
               loading: () => LoadingIndicator(),
               orElse: () => SizedBox.shrink(),
