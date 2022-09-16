@@ -34,7 +34,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
       state.maybeWhen(
         error: (error) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(error ?? context.localization.loginError)));
+              content: Text(error ?? context.localization.errorGeneric)));
         },
         success: () async {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -97,8 +97,8 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
               ),
             ),
           ),
-          Consumer(builder: (_, WidgetRef ref, __) {
-            final viewModel = ref.watch(resetPasswordViewModelProvider);
+          Consumer(builder: (_, WidgetRef widgetRef, __) {
+            final viewModel = widgetRef.watch(resetPasswordViewModelProvider);
             return viewModel.maybeWhen(
               loading: () => LoadingIndicator(),
               orElse: () => SizedBox.shrink(),
