@@ -3,7 +3,7 @@ import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/models/question.dart';
-import 'package:flutter_survey/pages/surveydetail/widget/survey_answer.dart';
+import 'package:flutter_survey/pages/surveydetail/page/survey_answer.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 
 class SurveyQuestion extends StatelessWidget {
