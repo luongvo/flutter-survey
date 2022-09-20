@@ -86,7 +86,8 @@ void main() {
             cacheSurveys.map((e) => SurveyUiModel.fromSurvey(e)).toList(),
           ]));
 
-      expect(container.read(homeViewModelProvider), const HomeState.success());
+      expect(
+          container.read(homeViewModelProvider), const HomeState.cacheLoaded());
     });
 
     test(
@@ -131,8 +132,7 @@ void main() {
       final stateStream = container.read(homeViewModelProvider.notifier).stream;
       final surveysStream =
           container.read(homeViewModelProvider.notifier).surveysStream;
-      expect(stateStream,
-          emitsInOrder([HomeState.loading(), HomeState.success()]));
+      expect(stateStream, emitsInOrder([HomeState.success()]));
       expect(
           surveysStream,
           emitsInOrder([
@@ -155,7 +155,6 @@ void main() {
       expect(
           stateStream,
           emitsInOrder([
-            HomeState.loading(),
             HomeState.error(
               NetworkExceptions.getErrorMessage(
                   NetworkExceptions.internalServerError()),

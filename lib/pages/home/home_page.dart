@@ -8,6 +8,7 @@ import 'package:flutter_survey/pages/home/home_state.dart';
 import 'package:flutter_survey/pages/home/home_view_model.dart';
 import 'package:flutter_survey/pages/home/widget/home_drawer.dart';
 import 'package:flutter_survey/pages/home/widget/home_header.dart';
+import 'package:flutter_survey/pages/home/widget/home_shimmer_loading.dart';
 import 'package:flutter_survey/pages/home/widget/survey_page_viewer.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/pages/widgets/loading_indicator.dart';
@@ -68,23 +69,24 @@ class _HomePageState extends ConsumerState<HomePage> {
       );
     });
 
-    final uiModels = ref.watch(_surveysStreamProvider).value;
+    final uiModels = ref.watch(_surveysStreamProvider).value ?? [];
     return ref.watch(homeViewModelProvider).when(
-          init: () => const SizedBox.shrink(),
-          loading: () => LoadingIndicator(),
-          success: () => _buildHomePage(uiModels ?? []),
+          init: () => HomeShimmerLoading(),
+          loading: () => _buildHomePage(uiModels, true),
+          cacheLoaded: () => _buildHomePage(uiModels, false),
+          success: () => _buildHomePage(uiModels, false),
           error: (message) {
             WidgetsBinding.instance?.addPostFrameCallback((_) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(message ?? context.localization.errorGeneric)));
             });
-            return _buildHomePage(uiModels ?? []);
+            return _buildHomePage(uiModels, false);
           },
           loggedOut: () => const SizedBox.shrink(),
         );
   }
 
-  Widget _buildHomePage(List<SurveyUiModel> surveys) {
+  Widget _buildHomePage(List<SurveyUiModel> surveys, bool isLoading) {
     return Scaffold(
       endDrawer: HomeDrawer(),
       resizeToAvoidBottomInset: false,
@@ -119,6 +121,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ),
               ),
             ),
+            if (isLoading) LoadingIndicator(),
           ],
         ),
       ),
