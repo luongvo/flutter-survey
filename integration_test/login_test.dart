@@ -1,16 +1,29 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_survey/api/oauth_service.dart';
+import 'package:flutter_survey/api/survey_service.dart';
+import 'package:flutter_survey/api/user_service.dart';
 import 'package:flutter_survey/di/di.dart';
 import 'package:flutter_survey/local/database/hive.dart';
 import 'package:flutter_survey/main.dart';
+import 'package:flutter_survey/pages/widgets/loading_indicator.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+
+import 'fake/fake_data.dart';
+import 'fake/fake_oauth_service.dart';
+import 'fake/fake_survey_service.dart';
+import 'fake/fake_user_service.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('Login Test', () {
+    late Finder emailField;
+    late Finder passwordField;
+    late Finder loginButton;
+
     ProviderScope _prepareTestApp() {
       return ProviderScope(
         child: SurveyApp(),
@@ -31,15 +44,33 @@ void main() {
       getIt.registerSingleton<BaseSurveyService>(FakeSurveyService());
     });
 
-    testWidgets('Test Login screen ui', (tester) async {
-      await tester.pumpWidget(_prepareTestApp());
+    setUp(() {
+      emailField = find.byKey(Key('tfLoginEmail'));
+      passwordField = find.byKey(Key('tfLoginPassword'));
+      loginButton = find.byKey(Key('btLogin'));
+    });
 
-      final Finder emailField = find.byKey(Key('tfLoginEmail'));
-      final Finder passwordField = find.byKey(Key('tfLoginPassword'));
-      final Finder submitBtn = find.byKey(Key('btLogin'));
+    testWidgets(
+        "When login with invalid email or password, it returns error message",
+        (WidgetTester tester) async {
+      FakeData.updateResponse(LOGIN_KEY, FakeResponse(400, {}));
+      await tester.pumpWidget(_prepareTestApp());
+      await tester.pumpAndSettle();
+
       expect(emailField, findsOneWidget);
       expect(passwordField, findsOneWidget);
-      expect(submitBtn, findsOneWidget);
+      expect(loginButton, findsOneWidget);
+
+      await tester.enterText(emailField, 'test@abc.com');
+      await tester.enterText(passwordField, '12345678');
+
+      await tester.tap(loginButton);
+      await tester.pump(Duration(milliseconds: 200));
+
+      await tester.pumpAndSettle();
+
+      expect(find.text('Login failed! Please recheck your email or password'),
+          findsOneWidget);
     });
   });
 }
