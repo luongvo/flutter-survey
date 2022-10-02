@@ -27,9 +27,9 @@ abstract class OAuthRepository {
   });
 }
 
-@Singleton(as: OAuthRepository)
+@LazySingleton(as: OAuthRepository)
 class OAuthRepositoryImpl extends OAuthRepository {
-  OAuthService _oauthService;
+  BaseOAuthService _oauthService;
 
   OAuthRepositoryImpl(this._oauthService);
 

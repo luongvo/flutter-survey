@@ -25,6 +25,10 @@ void main() {
       });
       await initHive();
       await configureInjection();
+      getIt.allowReassignment = true;
+      getIt.registerSingleton<BaseOAuthService>(FakeOAuthService());
+      getIt.registerSingleton<BaseUserService>(FakeUserService());
+      getIt.registerSingleton<BaseSurveyService>(FakeSurveyService());
     });
 
     testWidgets('Test Login screen ui', (tester) async {
