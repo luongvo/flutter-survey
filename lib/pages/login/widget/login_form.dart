@@ -37,6 +37,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextFormField(
+          key: Key('tfLoginEmail'),
           controller: _emailController,
           decoration: CustomInputDecoration(
             context: context,
@@ -51,6 +52,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
         Stack(
           children: [
             TextFormField(
+              key: Key('tfLoginPassword'),
               controller: _passwordController,
               decoration: CustomInputDecoration(
                 context: context,
@@ -93,6 +95,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
         SizedBox(
           width: double.infinity,
           child: TextButton(
+            key: Key('btLogin'),
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.white),
               foregroundColor: MaterialStateProperty.all(Colors.black),
