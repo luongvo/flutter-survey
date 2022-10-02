@@ -7,7 +7,7 @@ import 'package:flutter_survey/api/user_service.dart';
 import 'package:flutter_survey/di/di.dart';
 import 'package:flutter_survey/local/database/hive.dart';
 import 'package:flutter_survey/main.dart';
-import 'package:flutter_survey/pages/widgets/loading_indicator.dart';
+import 'package:flutter_survey/pages/login/login_page.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -45,9 +45,9 @@ void main() {
     });
 
     setUp(() {
-      emailField = find.byKey(Key('tfLoginEmail'));
-      passwordField = find.byKey(Key('tfLoginPassword'));
-      loginButton = find.byKey(Key('btLogin'));
+      emailField = find.byKey(LoginPageKey.tfEmail);
+      passwordField = find.byKey(LoginPageKey.tfPassword);
+      loginButton = find.byKey(LoginPageKey.btLogin);
     });
 
     testWidgets(
