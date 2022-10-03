@@ -7,7 +7,7 @@ import 'package:injectable/injectable.dart';
 
 @module
 abstract class NetworkModule {
-  @singleton
+  @Singleton(as: BaseOAuthService)
   OAuthService provideOAuthService(DioProvider dioProvider) {
     return OAuthService(
       dioProvider.getNonAuthenticatedDio(),
@@ -15,7 +15,7 @@ abstract class NetworkModule {
     );
   }
 
-  @singleton
+  @Singleton(as: BaseSurveyService)
   SurveyService provideSurveyService(DioProvider dioProvider) {
     return SurveyService(
       dioProvider.getAuthenticatedDio(),
@@ -23,7 +23,7 @@ abstract class NetworkModule {
     );
   }
 
-  @singleton
+  @Singleton(as: BaseUserService)
   UserService provideUserService(DioProvider dioProvider) {
     return UserService(
       dioProvider.getAuthenticatedDio(),

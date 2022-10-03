@@ -45,6 +45,7 @@ dependencies:
   hive: ^2.2.3
   injectable: ^1.5.3
   japx: ^2.0.4
+  json_annotation: ^4.6.0
   lottie: ^1.4.2
   retrofit: ^3.0.1+1
   package_info_plus: ^1.4.2
@@ -115,6 +116,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/lotties/
+    - test_resources/
 
   fonts:
     - family: Neuzeit

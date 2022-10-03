@@ -24,6 +24,14 @@ final loginViewModelProvider =
 final _isAnimatedPositionProvider =
     StateProvider.autoDispose<bool>((_) => false);
 
+class LoginPageKey {
+  LoginPageKey._();
+
+  static final tfEmail = Key('tfLoginEmail');
+  static final tfPassword = Key('tfLoginPassword');
+  static final btLogin = Key('btLogin');
+}
+
 class LoginPage extends ConsumerStatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
