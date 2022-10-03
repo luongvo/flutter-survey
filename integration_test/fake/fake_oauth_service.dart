@@ -8,11 +8,10 @@ import 'fake_data.dart';
 class FakeOAuthService extends Fake implements BaseOAuthService {
   @override
   Future<OAuthTokenResponse> login(OAuthTokenRequest body) async {
-    await Future.delayed(Duration(milliseconds: 300));
     final loginResponse = FakeData.fakeResponses[LOGIN_KEY]!;
 
     if (loginResponse.statusCode != 200) {
-      throw dioError(loginResponse.statusCode);
+      throw fakeDioError(loginResponse.statusCode);
     }
     return OAuthTokenResponse.fromJson(loginResponse.json);
   }

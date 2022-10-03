@@ -64,7 +64,7 @@ void main() {
     testWidgets(
         "When logging with invalid email or password, it shows the error message",
         (WidgetTester tester) async {
-      FakeData.updateResponse(LOGIN_KEY, FakeResponse(400, {}));
+      FakeData.addFakeResponse(LOGIN_KEY, FakeResponse(400, {}));
       await tester.pumpWidget(_prepareTestApp());
 
       await tester.pumpAndSettle();
@@ -80,7 +80,7 @@ void main() {
     testWidgets(
         "When logging with valid email and password, it navigates to HomePage",
         (WidgetTester tester) async {
-      FakeData.updateResponse(
+      FakeData.addFakeResponse(
           LOGIN_KEY,
           FakeResponse(
               200, await FileUtil.loadFile('test_resources/oauth_login.json')));
