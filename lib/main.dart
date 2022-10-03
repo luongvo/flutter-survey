@@ -14,11 +14,11 @@ Future<void> main() async {
   await configureInjection();
 
   return runApp(ProviderScope(
-    child: MyApp(),
+    child: SurveyApp(),
   ));
 }
 
-class MyApp extends StatelessWidget {
+class SurveyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
