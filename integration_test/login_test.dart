@@ -51,27 +51,14 @@ void main() {
       btLogin = find.byKey(LoginPageKey.btLogin);
     });
 
-    testWidgets(
-        "When logging with valid email and password, it navigates to HomePage",
+    testWidgets("When starting, it displays the Login screen correctly",
         (WidgetTester tester) async {
-      FakeData.updateResponse(
-          LOGIN_KEY,
-          FakeResponse(
-              200, await FileUtil.loadFile('test_resources/oauth_login.json')));
       await tester.pumpWidget(_prepareTestApp());
 
       await tester.pumpAndSettle();
       expect(tfEmail, findsOneWidget);
       expect(tfPassword, findsOneWidget);
       expect(btLogin, findsOneWidget);
-
-      await tester.enterText(tfEmail, 'test@abc.com');
-      await tester.enterText(tfPassword, '12345678');
-      await tester.tap(btLogin);
-      await tester.pump(Duration(milliseconds: 200));
-
-      await tester.pumpAndSettle();
-      expect(find.byType(HomePage), findsOneWidget);
     });
 
     testWidgets(
@@ -83,14 +70,29 @@ void main() {
       await tester.pumpAndSettle();
       await tester.enterText(tfEmail, 'test@abc.com');
       await tester.enterText(tfPassword, '12345678');
-
       await tester.tap(btLogin);
-      await tester.pump(Duration(milliseconds: 200));
 
       await tester.pumpAndSettle();
-
       expect(find.text('Login failed! Please recheck your email or password'),
           findsOneWidget);
+    });
+
+    testWidgets(
+        "When logging with valid email and password, it navigates to HomePage",
+        (WidgetTester tester) async {
+      FakeData.updateResponse(
+          LOGIN_KEY,
+          FakeResponse(
+              200, await FileUtil.loadFile('test_resources/oauth_login.json')));
+      await tester.pumpWidget(_prepareTestApp());
+
+      await tester.pumpAndSettle();
+      await tester.enterText(tfEmail, 'test@abc.com');
+      await tester.enterText(tfPassword, '12345678');
+      await tester.tap(btLogin);
+
+      await tester.pumpAndSettle();
+      expect(find.byType(HomePage), findsOneWidget);
     });
   });
 }
