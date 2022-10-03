@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_survey/pages/common/circular_checkbox.dart';
+import 'package:flutter_survey/pages/surveydetail/widget/circular_checkbox.dart';
 
 class MultiSelection extends StatefulWidget {
   final List<SelectionModel> items;

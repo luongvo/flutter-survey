@@ -24,6 +24,14 @@ final loginViewModelProvider =
 final _isAnimatedPositionProvider =
     StateProvider.autoDispose<bool>((_) => false);
 
+class LoginPageKey {
+  LoginPageKey._();
+
+  static final tfEmail = Key('tfLoginEmail');
+  static final tfPassword = Key('tfLoginPassword');
+  static final btLogin = Key('btLogin');
+}
+
 class LoginPage extends ConsumerStatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -118,8 +126,8 @@ class _LoginPageState extends ConsumerState<LoginPage>
               );
             },
           ),
-          Consumer(builder: (_, WidgetRef ref, __) {
-            final loginViewModel = ref.watch(loginViewModelProvider);
+          Consumer(builder: (_, WidgetRef widgetRef, __) {
+            final loginViewModel = widgetRef.watch(loginViewModelProvider);
             return loginViewModel.maybeWhen(
               loading: () => LoadingIndicator(),
               orElse: () => SizedBox.shrink(),

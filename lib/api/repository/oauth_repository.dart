@@ -3,6 +3,7 @@ import 'package:flutter_survey/api/oauth_service.dart';
 import 'package:flutter_survey/api/request/oauth_logout_request.dart';
 import 'package:flutter_survey/api/request/oauth_refresh_token_request.dart';
 import 'package:flutter_survey/api/request/oauth_token_request.dart';
+import 'package:flutter_survey/api/request/reset_password_request.dart';
 import 'package:flutter_survey/env.dart';
 import 'package:flutter_survey/models/oauth_token.dart';
 import 'package:injectable/injectable.dart';
@@ -20,11 +21,15 @@ abstract class OAuthRepository {
   Future<OAuthToken> refreshToken({
     required String refreshToken,
   });
+
+  Future<void> resetPassword({
+    required String email,
+  });
 }
 
-@Singleton(as: OAuthRepository)
+@LazySingleton(as: OAuthRepository)
 class OAuthRepositoryImpl extends OAuthRepository {
-  OAuthService _oauthService;
+  BaseOAuthService _oauthService;
 
   OAuthRepositoryImpl(this._oauthService);
 
@@ -82,6 +87,23 @@ class OAuthRepositoryImpl extends OAuthRepository {
         tokenType: response.tokenType,
         expiresIn: response.expiresIn,
       );
+    } catch (exception) {
+      throw NetworkExceptions.fromDioException(exception);
+    }
+  }
+
+  @override
+  Future<void> resetPassword({
+    required String email,
+  }) async {
+    try {
+      await _oauthService.resetPassword(ResetPasswordRequest(
+        user: UserRequest(
+          email: email,
+        ),
+        clientId: Env.basicAuthClientId,
+        clientSecret: Env.basicAuthClientSecret,
+      ));
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);
     }

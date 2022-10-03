@@ -1,6 +1,7 @@
 class Dimens {
   Dimens._();
 
+  static const double defaultMarginPaddingSmall = 16.0;
   static const double defaultMarginPadding = 20.0;
   static const double defaultMarginPaddingLarge = 24.0;
 

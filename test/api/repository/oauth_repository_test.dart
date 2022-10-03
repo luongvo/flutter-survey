@@ -108,5 +108,22 @@ void main() {
           () => oauthRepository.refreshToken(refreshToken: 'refreshToken');
       expect(result, throwsA(isA<NetworkExceptions>()));
     });
+
+    test('When calling reset password successfully, it returns empty result',
+        () async {
+      when(mockOAuthService.resetPassword(any)).thenAnswer((_) async => null);
+
+      await oauthRepository.resetPassword(email: 'email');
+    });
+
+    test(
+        'When calling reset password failed, it returns NetworkExceptions error',
+        () async {
+      when(mockOAuthService.resetPassword(any)).thenThrow(MockDioError());
+
+      final result = () => oauthRepository.resetPassword(email: 'email');
+
+      expect(result, throwsA(isA<NetworkExceptions>()));
+    });
   });
 }

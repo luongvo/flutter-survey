@@ -6,6 +6,7 @@ import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/pages/login/login_page.dart';
 import 'package:flutter_survey/pages/widgets/decoration/custom_input_decoration.dart';
 import 'package:flutter_survey/resources/dimens.dart';
+import 'package:flutter_survey/routes.dart';
 import 'package:flutter_survey/utils/keyboard_util.dart';
 
 const _passwordLengthMin = 6;
@@ -36,6 +37,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextFormField(
+          key: LoginPageKey.tfEmail,
           controller: _emailController,
           decoration: CustomInputDecoration(
             context: context,
@@ -50,6 +52,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
         Stack(
           children: [
             TextFormField(
+              key: LoginPageKey.tfPassword,
               controller: _passwordController,
               decoration: CustomInputDecoration(
                 context: context,
@@ -81,7 +84,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                         ),
                   ),
                   onPressed: () {
-                    // TODO forgot https://github.com/luongvo/flutter-survey/issues/8
+                    Navigator.of(context).pushNamed(Routes.resetPassword);
                   },
                 ),
               ),
@@ -92,6 +95,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
         SizedBox(
           width: double.infinity,
           child: TextButton(
+            key: LoginPageKey.btLogin,
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.white),
               foregroundColor: MaterialStateProperty.all(Colors.black),
