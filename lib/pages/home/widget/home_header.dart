@@ -28,6 +28,7 @@ class HomeHeader extends StatelessWidget {
               ),
             ),
             GestureDetector(
+              key: HomePageKey.ivAvatar,
               onTap: () => Scaffold.of(context).openEndDrawer(),
               child: Consumer(
                 builder: (BuildContext _, WidgetRef widgetRef, __) {

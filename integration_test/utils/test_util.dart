@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_survey/api/oauth_service.dart';
@@ -31,8 +32,15 @@ class TestUtil {
   }
 
   static Future<void> prepareTestEnv() async {
+    FlutterConfig.loadValueForTesting({
+      'REST_API_ENDPOINT': 'REST_API_ENDPOINT',
+      'BASIC_AUTH_CLIENT_ID': 'CLIENT_ID',
+      'BASIC_AUTH_CLIENT_SECRET': 'CLIENT_SECRET',
+    });
+
     await initHive();
     await configureInjection();
+
     getIt.allowReassignment = true;
     getIt.registerSingleton<BaseOAuthService>(FakeOAuthService());
     getIt.registerSingleton<BaseUserService>(FakeUserService());

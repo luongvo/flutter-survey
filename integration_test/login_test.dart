@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_survey/pages/home/home_page.dart';
 import 'package:flutter_survey/pages/login/login_page.dart';
 import 'package:flutter_survey/routes.dart';
@@ -22,11 +21,6 @@ void main() {
     late Finder btLogin;
 
     setUpAll(() async {
-      FlutterConfig.loadValueForTesting({
-        'REST_API_ENDPOINT': 'REST_API_ENDPOINT',
-        'BASIC_AUTH_CLIENT_ID': 'CLIENT_ID',
-        'BASIC_AUTH_CLIENT_SECRET': 'CLIENT_SECRET',
-      });
       await TestUtil.prepareTestEnv();
     });
 
