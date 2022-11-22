@@ -33,8 +33,9 @@ class HomeHeader extends StatelessWidget {
               child: Consumer(
                 builder: (BuildContext _, WidgetRef widgetRef, __) {
                   final user = widgetRef.watch(userStreamProvider).value;
+                  if (user == null) return SizedBox.shrink();
                   return CachedNetworkImage(
-                    imageUrl: user?.avatarUrl ?? "",
+                    imageUrl: user.avatarUrl,
                     imageBuilder: (_, imageProvider) => Container(
                       width: Dimens.homeAvatarSize,
                       height: Dimens.homeAvatarSize,
