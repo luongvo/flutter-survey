@@ -27,6 +27,16 @@ final surveyDetailViewModelProvider =
 final _surveyStreamProvider = StreamProvider.autoDispose<SurveyUiModel>(
     (ref) => ref.watch(surveyDetailViewModelProvider.notifier).surveyStream);
 
+class SurveyDetailPageKey {
+  SurveyDetailPageKey._();
+
+  static final btBack = Key('btSurveyDetailBack');
+  static final btStart = Key('btSurveyDetailStart');
+  static final btClose = Key('btSurveyDetailClose');
+  static final btQuestionNext = Key('btSurveyDetailQuestionNext');
+  static final btQuestionSubmit = Key('btSurveyDetailQuestionSubmit');
+}
+
 class SurveyDetailPage extends ConsumerStatefulWidget {
   @override
   _SurveyDetailPageState createState() {
