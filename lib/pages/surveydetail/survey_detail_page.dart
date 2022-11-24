@@ -67,6 +67,10 @@ class _SurveyDetailPageState extends ConsumerState<SurveyDetailPage> {
     ref.listen<SurveyDetailState>(surveyDetailViewModelProvider, (_, state) {
       state.maybeWhen(
         submitted: () => Navigator.of(context).pushNamed(Routes.completion),
+        error: (error) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(error ?? context.localization.errorGeneric)));
+        },
         orElse: () {},
       );
     });
