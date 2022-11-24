@@ -42,6 +42,13 @@ final userStreamProvider = StreamProvider.autoDispose<User>(
 final versionInfoProvider = StreamProvider.autoDispose<String>(
     (ref) => ref.watch(homeViewModelProvider.notifier).versionInfoStream);
 
+class HomePageKey {
+  HomePageKey._();
+
+  static final btStartSurvey = Key('btHomeStartSurvey');
+  static final ivAvatar = Key('ivHomeAvatar');
+}
+
 class HomePage extends ConsumerStatefulWidget {
   @override
   _HomePageState createState() {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_survey/extensions/build_context_ext.dart';
 import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
+import 'package:flutter_survey/pages/surveydetail/survey_detail_page.dart';
 import 'package:flutter_survey/pages/uimodel/survey_ui_model.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 
@@ -24,6 +25,7 @@ class SurveyStart extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
+          key: SurveyDetailPageKey.btBack,
           onTap: () => context.navigateBack(),
           child: SizedBox(
             width: 56,
@@ -72,6 +74,7 @@ class SurveyStart extends StatelessWidget {
 
   Widget _buildActionButton(BuildContext context) {
     return TextButton(
+      key: SurveyDetailPageKey.btStart,
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(Colors.white),
         foregroundColor: MaterialStateProperty.all(Colors.black),

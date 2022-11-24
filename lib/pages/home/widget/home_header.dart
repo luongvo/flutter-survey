@@ -28,12 +28,14 @@ class HomeHeader extends StatelessWidget {
               ),
             ),
             GestureDetector(
+              key: HomePageKey.ivAvatar,
               onTap: () => Scaffold.of(context).openEndDrawer(),
               child: Consumer(
                 builder: (BuildContext _, WidgetRef widgetRef, __) {
                   final user = widgetRef.watch(userStreamProvider).value;
+                  if (user == null) return SizedBox.shrink();
                   return CachedNetworkImage(
-                    imageUrl: user?.avatarUrl ?? "",
+                    imageUrl: user.avatarUrl,
                     imageBuilder: (_, imageProvider) => Container(
                       width: Dimens.homeAvatarSize,
                       height: Dimens.homeAvatarSize,
