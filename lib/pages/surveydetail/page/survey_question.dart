@@ -4,6 +4,7 @@ import 'package:flutter_survey/gen/assets.gen.dart';
 import 'package:flutter_survey/gen/colors.gen.dart';
 import 'package:flutter_survey/models/question.dart';
 import 'package:flutter_survey/pages/surveydetail/page/survey_answer.dart';
+import 'package:flutter_survey/pages/surveydetail/survey_detail_page.dart';
 import 'package:flutter_survey/resources/dimens.dart';
 
 class SurveyQuestion extends StatelessWidget {
@@ -36,6 +37,7 @@ class SurveyQuestion extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: Dimens.defaultMarginPadding),
               child: GestureDetector(
+                key: SurveyDetailPageKey.btClose,
                 onTap: () => context.navigateBack(),
                 child: SizedBox(
                   width: 56,
@@ -95,6 +97,7 @@ class SurveyQuestion extends StatelessWidget {
         ? Padding(
             padding: const EdgeInsets.only(left: Dimens.defaultMarginPadding),
             child: GestureDetector(
+              key: SurveyDetailPageKey.btQuestionNext,
               onTap: () => onNext(),
               child: ClipOval(
                 child: Material(
@@ -111,6 +114,7 @@ class SurveyQuestion extends StatelessWidget {
             ),
           )
         : TextButton(
+            key: SurveyDetailPageKey.btQuestionSubmit,
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.white),
               foregroundColor: MaterialStateProperty.all(Colors.black),
