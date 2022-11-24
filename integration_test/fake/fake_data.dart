@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
 
-const String LOGIN_KEY = 'login';
-
 class FakeResponse {
   final int statusCode;
   final Map<String, dynamic> json;
@@ -14,7 +12,13 @@ class FakeData {
 
   static Map<String, FakeResponse> fakeResponses = {};
 
-  static void addFakeResponse(String key, FakeResponse newValue) {
+  static void addSuccessResponse(String key, Map<String, dynamic> response) {
+    final newValue = FakeResponse(200, response);
+    fakeResponses.update(key, (value) => newValue, ifAbsent: () => newValue);
+  }
+
+  static void addErrorResponse(String key) {
+    final newValue = FakeResponse(400, {});
     fakeResponses.update(key, (value) => newValue, ifAbsent: () => newValue);
   }
 }

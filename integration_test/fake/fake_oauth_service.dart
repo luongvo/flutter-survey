@@ -5,14 +5,16 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'fake_data.dart';
 
+const String LOGIN_KEY = 'login';
+
 class FakeOAuthService extends Fake implements BaseOAuthService {
   @override
   Future<OAuthTokenResponse> login(OAuthTokenRequest body) async {
-    final loginResponse = FakeData.fakeResponses[LOGIN_KEY]!;
+    final response = FakeData.fakeResponses[LOGIN_KEY]!;
 
-    if (loginResponse.statusCode != 200) {
-      throw fakeDioError(loginResponse.statusCode);
+    if (response.statusCode != 200) {
+      throw fakeDioError(response.statusCode);
     }
-    return OAuthTokenResponse.fromJson(loginResponse.json);
+    return OAuthTokenResponse.fromJson(response.json);
   }
 }
