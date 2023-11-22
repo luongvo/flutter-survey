@@ -24,8 +24,8 @@ jobs:
         id: version
         uses: christian-draeger/read-properties@1.1.1
         with:
-          path: 'version.properties'
-          properties: 'templateScriptVersion'
+          path: "version.properties"
+          properties: "templateScriptVersion"
 
       - name: Find HEAD commit
         id: head
@@ -58,31 +58,16 @@ jobs:
 
       #       ${{ steps.changelog.outputs.changelog }}
 
-      # - name: Create the Release pull request
-      #   run: |
-      #     REPO_OWNER=your-username
-      #     REPO_NAME=your-repository
-      #     BASE_BRANCH=main
-      #     HEAD_BRANCH=feature-branch
-      #     PR_TITLE="Pull Request Title"
-      #     PR_BODY="This is the description of the pull request.\nYou can provide more details here."
-
-      #     ACCESS_TOKEN=$GITHUB_TOKEN
-
-      #     # Create a pull request using the GitHub API
-      #     API_URL="https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/pulls"
-      #     PR_DATA="{\"title\":\"$PR_TITLE\",\"body\":\"$PR_BODY\",\"head\":\"$HEAD_BRANCH\",\"base\":\"$BASE_BRANCH\"}"
-      #     curl -X POST -H "Authorization: Bearer $ACCESS_TOKEN" -d "$PR_DATA" $API_URL
-      
-
       - name: Create the Release pull request
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh pr create --title 'Release - ${{ steps.version.outputs.templateScriptVersion }}' --body '|
-                https://github.com/nimblehq/android-templates/milestone/TODO
+          git checkout -b release/${{ steps.version.outputs.templateScriptVersion }}
+          git push origin release/${{ steps.version.outputs.templateScriptVersion }}
+          gh pr create \
+            --base main-0.6 \
+            --head release/${{ steps.version.outputs.templateScriptVersion }} \
+            --title 'Release - ${{ steps.version.outputs.templateScriptVersion }}' \
+            --body 'https://github.com/nimblehq/android-templates/milestone/TODO
 
-                ${{ steps.changelog.outputs.changelog }}'
-          # gh pr create --reviewer monalisa,hubot  --reviewer myorg/team-name
-          # gh pr create --project "Roadmap"`
-          # gh pr create --base develop --head monalisa:feature
+            ${{ steps.changelog.outputs.changelog }}' \
