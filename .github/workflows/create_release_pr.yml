@@ -53,7 +53,7 @@ jobs:
           gh pr create \
             --base $BASE_BRANCH \
             --head $HEAD_BRANCH \
-            --assignee "bot-nimble" \
+            --assignee "luongvo-bot" \
             --title "Release - $VERSION" \
             --label 'type : release' \
             --body 'https://github.com/nimblehq/android-templates/milestone/TODO
