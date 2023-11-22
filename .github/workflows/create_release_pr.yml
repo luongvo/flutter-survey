@@ -40,34 +40,22 @@ jobs:
           toTag: ${{ steps.head.outputs.sha }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Create the Release pull request
-      #   uses: peter-evans/create-pull-request@v5
-      #   with:
-      #     assignees: ${{ secrets.GITHUB_USER }}
-      #     token: ${{ github.token }}
-      #     commit-message: '[Chore] Create the Release pull request'
-      #     committer: Nimble Bot <bot@nimblehq.co>
-      #     branch: release/${{ steps.version.outputs.templateScriptVersion }}
-      #     base: develop
-      #     delete-branch: true
-      #     title: 'Release - ${{ steps.version.outputs.templateScriptVersion }}'
-      #     labels: |
-      #       type : release
-      #     body: |
-      #       https://github.com/nimblehq/android-templates/milestone/TODO
-
-      #       ${{ steps.changelog.outputs.changelog }}
-
       - name: Create the Release pull request
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          git checkout -b release/${{ steps.version.outputs.templateScriptVersion }}
-          git push origin release/${{ steps.version.outputs.templateScriptVersion }}
+          VERSION=${{ steps.version.outputs.templateScriptVersion }}
+          BASE_BRANCH=main-0.6
+          HEAD_BRANCH=release/$VERSION
+
+          git checkout -b $HEAD_BRANCH
+          git push origin $HEAD_BRANCH
           gh pr create \
-            --base main-0.6 \
-            --head release/${{ steps.version.outputs.templateScriptVersion }} \
-            --title 'Release - ${{ steps.version.outputs.templateScriptVersion }}' \
+            --base $BASE_BRANCH \
+            --head $HEAD_BRANCH \
+            --assignee "bot-nimble" \
+            --title "Release - $VERSION" \
+            --label 'type : release' \
             --body 'https://github.com/nimblehq/android-templates/milestone/TODO
 
             ${{ steps.changelog.outputs.changelog }}' \
