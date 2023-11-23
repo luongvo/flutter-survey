@@ -56,6 +56,7 @@ jobs:
             --assignee "luongvo-bot" \
             --title "Release - $VERSION" \
             --label 'type : release' \
+            --milestone $VERSION \
             --body 'https://github.com/nimblehq/android-templates/milestone/TODO
 
             ${{ steps.changelog.outputs.changelog }}' \
