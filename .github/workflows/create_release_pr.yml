@@ -48,14 +48,23 @@ jobs:
           BASE_BRANCH=main-0.6
           HEAD_BRANCH=release/$VERSION
 
+          # Fetch milestone info
+          gh extension install valeriobelli/gh-milestone
+          MILESTONE=$VERSION
+          MILESTONE_URL=$(gh milestone list --query $MILESTONE --json url --jq ".[0].url")
+
+          # Create the release branch
           git checkout -b $HEAD_BRANCH
           git push origin $HEAD_BRANCH
+
+          # Create the pull request
           gh pr create \
             --base $BASE_BRANCH \
             --head $HEAD_BRANCH \
             --assignee "luongvo-bot" \
             --title "Release - $VERSION" \
             --label 'type : release' \
-            --body 'https://github.com/nimblehq/android-templates/milestone/TODO
+            --milestone $MILESTONE \
+            --body "$MILESTONE_URL
 
-            ${{ steps.changelog.outputs.changelog }}' \
+            ${{ steps.changelog.outputs.changelog }}" \
