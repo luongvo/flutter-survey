@@ -27,10 +27,11 @@ jobs:
           path: "version.properties"
           properties: "templateScriptVersion"
 
-      - uses: nimblehq/github-actions-workflows/create_release_pr@0.1.5
+      - uses: nimblehq/github-actions-workflows/create_release_pr@0.1.6
         with:
           token: ${{ github.token }}
           version: ${{ steps.version.outputs.templateScriptVersion }}
           base_branch: main-0.6
           changelogConfiguration: ".github/workflows/config/changelog-release.json"
           assignee: luongvo-bot
+          label: "type : release"
